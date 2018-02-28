@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rocoinfo.repository.sale.dict.MdniDictionaryDao">
+    <resultMap id="BaseResultMap" type="MdniDictionary">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="parent_code" property="parentCode"/>
+        <result column="parent_name" property="parentName"/>
+        <result column="type" property="type"/>
+        <result column="sort" property="sort"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <sql id="SelectInfo">
+    md.id, md.name, md.parent_code, md.type, md.sort,md2.name parent_name
+  </sql>
+    <select id="getById" resultMap="BaseResultMap" parameterType="long">
+        select
+        <include refid="SelectInfo"/>
+        from sale_dictionary md LEFT JOIN sale_dictionary md2 ON md.parent_code=md2.id
+        where md.id = #{id}
+    </select>
+    <select id="getByName" resultMap="BaseResultMap" parameterType="String">
+        SELECT
+        dic.id,dic.name
+        from sale_dictionary dic where name=#{name}
+    </select>
+    <!-- 逻辑删除 -->
+    <delete id="deleteById" parameterType="long">
+	    update sale_dictionary set status=1
+	    where id = #{id}
+  	</delete>
+    <insert id="insert" parameterType="MdniDictionary" useGeneratedKeys="true" keyProperty="id">
+        insert into sale_dictionary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="parentCode != null">
+                parent_code,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="status != null">
+                status
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="parentCode != null">
+                #{parentCode},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="MdniDictionary">
+        update sale_dictionary
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="parentCode != null">
+                parent_code = #{parentCode},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <select id="search" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="SelectInfo"/>
+        from sale_dictionary md
+        left join sale_dictionary md2 on md.parent_code=md2.id
+        where md.status != 1
+        <include refid="searchWhere"/>
+        <if test="sort != null">
+            ORDER BY
+            <foreach collection="sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+    <select id="searchTotal" parameterType="map" resultType="Long">
+        SELECT
+        COUNT(*)
+        FROM sale_dictionary md where md.status != 1
+        <include refid="searchWhere"/>
+    </select>
+
+    <select id="getNode" parameterType="long" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        sale_dictionary
+        WHERE status != 1 and 
+        type=#{type}-1
+    </select>
+
+    <select id="getByType" resultMap="BaseResultMap">
+        select * from sale_dictionary md where md.status != 1 and md.parent_code=#{parentCode}
+         and type=#{type}
+    </select>
+    <select id="findByCompanyLiableDep" parameterType="int" resultMap="BaseResultMap">
+        SELECT
+        md.*
+        FROM
+            sale_dictionary md
+        JOIN sale_org_question soq ON md.id = soq.dic_id
+        WHERE
+            md.type = 5 and md.status != 1 
+        AND soq.org_id = #{liableDepartment}
+    </select>
+
+    <sql id="searchWhere">
+        <if test="keyword!=null">
+            AND  md.name LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="searchType != null">
+            AND md.type=#{searchType}
+        </if>
+    </sql>
+
+
+</mapper>

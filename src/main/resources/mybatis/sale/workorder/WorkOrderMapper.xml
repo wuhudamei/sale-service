@@ -1,0 +1,1692 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rocoinfo.repository.sale.workorder.WorkOrderDao">
+
+    <resultMap id="BaseResultMap" type="WorkOrder">
+        <result property="id" column="id"/>
+        <result property="workOrderCode" column="workorder_code"/>
+        <result property="mdniOrder.orderId" column="order_id"/>
+        <result property="mdniOrder.orderNo" column="order_no"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="customerName" column="customer_name"/>
+        <result property="customerMobile" column="customer_mobile"/>
+        <result property="customerAddress" column="customer_address"/>
+        <result property="contractStartTime" column="contract_start_time"/>
+        <result property="contractCompleteTime" column="contract_complete_time"/>
+        <!--实际开工/竣工时间-->
+        <result property="actualStartTime" column="actual_start_time"/>
+        <result property="actualCompletionTime" column="actual_completion_time"/>
+        <result property="styListName" column="stylist_name"/>
+        <result property="treamentTimeUpdate" column="treament_time_update"/>
+        <result property="styListMobile" column="stylist_mobile"/>
+        <result property="contractorName" column="contractor_name"/>
+        <result property="contractorMobile" column="contractor_mobile"/>
+        <result property="supervisorName" column="supervisor_name"/>
+        <result property="supervisorMobile" column="supervisor_mobile"/>
+        <result property="importantDegree1.id" column="important_degree1"/>
+        <result property="importantDegree1.name" column="important_degree1_name"/>
+        <result property="questionType1.id" column="question_type1"/>
+        <result property="questionType2.id" column="question_type2"/>
+        <result property="srcCompany.id" column="src_company"/>
+        <result property="srcCompany.orgCode" column="src_company_code"/>
+        <result property="srcCompany.orgName" column="src_company_name"/>
+        <result property="srcDepartment.id" column="src_department"/>
+        <result property="srcDepartment.orgCode" column="src_department_code"/>
+        <result property="srcDepartment.orgName" column="src_department_name"/>
+        <result property="receptionPerson.id" column="reception_person"/>
+        <result property="receptionPerson.name" column="reception_person_name"/>
+        <result property="receptionTime" column="reception_time"/>
+        <result property="brand" column="brand"/>
+        <result property="brandName" column="brandName"/>
+        <result property="workType" column="work_type"/>
+        <result property="problem" column="problem"/>
+        <result property="photo" column="photo"/>
+        <result property="liableDepartment.id" column="liable_department"/>
+        <result property="liableDepartment.orgName" column="liable_department_name"/>
+        <result property="liableDepartment.depType" column="liable_department_type"/>
+        <result property="liableCompany.id" column="liable_company"/>
+        <result property="liableCompany.orgName" column="liable_company_name"/>
+        <result property="liablePerson.id" column="liable_person"/>
+        <result property="liablePerson.name" column="liable_person_name"/>
+        <result property="liableType1.id" column="liable_type1"/>
+        <result property="liableType1.name" column="liable_type1_name"/>
+        <result property="liableType2.id" column="liable_type2"/>
+        <result property="liableType2.name" column="liable_type2_name"/>
+        <result property="treamentPlan" column="treament_plan"/>
+        <result property="treamentTime" column="treament_time"/>
+        <result property="feedbackTime" column="feedback_time"/>
+        <result property="customerFeedbackTime" column="customer_feedback_time"/>
+        <result property="visitResult" column="visit_result"/>
+        <result property="statuFlag" column="statu_flag"/>
+        <result property="orderStatus" column="order_status"/>
+        <result property="copyFlag" column="copy_flag"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createUserName" column="create_user_name"/>
+        <result property="createDate" column="create_date"/>
+        <result property="fenpaiDate" column="fenpai_date"/>
+        <!-- <result property="operationDate" column="create_date"/> -->
+        <result property="createDate" column="create_date"/>
+        <result property="operationDate" column="operation_date"/>
+        <result property="rejectName" column="reject_name"/>
+        <result property="source.id" column="source"/>
+        <result property="remark" column="remark"/>
+        <!-- 事项分类 -->
+        <result property="questionType1.id" column="question_type1"/>
+        <result property="questionType1.name" column="question_type1_name"/>
+        <!-- 问题类型 -->
+        <result property="questionType2.id" column="question_type2"/>
+        <result property="questionType2.name" column="question_type2_name"/>
+        <!-- 投诉原因 -->
+        <result property="complaintType.id" column="complaint_type"/>
+        <result property="complaintType.name" column="complaint_type_name"/>
+        <result property="refusedagainTime" column="refusedagain_time"/>
+        <result property="refuseTime" column="refuse_time"/>
+        <result property="urgeTimes" column="urge_times"/>
+        <result property="isRead" column="is_read"/>
+        <!-- 工单操作时间,来自轨迹表 -->
+        <result property="operationDateFromRmk" column="operationDateFromRmk"/>
+        <!-- 工单回访次数,来自轨迹表 -->
+        <result property="visitedTimes" column="visitedTimes"/>
+        <!-- 工单操作人,来自轨迹表 -->
+        <result property="operationUserFromRmk.name" column="operationUser_name"/>
+        <!--黑名单标记, 来自客户库-->
+        <result property="blackFlag" column="black_flag"/>
+        <!--责任供应商-->
+        <result property="liableSupplier.id" column="liable_supplier"/>
+        <result property="pushNumber" column="push_number"/>
+        <result property="pushType" column="push_type"/>
+
+        <!--分配意见-->
+        <result property="suggestion" column="suggestion"/>
+    </resultMap>
+
+    <resultMap id="ServiceMap" type="WorkOrderServiceDto">
+        <result property="liableCompanyName" column="liable_company_name"/>
+        <result property="workOrderCode" column="workorder_code"/>
+        <result property="customerName" column="customer_name"/>
+        <result property="customerMobile" column="customer_mobile"/>
+        <result property="customerAddress" column="customer_address"/>
+        <result property="contractorName" column="contractor_name"/>
+        <result property="contractorMobile" column="contractor_mobile"/>
+        <result property="supervisorName" column="supervisor_name"/>
+        <result property="supervisorMobile" column="supervisor_mobile"/>
+        <result property="problem" column="problem"/>
+        <result property="createDate" column="create_date"/>
+        <result property="source.id" column="source"/>
+        <result property="source.name" column="source_name"/>
+        <result property="photo" column="photo"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="liableDepartment.id" column="liable_department"/>
+        <result property="liableDepartment.orgName" column="liable_department_name"/>
+        <result property="liableType1.id" column="liable_type1"/>
+        <result property="liableType1.name" column="liable_type1_name"/>
+        <result property="questionType1.id" column="question_type1"/>
+        <result property="questionType1.name" column="question_type1_name"/>
+        <result property="questionType2.id" column="question_type2"/>
+        <result property="questionType2.name" column="question_type2_name"/>
+        <result property="importantDegree1.id" column="important_degree1"/>
+        <result property="importantDegree1.name" column="important_degree1_name"/>
+        <result property="refusedagainTime" column="refusedagain_time"/>
+        <result property="refuseTime" column="refuse_time"/>
+        <result property="urgeTimes" column="urge_times"/>
+        <result property="isRead" column="is_read"/>
+        <result property="complaintType.name" column="complaint_type_name"/>
+    </resultMap>
+    <!-- 封装在WorkOrderForExport中,用于工单回访数据导出 -->
+    <resultMap id="resultMapForExport" type="WorkOrderForExport">
+        <result property="id" column="id"/>
+        <result property="workOrderCode" column="workorder_code"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="customerName" column="customer_name"/>
+        <result property="customerMobile" column="customer_mobile"/>
+        <result property="customerAddress" column="customer_address"/>
+        <result property="contractStartTime" column="contract_start_time"/>
+        <result property="contractCompleteTime" column="contract_complete_time"/>
+        <result property="styListName" column="stylist_name"/>
+        <result property="styListMobile" column="stylist_mobile"/>
+        <result property="contractorName" column="contractor_name"/>
+        <result property="contractorMobile" column="contractor_mobile"/>
+        <result property="supervisorName" column="supervisor_name"/>
+        <result property="supervisorMobile" column="supervisor_mobile"/>
+        <result property="importantDegree1" column="important_degree1_name"/>
+        <result property="srcCompany" column="src_company_name"/>
+        <result property="srcDepartment" column="src_department_name"/>
+        <result property="receptionPerson" column="reception_person_name"/>
+        <result property="receptionTime" column="reception_time"/>
+        <result property="brand" column="brand"/>
+        <result property="brandName" column="brandName"/>
+        <result property="workType" column="work_type"/>
+        <result property="problem" column="problem"/>
+        <result property="photo" column="photo"/>
+        <result property="liableDepartment" column="liable_department_name"/>
+        <result property="liableCompany" column="liable_company_name"/>
+        <result property="liablePerson" column="liable_person_name"/>
+        <result property="liableType1" column="liable_type1_name"/>
+        <result property="liableType2" column="liable_type2_name"/>
+        <result property="treamentPlan" column="treament_plan"/>
+        <result property="treamentTime" column="treament_time"/>
+        <result property="feedbackTime" column="feedback_time"/>
+        <result property="customerFeedbackTime" column="customer_feedback_time"/>
+        <result property="visitResult" column="visit_result"/>
+        <result property="statuFlag" column="statu_flag"/>
+        <result property="orderStatus" column="order_status"/>
+        <result property="copyFlag" column="copy_flag"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createUserName" column="create_user_name"/>
+        <result property="createDate" column="create_date"/>
+        <result property="fenpaiDate" column="fenpai_date"/>
+        <!-- <result property="operationDate" column="create_date"/> -->
+        <result property="createDate" column="create_date"/>
+        <result property="operationDate" column="operation_date"/>
+        <result property="rejectName" column="reject_name"/>
+        <result property="source" column="source"/>
+        <result property="remark" column="remark"/>
+        <!-- 事项分类 -->
+        <result property="questionType1" column="question_type1_name"/>
+        <!-- 问题类型 -->
+        <result property="questionType2" column="question_type2_name"/>
+        <!-- 投诉原因 -->
+        <result property="complaintType" column="complaint_type_name"/>
+        <result property="refusedagainTime" column="refusedagain_time"/>
+        <result property="refuseTime" column="refuse_time"/>
+        <result property="urgeTimes" column="urge_times"/>
+        <result property="isRead" column="is_read"/>
+        <!-- 工单操作时间,来自轨迹表 -->
+        <result property="operationDateFromRmk" column="operationDateFromRmk"/>
+        <!-- 工单回访次数,来自轨迹表 -->
+        <result property="visitedTimes" column="visitedTimes"/>
+        <!-- 工单操作人,来自轨迹表 -->
+        <result property="operationUserFromRmk" column="operationUser_name"/>
+        <!-- 回访时,不满意原因:来自轨迹表且是操作类型是visit -->
+        <result property="unSatisfiedFromRmk" column="unSatisfiedFromRmk"/>
+        <!--申请预计完成时间延期成功 次数-->
+        <result property="treamentResultCount" column="treamentResultCount"/>
+
+    </resultMap>
+
+    <insert id="insert" parameterType="WorkOrder" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sale_workorder(workorder_code,order_id,order_no,brand,source,
+        	customer_id,customer_name,customer_mobile,customer_address,contract_start_time,
+        	contract_complete_time,actual_start_time,actual_completion_time,stylist_name,stylist_mobile,
+        	contractor_name,contractor_mobile, supervisor_name,supervisor_mobile,important_degree1,
+        	question_type1,question_type2,src_company,src_department,reception_person,
+        	reception_time, work_type, problem,photo,liable_company,liable_department,liable_person,
+        	liable_type1,liable_type2,treament_plan, treament_time,feedback_time,customer_feedback_time,
+        	visit_result,statu_flag,order_status,copy_flag,create_user,create_date,complaint_type,refusedagain_time,
+        	refuse_time,urge_times,is_read,fenpai_date,liable_supplier,suggestion)
+        VALUES (#{workOrderCode},#{mdniOrder.orderId},#{mdniOrder.orderNo},#{brand},#{source.id},#{customerId},#{customerName},#{customerMobile},#{customerAddress},#{contractStartTime},
+        		#{contractCompleteTime},#{actualStartTime},#{actualCompletionTime},#{styListName},#{styListMobile},#{contractorName},#{contractorMobile},#{supervisorName},#{supervisorMobile},
+        		#{importantDegree1.id},#{questionType1.id},#{questionType2.id},#{srcCompany.id},#{srcDepartment.id},
+        		#{receptionPerson.id},#{receptionTime},#{workType},#{problem},#{photo},#{liableCompany.id},#{liableDepartment.id},#{liablePerson.id},#{liableType1.id},#{liableType2.id},
+        		#{treamentPlan},#{treamentTime},#{feedbackTime},#{customerFeedbackTime},#{visitResult},#{statuFlag},#{orderStatus},#{copyFlag},#{createUser},
+        		#{createDate},#{complaintType.id},#{refusedagainTime},#{refuseTime},0,#{isRead},#{fenpaiDate},#{liableSupplier.id},
+        		#{suggestion})
+    </insert>
+    <insert id="insertCopy" parameterType="WorkOrder" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sale_workorder(workorder_code,order_id,order_no,brand,
+        customer_id,customer_name,customer_mobile,customer_address,contract_start_time,contract_complete_time,stylist_name,stylist_mobile,
+        contractor_name,contractor_mobile,supervisor_name,supervisor_mobile,
+        important_degree1,question_type1,question_type2,src_company,src_department,reception_person,reception_time,work_type,
+        problem,photo,liable_company,liable_department,liable_person,liable_type1,liable_type2,treament_plan,treament_time,feedback_time,customer_feedback_time,visit_result,
+        statu_flag,order_status,copy_flag,create_user,create_date,urge_times)
+        SELECT workorder_code,order_id,order_no,brand,
+        customer_id,customer_name,customer_mobile,customer_address,contract_start_time,contract_complete_time,stylist_name,stylist_mobile,
+        contractor_name,contractor_mobile,supervisor_name,supervisor_mobile,
+        (select id from sale_dictionary where
+        name='投诉'),question_type1,question_type2,src_company,src_department,reception_person,#{receptionTime},work_type,
+        #{problem},photo,liable_company,liable_department,liable_person,liable_type1,liable_type2,treament_plan,treament_time,feedback_time,customer_feedback_time,visit_result,
+        statu_flag,'CREATE','Y',create_user,#{receptionTime},0 FROM sale_workorder where id=#{id}
+
+        <!--<selectKey keyProperty="id" resultType="long">-->
+        <!--SELECT LAST_INSERT_ID() AS id-->
+        <!--</selectKey>-->
+    </insert>
+    <update id="update" parameterType="WorkOrder">
+        update sale_workorder
+        <set>
+            <if test="treamentTimeUpdate!=null">
+                treament_time_update=#{treamentTimeUpdate},
+            </if>
+            <if test="workOrderCode != null">
+                workorder_code = #{workOrderCode},
+            </if>
+            <if test="mdniOrder != null and mdniOrder.orderId != null">
+                order_id = #{mdniOrder.orderId},
+            </if>
+            <if test="customerId != null">
+                customer_id = #{customerId},
+            </if>
+            <if test="customerName != null">
+                customer_name = #{customerName},
+            </if>
+            <if test="customerMobile != null">
+                customer_mobile = #{customerMobile},
+            </if>
+            <if test="customerAddress != null">
+                customer_address = #{customerAddress},
+            </if>
+            <if test="contractStartTime != null">
+                contract_start_time = #{contractStartTime},
+            </if>
+            <if test="contractCompleteTime != null">
+                contract_complete_time = #{contractCompleteTime},
+            </if>
+            <if test="styListName != null and styListName != ''">
+                stylist_name = #{styListName},
+            </if>
+            <if test="styListMobile != null">
+                stylist_mobile = #{styListMobile},
+            </if>
+            <if test="contractorName != null and contractorName != ''">
+                contractor_name = #{contractorName},
+            </if>
+            <if test="contractorMobile != null">
+                contractor_mobile = #{contractorMobile},
+            </if>
+            <if test="supervisorName != null and supervisorName != ''">
+                supervisor_name = #{supervisorName},
+            </if>
+            <if test="supervisorMobile != null">
+                supervisor_mobile = #{supervisorMobile},
+            </if>
+            <if test="importantDegree1 != null and importantDegree1.id != null">
+                important_degree1 = #{importantDegree1.id},
+            </if>
+            <if test="questionType1 != null and questionType1.id != null">
+                question_type1 = #{questionType1.id},
+            </if>
+            <if test="questionType2 != null and questionType2.id != null">
+                question_type2 = #{questionType2.id},
+            </if>
+            <if test="receptionPerson != null and receptionPerson.id != null">
+                reception_person = #{receptionPerson.id},
+            </if>
+            <if test="receptionTime != null">
+                reception_time = #{receptionTime},
+            </if>
+            <if test="srcDepartment != null and srcDepartment.id != null">
+                src_department = #{srcDepartment.id},
+            </if>
+            <if test="srcCompany != null and srcCompany.id != null">
+                src_company = #{srcCompany.id},
+            </if>
+            <if test="liableCompany != null and liableCompany.id != null">
+                liable_company = #{liableCompany.id},
+            </if>
+            <if test="liableDepartment != null and liableDepartment.id != null">
+                liable_department = #{liableDepartment.id},
+            </if>
+            <if test="liableSupplier != null">
+                liable_supplier = #{liableSupplier.id},
+            </if>
+
+            <if test="liableType1 != null and liableType1.id != null">
+                liable_type1 = #{liableType1.id},
+            </if>
+            <if test="liableType2 != null and liableType2.id != null">
+                liable_type2 = #{liableType2.id},
+            </if>
+            <if test="treamentPlan != null">
+                treament_plan = #{treamentPlan},
+            </if>
+            <if test="treamentTime != null">
+                treament_time = #{treamentTime},
+            </if>
+            <if test="feedbackTime != null">
+                feedback_time = #{feedbackTime},
+            </if>
+            <if test="customerFeedbackTime != null">
+                customer_feedback_time = #{customerFeedbackTime},
+            </if>
+            <if test="visitResult != null">
+                visit_result = #{visitResult},
+            </if>
+            <if test="statuFlag != null">
+                statu_flag = #{statuFlag},
+            </if>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus},
+            </if>
+            <if test="copyFlag != null">
+                copy_flag = #{copyFlag},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="workType != null">
+                work_type = #{workType},
+            </if>
+            <if test="problem != null">
+                problem = #{problem},
+            </if>
+            <if test="photo != null">
+                photo = #{photo},
+            </if>
+            <if test="complaintType != null and complaintType.id != null">
+                complaint_type = #{complaintType.id},
+            </if>
+
+            <if test="source != null">
+                source = #{source.id},
+            </if>
+
+            <if test="liablePerson !=null and liablePerson.id!=''">
+                liable_person=#{liablePerson.id},
+            </if>
+            <if test="brand!=null and brand!=''">
+                brand=#{brand},
+            </if>
+
+            <if test="refusedagainTime!=null">
+                refusedagain_time=#{refusedagainTime},
+            </if>
+            <if test="refuseTime!=null">
+                refuse_time=#{refuseTime},
+            </if>
+
+            <if test="isRead!=null">
+                is_read=#{isRead},
+            </if>
+            <if test="urgeTimes!=null and urgeTimes!=''">
+                urge_times=urge_times+1,
+            </if>
+            <if test="fenpaiDate != null and fenpaiDate != ''">
+                fenpai_date = #{fenpaiDate},
+            </if>
+            <if test="treamentTimeUpdate != null and treamentTimeUpdate != ''">
+                treament_time_update = #{treamentTimeUpdate},
+            </if>
+            <if test="suggestion != null and suggestion != ''">
+                suggestion = #{suggestion}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <resultMap id="OrderRemarkResultMap" type="WorkOrderRemark">
+        <id property="id" column="id"/>
+        <result property="workOrderId" column="work_order_id"/>
+        <result property="remark" column="remark"/>
+        <result property="operationType" column="operation_type"/>
+        <result property="operationUser.id" column="operation_user"/>
+        <result property="operationUser.name" column="operation_user_name"/>
+        <result property="operationDate" column="operation_date"/>
+    </resultMap>
+    <select id="getRemarkByOrderId" parameterType="Long" resultMap="OrderRemarkResultMap">
+        SELECT R.id,R.work_order_id,R.remark,R.operation_type,R.operation_user,U.name operation_user_name,R.operation_date FROM sale_workorder_rmk R
+        LEFT JOIN sale_user U ON R.operation_user = U.id
+        WHERE R.work_order_id=#{orderId} ORDER BY R.id DESC
+    </select>
+
+    <update id="updateWorkInfo">
+        UPDATE sale_workorder
+        <set>
+            <if test="liablePerson!=null and liablePerson.id!=''">
+                liable_person=#{liablePerson.id},
+            </if>
+            <if test="brand!=null and brand!=''">
+                brand=#{brand},
+            </if>
+            <if test="treamentPlan != null and treamentPlan != ''">
+                treament_plan = #{treamentPlan},
+            </if>
+            <if test="treamentTime != null and treamentTime != ''">
+                treament_time = #{treamentTime},
+            </if>
+            <if test="feedbackTime != null and feedbackTime != ''">
+                feedback_time = #{feedbackTime},
+            </if>
+            <if test="customerFeedbackTime != null and customerFeedbackTime != ''">
+                customer_feedback_time = #{customerFeedbackTime},
+            </if>
+            <if test="visitResult != null and visitResult != ''">
+                visit_result = #{visitResult},
+            </if>
+            <if test="refusedagainTime!=null">
+                refusedagain_time=#{refusedagainTime},
+            </if>
+            <if test="refuseTime!=null">
+                refuse_time=#{refuseTime},
+            </if>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus},
+            </if>
+            <if test="questionType1!= null and questionType1.id!='' and questionType1.id!=null">
+                question_type1 = #{questionType1.id},
+            </if>
+            <if test="questionType2!= null and questionType2.id!='' and questionType2.id!=null">
+                question_type2 = #{questionType2.id},
+            </if>
+            <if test="isRead!=null">
+                is_read=#{isRead},
+            </if>
+            <if test="urgeTimes!=null and urgeTimes!=''">
+                urge_times=urge_times+1
+            </if>
+            <if test="fenpaiDate != null and fenpaiDate != ''">
+                fenpai_date = #{fenpaiDate}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateWorkCopyFlag">
+        UPDATE sale_workorder set copy_flag = 'Y' WHERE id = #{id}
+    </update>
+
+    <select id="getCurrentOrderNum" parameterType="map" resultType="string">
+    	<![CDATA[
+
+
+
+        	select case 
+				when (count(*)+1) < 10 then CONCAT('00',count(*)+1)
+				when (count(*)+1) >= 10 and (count(*)+1) < 99 then CONCAT('0',count(*)+1)
+			  else CONCAT('',count(*)+1) end curOrderNum 
+			from sale_workorder where reception_time like '%${currentDate}%'
+
+
+
+        ]]>
+    </select>
+
+    <!--首页工作台 展示 相关数据-->
+    <select id="searchTotal" parameterType="map" resultType="long">
+        SELECT COUNT(sale_workorder.id) FROM sale_workorder
+        <if test="status != null and status =='URGE'">
+            JOIN (select swr.work_order_id from sale_workorder_rmk swr
+            where swr.operation_type = 'REMAINDER' group by swr.work_order_id) urge
+        </if>
+        <if test="personName != null and personName != ''">
+            LEFT JOIN sale_user mu on mu.id=sale_workorder.reception_person
+            left join sale_user mu1 on sale_workorder.liable_person=mu1.id
+        </if>
+        <!--如果是已完成/暂无评价/不再回访 就关联客户表,去除黑名单客户下的工单-->
+        <if test="status == 'COMPLETED' || status == 'INVALIDVISIT' || status == 'FAILUREVISIT'">
+            LEFT JOIN sale_customer cust ON cust.id = customer_id
+        </if>
+        where 1=1
+        <if test="keyword != null and keyword != ''">
+            and (customer_name like '%${keyword}%' or customer_mobile = #{keyword})
+        </if>
+        <if test="questionType1 != null and questionType1 != ''">
+            and question_type1 = #{questionType1}
+        </if>
+        <if test="importantDegree1 != null and importantDegree1 != ''">
+            and important_degree1=#{importantDegree1}
+        </if>
+        <if test="complaintType != null and complaintType != ''">
+            AND complaint_type = #{complaintType}
+        </if>
+        <if test="status != null and status =='URGE'">
+            AND urge.work_order_id = sale_workorder.id
+        </if>
+        <if test="status != null and status != '' and status != 'URGE'">
+            AND order_status = #{status}
+            <if test="status == 'COMPLETED' || status == 'INVALIDVISIT' || status == 'FAILUREVISIT'">
+                AND (
+                cust.black_flag = 0
+                OR cust.black_flag IS NULL
+                )
+            </if>
+        </if>
+        <if test="status=='NVISIT' || status=='CALLBACK' and statusFlag=='NVISIT'">
+            AND order_status = #{status}
+        </if>
+        <if test="statusFlag==null and statusFlag =='NVISIT'">
+            AND statu_flag = #{statusFlag}
+        </if>
+        <if test="srcId != null and srcId != ''">
+            AND src_department = #{srcId}
+        </if>
+        <if test="liableCompany != null and liableCompany != ''">
+            AND liable_company = #{liableCompany}
+        </if>
+        <if test="liableDepartment != null and liableDepartment != ''">
+            AND liable_department = #{liableDepartment}
+        </if>
+        <if test="liableSupplier != null and liableSupplier != ''">
+            AND liable_supplier = #{liableSupplier}
+        </if>
+        <if test="fenpaiDate != null and fenpaiDate == 'true' and startDate!=null and startDate!=''">
+            AND fenpai_date &gt;= #{startDate}
+        </if>
+        <if test="fenpaiDate != null and fenpaiDate == 'true' and endDate!=null and endDate!=''">
+            AND fenpai_date &lt; #{endDate}
+        </if>
+        <if test="faqiDate != null and faqiDate == 'true' and startDate!=null and startDate!=''">
+            AND create_date &gt;= #{startDate}
+        </if>
+        <if test="faqiDate != null and faqiDate == 'true' and endDate!=null and endDate!=''">
+            AND create_date &lt; #{endDate}
+        </if>
+        <if test="refuseDate != null and refuseDate == 'true' and startDate!=null and startDate!=''">
+            AND refuse_time &gt;= #{startDate}
+        </if>
+        <if test="refuseDate != null and refuseDate == 'true' and endDate!=null and endDate!=''">
+            AND refuse_time &lt; #{endDate}
+        </if>
+        <if test="refusedagainDate != null and refusedagainDate == 'true' and startDate!=null and startDate!=''">
+            AND refusedagain_time &gt;= #{startDate}
+        </if>
+        <if test="refusedagainDate != null and refusedagainDate == 'true' and endDate!=null and endDate!=''">
+            AND refusedagain_time &lt; #{endDate}
+        </if>
+        <if test="expectDate != null and expectDate == 'true' and startDate!=null and startDate!=''">
+            AND treament_time &gt;= #{startDate}
+        </if>
+        <if test="expectDate != null and expectDate == 'true' and endDate!=null and endDate!=''">
+            AND treament_time &lt; #{endDate}
+        </if>
+        <if test="customerFeedbackTime != null and customerFeedbackTime =='true' and startDate!=null and startDate!=''">
+            AND customer_feedback_time &gt;= #{startDate}
+        </if>
+        <if test="customerFeedbackTime != null and customerFeedbackTime =='true' and endDate!=null and endDate!=''">
+            AND customer_feedback_time &lt; #{endDate}
+        </if>
+        <if test="receptionPerson != null and receptionPerson != ''">
+            AND reception_person = #{receptionPerson}
+        </if>
+        <if test="receptionStartTime != null and receptionStartTime != ''">
+            AND mw.create_date &gt;=#{receptionStartTime}
+        </if>
+        <if test="receptionEndTime != null and receptionEndTime != ''">
+            AND mw.create_date &lt;= #{receptionEndTime}
+        </if>
+        <if test="liablePerson != null and liablePerson != ''">
+            AND liable_person = #{liablePerson}
+        </if>
+        <if test="personName != null and personName != ''">
+            AND (mu.name LIKE CONCAT('%',#{personName},'%') OR
+            mu1.name LIKE CONCAT('%',#{personName},'%'))
+        </if>
+    </select>
+
+    <select id="searchByDate" parameterType="map" resultType="long">
+        select count(1) from sale_workorder
+        where create_date &gt;=#{start} and create_date &lt;=#{end}
+    </select>
+
+    <!-- 对外提供接口,按条件查询工单 -->
+    <select id="orderService" parameterType="map" resultMap="ServiceMap">
+        SELECT
+        CASE
+        WHEN sw.liable_company = 99 THEN '100001'
+        WHEN sw.liable_company = 126 THEN '100002'
+        WHEN sw.liable_company = 121 THEN '100003'
+        WHEN sw.liable_company = 128 THEN '100004'
+        WHEN sw.liable_company = 100 THEN '100005'
+        END
+        liable_company_name,
+        workorder_code ,
+        customer_name ,
+        customer_mobile ,
+        customer_address ,
+        problem ,
+        sw.create_date ,
+        order_no,
+        sw.important_degree1,
+        sw.liable_department,
+        so2.org_name liable_department_name ,
+        sd2.name important_degree1_name,
+        sd3.name question_type1_name,
+        sd4.name question_type2_name,
+        sd5.name source_name,
+        sd6.name complaint_type_name,
+        photo
+        FROM
+        sale_workorder sw
+        LEFT JOIN sale_organization so ON so.id = sw.liable_company
+        LEFT JOIN sale_organization so2 ON so2.id = sw.liable_department
+        LEFT JOIN sale_dictionary sd2 ON sw.important_degree1 = sd2.id
+        LEFT JOIN sale_dictionary sd3 ON sw.question_type1 = sd3.id
+        LEFT JOIN sale_dictionary sd4 ON sw.question_type2 = sd4.id
+        LEFT JOIN sale_dictionary sd5 ON sw.source = sd5.id
+        LEFT JOIN sale_dictionary sd6 ON sw.complaint_type = sd6.id
+        WHERE sw.statu_flag = 1
+        <if test="startDate != null and startDate!=''">
+            AND sw.create_date &gt;=#{startDate}
+        </if>
+        <if test="endDate != null and endDate!=''">
+            AND sw.create_date &lt;=#{endDate}
+        </if>
+        <if test="liableDeptArr != null">
+            AND liable_department in
+            <foreach collection="liableDeptArr" index="index" item="item"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="liableCompanyArr != null">
+            AND liable_company in
+            <foreach collection="liableCompanyArr" index="index" item="item"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <!-- 对外提供接口,推工单 -->
+    <select id="pushWordOrder" resultMap="ServiceMap">
+        SELECT
+        CASE
+        WHEN sw.liable_company = 99 THEN '100001'
+        WHEN sw.liable_company = 126 THEN '100002'
+        WHEN sw.liable_company = 121 THEN '100003'
+        WHEN sw.liable_company = 128 THEN '100004'
+        WHEN sw.liable_company = 100 THEN '100005'
+        END
+        liable_company_name,
+        workorder_code ,
+        customer_name ,
+        customer_mobile ,
+        customer_address ,
+        problem ,
+        sw.create_date ,
+        order_no,
+        sw.important_degree1,
+        sw.liable_department,
+        so2.org_name liable_department_name ,
+        sd2.name important_degree1_name,
+        sd3.name question_type1_name,
+        sd4.name question_type2_name,
+        sd5.name source_name,
+        sd6.name complaint_type_name,
+        photo
+        FROM
+        sale_workorder sw
+        LEFT JOIN sale_organization so ON so.id = sw.liable_company
+        LEFT JOIN sale_organization so2 ON so2.id = sw.liable_department
+        LEFT JOIN sale_dictionary sd2 ON sw.important_degree1 = sd2.id
+        LEFT JOIN sale_dictionary sd3 ON sw.question_type1 = sd3.id
+        LEFT JOIN sale_dictionary sd4 ON sw.question_type2 = sd4.id
+        LEFT JOIN sale_dictionary sd5 ON sw.source = sd5.id
+        LEFT JOIN sale_dictionary sd6 ON sw.complaint_type = sd6.id
+        WHERE sw.statu_flag = 1
+       AND sw.id=#{id}
+    </select>
+
+    <!--工单处理 各列表-->
+    <select id="search" parameterType="map" resultMap="BaseResultMap">
+        select distinct mw.id,mw.workorder_code,mw.order_id,mw.brand,mw.source,mw.treament_time_update,
+        mw.customer_id,mw.customer_name,mw.customer_mobile,mw.customer_address,mw.contract_start_time,mw.contract_complete_time,
+        mw.stylist_name,mw.stylist_mobile,mw.contractor_name,mw.contractor_mobile,mw.supervisor_name,mw.supervisor_mobile,
+        mw.important_degree1,md.name as important_degree1_name,
+        mw.important_degree2,md2.name as important_degree2_name,
+        mw.question_type1,que.name question_type1_name,mw.fenpai_date,
+        mw.question_type2,que2.name question_type2_name,
+        mw.src_company,mo1.org_code as src_company_code,mo1.org_name as src_company_name,
+        mw.src_department,mo.org_code as src_department_code,mo.org_name as src_department_name,
+        mw.reception_person,mu.name as reception_person_name,mw.reception_time,mw.work_type,
+        mw.problem,mw.photo,mw.liable_department,mo2.org_name as liable_department_name,
+        mw.liable_person,IFNULL(mu1.NAME,'') as liable_person_name,
+        mw.liable_type1,mdl.name as liable_type1_name,
+        mw.urge_times,mw.is_read,
+        mu2.name as create_user_name,mw.brand,mw.refuse_time,mw.refusedagain_time,
+        mw.treament_plan,mw.treament_time,mw.feedback_time,mw.visit_result,
+        mw.order_status,mw.copy_flag,mw.create_user,mw.create_date,mw.customer_feedback_time,rmk.operation_date,
+        rmk.reject_name,rmk.remark,rmk2.operation_date2
+        from sale_workorder mw
+        left join sale_dictionary md on mw.important_degree1=md.id
+        left join sale_dictionary md2 on mw.important_degree2=md2.id
+        left join sale_dictionary mdl on mw.liable_type1 = mdl.id
+        left join sale_dictionary que on mw.question_type1 = que.id
+        left join sale_dictionary que2 on mw.question_type2 = que2.id
+        left join sale_organization mo on mw.src_department=mo.id
+        left join sale_organization mo1 on mw.src_company=mo1.id
+        left join sale_organization mo2 on mw.liable_department=mo2.id
+        left join sale_user mu on mw.reception_person=mu.id
+        left join sale_user mu1 on mw.liable_person=mu1.id
+        left join sale_user mu2 on mw.create_user=mu2.id
+        <if test="status != null and status =='URGE'">
+            join sale_workorder_rmk swr
+        </if>
+
+        left join (
+        select swr.work_order_id ,swr.operation_date , swr.operation_user ,
+        swr.remark,su. NAME reject_name from sale_workorder_rmk swr join ( SELECT
+        max(sw.id) id FROM sale_workorder_rmk sw WHERE sw.operation_type = 'REJECT'
+        GROUP BY work_order_id
+        ) t on swr.id=t.id
+        left join sale_user su ON su.id = swr.operation_user
+        ) rmk on rmk.work_order_id=mw.id
+        LEFT JOIN(
+        SELECT
+        swr.work_order_id ,
+        swr.operation_date operation_date2 ,
+        swr.operation_user ,
+        swr.remark ,
+        su. NAME reject_name
+        FROM
+        sale_workorder_rmk swr
+        JOIN(
+        SELECT
+        max(sw.id) id
+        FROM
+        sale_workorder_rmk sw
+        WHERE
+        sw.operation_type = 'REMAINDER'
+        GROUP BY
+        work_order_id
+        order by sw.operation_date desc
+        ) t ON swr.id = t.id
+        LEFT JOIN sale_user su ON su.id = swr.operation_user
+        ) rmk2 ON rmk2.work_order_id = mw.id
+        where mw.statu_flag=1
+        <if test="keyword != null and keyword != ''">
+            and (customer_name like '%${keyword}%' or customer_mobile = #{keyword})
+        </if>
+        <if test="questionType1 != null and questionType1 != ''">
+            and question_type1 = #{questionType1}
+        </if>
+        <if test="importantDegree1 != null and importantDegree1 != ''">
+            and important_degree1=#{importantDegree1}
+        </if>
+        <if test="complaintType != null and complaintType != ''">
+            AND complaint_type= #{complaintType}
+        </if>
+        <if test="status != null and status != '' and status!='URGE'">
+            AND order_status = #{status}
+        </if>
+        <if test="status != null and status =='URGE'">
+            AND swr.work_order_id=mw.id AND swr.operation_type='REMAINDER'
+        </if>
+        <if test="status=='NVISIT' || status=='CALLBACK' and statusFlag=='NVISIT'">
+            AND order_status = #{status}
+        </if>
+        <if test="statusFlag==null and statusFlag =='NVISIT'">
+            AND statu_flag = #{statusFlag}
+        </if>
+        <if test="srcId != null and srcId != ''">
+            AND src_department = #{srcId}
+        </if>
+        <if test="liableCompany != null and liableCompany != ''">
+            AND mw.liable_company = #{liableCompany}
+        </if>
+        <if test="liableDepartment != null and liableDepartment != ''">
+            AND mw.liable_department = #{liableDepartment}
+        </if>
+        <if test="liableSupplier != null and liableSupplier != ''">
+            AND mw.liable_supplier = #{liableSupplier}
+        </if>
+        <if test="fenpaiDate != null and fenpaiDate == 'true' and startDate!=null and startDate!=''">
+            AND mw.fenpai_date &gt;= #{startDate}
+        </if>
+        <if test="fenpaiDate != null and fenpaiDate == 'true' and endDate!=null and endDate!=''">
+            AND mw.fenpai_date &lt; #{endDate}
+        </if>
+        <if test="faqiDate != null and faqiDate == 'true' and startDate!=null and startDate!=''">
+            AND mw.create_date &gt;= #{startDate}
+        </if>
+        <if test="faqiDate != null and faqiDate == 'true' and endDate!=null and endDate!=''">
+            AND mw.create_date &lt; #{endDate}
+        </if>
+        <if test="refuseDate != null and refuseDate == 'true' and startDate!=null and startDate!=''">
+            AND mw.refuse_time &gt;= #{startDate}
+        </if>
+        <if test="refuseDate != null and refuseDate == 'true' and endDate!=null and endDate!=''">
+            AND mw.refuse_time &lt; #{endDate}
+        </if>
+        <if test="refusedagainDate != null and refusedagainDate == 'true' and startDate!=null and startDate!=''">
+            AND mw.refusedagain_time &gt;= #{startDate}
+        </if>
+        <if test="refusedagainDate != null and refusedagainDate == 'true' and endDate!=null and endDate!=''">
+            AND mw.refusedagain_time &lt; #{endDate}
+        </if>
+        <if test="expectDate != null and expectDate == 'true' and startDate!=null and startDate!=''">
+            AND mw.treament_time &gt;= #{startDate}
+        </if>
+        <if test="expectDate != null and expectDate == 'true' and endDate!=null and endDate!=''">
+            AND mw.treament_time &lt; #{endDate}
+        </if>
+        <if test="customerFeedbackTime != null and customerFeedbackTime =='true' and startDate!=null and startDate!=''">
+            AND mw.customer_feedback_time &gt;= #{startDate}
+        </if>
+        <if test="customerFeedbackTime != null and customerFeedbackTime =='true' and endDate!=null and endDate!=''">
+            AND mw.customer_feedback_time &lt; #{endDate}
+        </if>
+        <if test="receptionPerson != null and receptionPerson != ''">
+            AND reception_person = #{receptionPerson}
+        </if>
+        <if test="receptionStartTime != null and receptionStartTime != ''">
+            AND mw.create_date &gt;=#{receptionStartTime}
+        </if>
+        <if test="receptionEndTime != null and receptionEndTime != ''">
+            AND mw.create_date &lt;= #{receptionEndTime}
+        </if>
+        <if test="personName != null and personName != ''">
+            AND (mu.name LIKE CONCAT('%',#{personName},'%') OR
+            mu1.name LIKE CONCAT('%',#{personName},'%'))
+        </if>
+
+        ORDER BY
+        <if test="status != null and status =='URGE'">
+            rmk2.operation_date2 DESC ,
+        </if>
+        <if test="status != null and status =='PROCESSING'">
+            mw.treament_time asc ,
+        </if>
+
+        mw.create_date DESC
+
+        <if test="limit!=null and limit!=''">
+            LIMIT #{offset} ,#{limit}
+        </if>
+
+    </select>
+
+    <select id="getById" parameterType="long" resultMap="BaseResultMap">
+        select distinct mw.id,mw.workorder_code,mw.order_id,mw.question_type1,mw.question_type2,mw.brand,mw.source,
+        mw.customer_id,mw.customer_name,mw.customer_mobile,mw.customer_address,mw.contract_start_time,mw.contract_complete_time,
+        mw.actual_start_time,mw.actual_completion_time,
+        mw.stylist_name,mw.stylist_mobile,mw.contractor_name,mw.contractor_mobile,mw.supervisor_name,mw.supervisor_mobile,
+        mw.important_degree1,md.name as important_degree1_name,
+        mw.important_degree2,md2.name as important_degree2_name,
+        mw.src_company,mo1.org_code as src_company_code,mo1.org_name as src_company_name,
+        mw.src_department,mo.org_code as src_department_code,mo.org_name as src_department_name,
+        mw.reception_person,mu.name as reception_person_name,mw.reception_time,mw.work_type,
+        mw.problem,mw.photo,mw.liable_company,mo3.org_name as liable_company_name,mw.liable_department,
+        mo2.org_name as liable_department_name,
+        mw.liable_person,mu1.name as liable_person_name,mu2.name as create_user_name,
+        mw.liable_type1,mw.liable_type2,mw.treament_plan,mw.treament_time,mw.feedback_time,mw.visit_result,
+        mw.order_status,mw.copy_flag,mw.create_user,mw.create_date,mw.customer_feedback_time,
+        <!-- 新字段 -->
+        mw.complaint_type, mw.liable_company2, mw.refusedagain_time, mw.refuse_time, mw.urge_times,
+        mw.is_read,mw.suggestion
+        from sale_workorder mw
+        left join sale_dictionary md on mw.important_degree1=md.id
+        left join sale_dictionary md2 on mw.important_degree2=md2.id
+        left join sale_organization mo on mw.src_department=mo.id
+        left join sale_organization mo1 on mw.src_company=mo1.id
+        left join sale_organization mo2 on mw.liable_department=mo2.id
+        left join sale_organization mo3 on mw.liable_company=mo3.id
+        left join sale_user mu on mw.reception_person=mu.id
+        left join sale_user mu1 on mw.liable_person=mu1.id
+        left join sale_user mu2 ON mw.create_user = mu2.id
+        WHERE mw.id = #{orderId} and mw.statu_flag=1
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT id,workorder_code,order_id,liable_type1,liable_type2 FROM sale_workorder
+    </select>
+
+    <select id="findAllInfo" resultMap="BaseResultMap">
+         select distinct mw.id,mw.workorder_code,mw.order_id,mw.brand,mw.source,
+        	mw.customer_id,mw.customer_name,mw.customer_mobile,mw.customer_address,mw.contract_start_time,mw.contract_complete_time,
+            mw.stylist_name,mw.stylist_mobile,mw.contractor_name,mw.contractor_mobile,mw.supervisor_name,mw.supervisor_mobile,
+	        mw.important_degree1,md.name as important_degree1_name,
+	        mw.important_degree2,md2.name as important_degree2_name,
+	        mw.src_company,mo1.org_code as src_company_code,mo1.org_name as src_company_name,
+	        mw.src_department,mo.org_code as src_department_code,mo.org_name as src_department_name,
+	        mw.reception_person,mu.name as reception_person_name,mw.reception_time,mw.brand,mw.work_type,
+	        mw.problem,mw.photo,mw.liable_department,mo2.org_name as liable_department_name,
+	        mw.liable_person,mu1.name as liable_person_name,
+	        mw.liable_type1,md3.name as liable_type1_name,mw.liable_type2,md4.name as liable_type2_name,mw.treament_plan,mw.treament_time,
+	        mw.feedback_time,mw.visit_result,mw.order_status,mw.copy_flag,mw.statu_flag,mw.create_user,mw.create_date,mw.customer_feedback_time
+        from sale_workorder mw
+	        left join sale_dictionary md on mw.important_degree1=md.id
+	        left join sale_dictionary md2 on mw.important_degree2=md2.id
+	        left join sale_dictionary md3 on mw.liable_type1=md3.id
+	        left join sale_dictionary md4 on mw.liable_type2=md4.id
+	        left join sale_organization mo on mw.src_department=mo.id
+	        left join sale_organization mo1 on mw.src_company=mo1.id
+	        left join sale_organization mo2 on mw.liable_department=mo2.id
+	        left join sale_user mu on mw.reception_person=mu.id
+	        left join sale_user mu1 on mw.liable_person=mu1.id
+	        where mw.create_date &gt;=#{start} and mw.create_date &lt;=#{end}
+    </select>
+
+    <select id="findByLiableAndDate" resultMap="BaseResultMap">
+        SELECT id,workorder_code,order_id,liable_type1,liable_type2,customer_name,customer_mobile,customer_address FROM sale_workorder
+        WHERE liable_type1 = #{liable1} AND LEFT(create_date, 10) &gt;= #{startDate} AND LEFT(create_date,10) &lt; #{endDate}
+    </select>
+
+    <!-- 工单库/工单回访: 查询门店库/集团库 分页-->
+    <select id="findStoreWorkOrder" parameterType="Map" resultMap="BaseResultMap">
+        SELECT
+        workorder.id, workorder.workorder_code, workorder.customer_name, workorder.customer_mobile,
+        workorder.customer_address, workorder.problem, workorder.customer_feedback_time,
+        workorder.order_status, dict1.name important_degree1_name,workorder.create_user,
+        <if test="createUserName != null">
+          us.name create_user_name,
+        </if>
+        dict2.name question_type1_name, dict3.name complaint_type_name,dict4.name liable_type1_name
+        <if test="orderStatus == 'INVALIDVISIT' or orderStatus == 'FAILUREVISIT'">
+            <!--,(SELECT count(*) FROM sale_workorder_rmk
+            WHERE work_order_id = workorder.id AND operation_type = 'VISIT')
+            visitedTimes-->
+            ,CASE WHEN rmk.visitedTimes IS NULL THEN 0
+            ELSE rmk.visitedTimes
+            END visitedTimes
+        </if>
+        <if test="blackFlag != null">
+            ,cust.black_flag black_flag
+        </if>
+        FROM sale_workorder workorder
+        LEFT JOIN sale_dictionary dict1
+        ON dict1.id = workorder.important_degree1
+        LEFT JOIN sale_dictionary dict2
+        ON dict2.id = workorder.question_type1
+        LEFT JOIN sale_dictionary dict3
+        ON dict3.id = workorder.complaint_type
+        LEFT JOIN sale_dictionary dict4
+        ON dict4.id = workorder.liable_type1
+        <if test="createUserName != null">
+            LEFT JOIN sale_user us
+            ON workorder.create_user=us.id
+        </if>
+        <!--当工单回访时,连接该客户表,过滤黑名单用户-->
+        <if test="blackFlag != null">
+            LEFT JOIN sale_customer cust
+            ON cust.id = workorder.customer_id
+        </if>
+        <if test="treamentTime != null">
+            LEFT JOIN sale_workorder_rmk rmk
+            ON rmk.work_order_id = workorder.id AND rmk.operation_type = 'FINISHORDER'
+        </if>
+        <!--暂无评价和不再回访时,统计回访次数-->
+        <if test="orderStatus == 'INVALIDVISIT' or orderStatus == 'FAILUREVISIT'">
+            LEFT JOIN (
+            SELECT
+            count(work_order_id) visitedTimes,work_order_id
+            FROM
+            sale_workorder_rmk
+            WHERE operation_type = 'VISIT'
+            GROUP BY work_order_id
+            ) rmk
+            ON workorder.id = rmk.work_order_id
+        </if>
+        <where>
+            <if test="keyword != null">
+                AND (workorder.customer_name like CONCAT('%',#{keyword},'%')
+                OR workorder.customer_mobile = #{keyword})
+            </if>
+            <!-- 事项分类筛选 -->
+            <if test="questionType1 != null">
+                AND workorder.question_type1 = #{questionType1}
+            </if>
+            <!-- 投诉原因筛选 -->
+            <if test="complaintType != null">
+                AND workorder.complaint_type = #{complaintType}
+            </if>
+            <!-- 重要程度筛选 -->
+            <if test="importantDegree1 != null">
+                AND workorder.important_degree1 = #{importantDegree1}
+            </if>
+            <!-- 门店筛选 -->
+            <if test="companyId != null">
+                AND workorder.liable_company = #{companyId}
+            </if>
+            <!-- 部门筛选 -->
+            <if test="departmentId != null">
+                AND workorder.liable_department = #{departmentId}
+            </if>
+            <!-- 工单状态筛选 -->
+            <if test="orderStatus != null">
+                AND workorder.order_status = #{orderStatus}
+            </if>
+
+            <!-- 客户id 筛选-->
+            <if test="customerId != null">
+                AND workorder.customer_id = #{customerId}
+            </if>
+            <!--工单发起人姓名-->
+            <if test="createUserName != null">
+                AND us.name= #{createUserName}
+            </if>
+            <!-- 三个时间筛选 -->
+            <if test="createDate != null or customerFeedbackTime != null or treamentTime != null">
+                <if test="startDate != null and endDate != null">
+                    <if test="createDate != null">
+                        AND DATE(workorder.create_date) &gt;= DATE(#{startDate})
+                        AND DATE(workorder.create_date) &lt;= DATE(#{endDate})
+                    </if>
+                    <if test="customerFeedbackTime != null">
+                        AND DATE(workorder.customer_feedback_time) &gt;= DATE(#{startDate})
+                        AND DATE(workorder.customer_feedback_time) &lt;= DATE(#{endDate})
+                    </if>
+                    <if test="treamentTime != null">
+                        AND DATE(rmk.operation_date) &gt;= DATE(#{startDate})
+                        AND DATE(rmk.operation_date) &lt;= DATE(#{endDate})
+                    </if>
+                </if>
+            </if>
+            <!--黑名单筛选 false时进行过滤-->
+            <if test="blackFlag != null and ! blackFlag">
+                AND (cust.black_flag = 0 OR cust.black_flag is NULL)
+            </if>
+            <!--回访次数-->
+            <if test="visitedTimes != null">
+                AND rmk.visitedTimes = #{visitedTimes}
+            </if>
+        </where>
+        <if test="sort != null">
+            ORDER BY
+            <foreach collection="sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+        <if test="limit!=null and limit!=''">
+            LIMIT #{offset} ,#{limit}
+        </if>
+    </select>
+
+    <!-- 统计工单库总条数: -->
+    <select id="countStoreWorkOrder" parameterType="Map" resultType="long">
+        SELECT
+        count(*)
+        FROM sale_workorder workorder
+        <if test="createUserName != null">
+            LEFT JOIN sale_user us
+            ON workorder.create_user=us.id
+        </if>
+        <if test="treamentTime != null">
+            LEFT JOIN sale_workorder_rmk rmk
+            ON rmk.work_order_id = workorder.id AND rmk.operation_type = 'FINISHORDER'
+        </if>
+        <!--当工单回访时,连接该客户表,过滤黑名单用户-->
+        <if test="blackFlag != null">
+            LEFT JOIN sale_customer cust
+            ON cust.id = workorder.customer_id
+        </if>
+        <!--暂无评价和不再回访时,统计回访次数-->
+        <if test="orderStatus == 'INVALIDVISIT' or orderStatus == 'FAILUREVISIT'">
+            LEFT JOIN (
+            SELECT
+            count(work_order_id) visitedTimes,work_order_id
+            FROM
+            sale_workorder_rmk
+            WHERE operation_type = 'VISIT'
+            GROUP BY work_order_id
+            ) rmk
+            ON workorder.id = rmk.work_order_id
+        </if>
+        <where>
+            <if test="keyword != null">
+                AND (workorder.customer_name like CONCAT('%',#{keyword},'%')
+                OR workorder.customer_mobile = #{keyword})
+            </if>
+            <!-- 事项分类筛选 -->
+            <if test="questionType1 != null">
+                AND workorder.question_type1 = #{questionType1}
+            </if>
+            <!-- 投诉原因筛选 -->
+            <if test="complaintType != null">
+                AND workorder.complaint_type = #{complaintType}
+            </if>
+            <!-- 重要程度筛选 -->
+            <if test="importantDegree1 != null">
+                AND workorder.important_degree1 = #{importantDegree1}
+            </if>
+            <!-- 门店筛选 -->
+            <if test="companyId != null">
+                AND workorder.liable_company = #{companyId}
+            </if>
+            <!-- 部门筛选 -->
+            <if test="departmentId != null">
+                AND workorder.liable_department = #{departmentId}
+            </if>
+            <!-- 工单状态筛选 -->
+            <if test="orderStatus != null">
+                AND workorder.order_status = #{orderStatus}
+            </if>
+            <!--工单发起人姓名-->
+            <if test="createUserName != null">
+                AND us.name= #{createUserName}
+            </if>
+            <!-- 三个时间筛选 -->
+            <if test="createDate != null or customerFeedbackTime != null or treamentTime != null">
+                <if test="startDate != null and endDate != null">
+                    <if test="createDate != null">
+                        AND DATE(workorder.create_date) &gt;= DATE(#{startDate})
+                        AND DATE(workorder.create_date) &lt;= DATE(#{endDate})
+                    </if>
+                    <if test="customerFeedbackTime != null">
+                        AND DATE(workorder.customer_feedback_time) &gt;= DATE(#{startDate})
+                        AND DATE(workorder.customer_feedback_time) &lt;= DATE(#{endDate})
+                    </if>
+                    <if test="treamentTime != null">
+                        AND DATE(rmk.operation_date) &gt;= DATE(#{startDate})
+                        AND DATE(rmk.operation_date) &lt;= DATE(#{endDate})
+                    </if>
+                </if>
+            </if>
+
+            <!--黑名单筛选-->
+            <if test="blackFlag != null and !blackFlag">
+                AND (cust.black_flag = 0 OR cust.black_flag is NULL)
+            </if>
+            <!--回访次数-->
+            <if test="visitedTimes != null">
+                AND rmk.visitedTimes = #{visitedTimes}
+            </if>
+        </where>
+    </select>
+
+
+    <!-- 详细查询工单库: 查询门店库/集团库  用于导出   -->
+    <select id="findAllStoreWorkOrder" parameterType="Map" resultMap="resultMapForExport">
+        SELECT DISTINCT
+            workorder.id,workorder.workorder_code,workorder.create_date,dict7.name question_type2_name,
+            workorder.customer_name,workorder.customer_mobile,workorder.customer_address,workorder.urge_times,
+            workorder.stylist_name,workorder.stylist_mobile,workorder.contractor_name,
+            workorder.contractor_mobile,workorder.supervisor_name,workorder.supervisor_mobile,
+            CASE workorder.work_type
+            WHEN 'PRESALE' THEN '售前'
+            WHEN 'SELLING' THEN '售中'
+            WHEN 'AFTERSALE' THEN '售后'
+            END work_type,
+            workorder.problem,workorder.customer_feedback_time,workorder.treament_time,
+            workorder.treament_plan,
+            CASE workorder.order_status
+            WHEN 'CREATE' THEN '未派单'
+            WHEN 'RECEIVED' THEN '已接收'
+            WHEN 'PROCESSING' THEN '处理中'
+            WHEN 'REFUSED' THEN '申诉'
+            WHEN 'REFUSEDAGAIN' THEN '申诉无效'
+            WHEN 'PENDING' THEN '待处理'
+            WHEN 'SATISFIED' THEN '回访满意'
+            WHEN 'COMMONLY' THEN '一般满意'
+            WHEN 'UNSATISFIED' THEN '回访不满意'
+            WHEN 'INVALIDVISIT' THEN '暂无评价'
+            WHEN 'FAILUREVISIT' THEN '不再回访'
+            WHEN 'ASSIGN' THEN '待分配'
+            WHEN 'URGE' THEN '催单'
+            WHEN 'NREPLY' THEN '待回复'
+            WHEN 'NVISIT' THEN '待回访'
+            WHEN 'CONSULTOVER' THEN '咨询完毕'
+            WHEN 'UNEXECUTED' THEN '回访未执行'
+            WHEN 'COMPLETED' THEN '已完成'
+            END order_status,
+            dict1.name important_degree1_name,
+            dict2.name question_type1_name, dict3.name complaint_type_name,
+            dict4.name liable_type1_name, suser.name reception_person_name,
+            org1.org_name src_department_name, org2.org_name liable_company_name,
+            org3.org_name liable_department_name
+            <!-- 品牌-->
+            ,brand.name brandName
+            <!-- 工单轨迹表获取工单操作 完成时间(通过显示时间,去掉当天重复多次完成的记录 ) -->
+            ,DATE(rmk.operation_date) operationDateFromRmk
+            <!-- 轨迹表中处理人与处理时间 -->
+            ,rmk2.operation_date operationDate
+            ,rmk2.operationUser_name
+            ,dict5.name source
+            <!-- 不满意原因,来自工单轨迹 -->
+            ,rmk5.name unSatisfiedFromRmk
+            <!--申请预计完成时间延期成功 次数-->
+            , (SELECT count(res.id) FROM sale_treament_result res WHERE res.workorder_id =
+              workorder.id AND res.approval_result = 1) treamentResultCount
+        FROM sale_workorder workorder
+        LEFT JOIN sale_dictionary dict1
+        ON dict1.id = workorder.important_degree1
+        LEFT JOIN sale_dictionary dict2
+        ON dict2.id = workorder.question_type1
+        LEFT JOIN sale_dictionary dict3
+        ON dict3.id = workorder.complaint_type
+        LEFT JOIN sale_dictionary dict4
+        ON dict4.id = workorder.liable_type1
+        LEFT JOIN sale_dictionary dict5
+        ON dict5.id = workorder.source
+        LEFT JOIN sale_dictionary dict7
+        ON dict7.id = workorder.question_type2
+        LEFT JOIN sale_user suser
+        ON suser.id = workorder.reception_person
+        LEFT JOIN sale_organization org1
+        ON org1.id = workorder.src_department
+        LEFT JOIN sale_organization org2
+        ON org2.id = workorder.liable_company
+        LEFT JOIN sale_organization org3
+        ON org3.id = workorder.liable_department
+        LEFT JOIN sale_brand brand
+        ON brand.id = workorder.brand
+        <!-- 查询完成时间:选择了完成时间 或者 导出时: -->
+        <if test="treamentTime != null or export != null">
+            LEFT JOIN sale_workorder_rmk rmk
+            ON rmk.work_order_id = workorder.id AND rmk.operation_type = 'FINISHORDER'
+        </if>
+        LEFT JOIN
+        (SELECT work_order_id,operationUser_name,operation_date
+        FROM (SELECT rmkAndUser.work_order_id,suser2.name operationUser_name,rmkAndUser.operation_date
+        FROM sale_workorder_rmk rmkAndUser
+        LEFT JOIN sale_user suser2 ON suser2.id = rmkAndUser.operation_user
+        WHERE rmkAndUser.operation_type = 'OPERATION' ORDER BY rmkAndUser.id DESC
+        ) rmk1 GROUP BY work_order_id
+        ) rmk2
+        ON rmk2.work_order_id = workorder.id
+        <!-- 不满意原因,轨迹表 -->
+        LEFT JOIN
+        (SELECT work_order_id, name
+        FROM
+        (SELECT rmk3.work_order_id,dict6.name
+        FROM sale_workorder_rmk rmk3
+        LEFT JOIN sale_dictionary dict6
+        ON dict6.id = rmk3.complaint_type_id
+        WHERE rmk3.operation_type = 'VISIT' ORDER BY rmk3.id DESC) rmk4
+        GROUP BY work_order_id
+        )rmk5
+        ON rmk5.work_order_id = workorder.id
+        <where>
+            <if test="keyword != null">
+                AND (workorder.customer_name like CONCAT('%',#{keyword},'%')
+                OR workorder.customer_mobile = #{keyword})
+            </if>
+            <!-- 事项分类筛选 -->
+            <if test="questionType1 != null">
+                AND workorder.question_type1 = #{questionType1}
+            </if>
+            <!-- 投诉原因筛选 -->
+            <if test="complaintType != null">
+                AND workorder.complaint_type = #{complaintType}
+            </if>
+            <!-- 重要程度筛选 -->
+            <if test="importantDegree1 != null">
+                AND workorder.important_degree1 = #{importantDegree1}
+            </if>
+            <!-- 门店筛选 -->
+            <if test="companyId != null">
+                AND workorder.liable_company = #{companyId}
+            </if>
+            <!-- 部门筛选 -->
+            <if test="departmentId != null">
+                AND workorder.liable_department = #{departmentId}
+            </if>
+            <!-- 工单状态筛选 -->
+            <if test="orderStatus != null">
+                AND workorder.order_status = #{orderStatus}
+            </if>
+
+            <!-- 客户id 筛选-->
+            <if test="customerId != null">
+                AND workorder.customer_id = #{customerId}
+            </if>
+
+            <!-- 三个时间筛选 -->
+            <if test="createDate != null or customerFeedbackTime != null or treamentTime != null">
+                <if test="startDate != null and endDate != null">
+                    <if test="createDate != null">
+                        AND DATE(workorder.create_date) &gt;= DATE(#{startDate})
+                        AND DATE(workorder.create_date) &lt;= DATE(#{endDate})
+                    </if>
+                    <if test="customerFeedbackTime != null">
+                        AND DATE(workorder.customer_feedback_time) &gt;= DATE(#{startDate})
+                        AND DATE(workorder.customer_feedback_time) &lt;= DATE(#{endDate})
+                    </if>
+                    <if test="treamentTime != null">
+                        AND DATE(rmk.operation_date) &gt;= DATE(#{startDate})
+                        AND DATE(rmk.operation_date) &lt;= DATE(#{endDate})
+                    </if>
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllList" resultType="com.rocoinfo.dto.WorkOrderReturnDto">
+        SELECT
+        sw.id,
+        sw.order_status AS orderStatus,
+        sw.liable_department AS liableDepartment,
+        sw.copy_flag AS copyFlag,
+        so.org_name AS orgName,
+        sw.liable_company AS liableCompany,
+        sso.org_name AS liableCompanyName,
+        sw.treament_time AS treamentTime,
+        sw.feedback_time AS feedbackTime,
+        sw.customer_feedback_time AS customerFeedbackTime ,
+        sw.create_date AS createTime
+        FROM
+        sale_workorder sw
+        JOIN
+        sale_organization so
+        ON so.id=sw.liable_department
+        JOIN sale_organization sso ON sso.id=sw.liable_company
+        <where>
+            sw.statu_flag='1'
+            <if test="departmentId!=null and departmentId!='' ">
+                AND sw.liable_department=#{departmentId}
+            </if>
+            <if test="companyId!=null and companyId!='' ">
+                AND sw.liable_company=#{companyId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getWorkCount" resultType="java.lang.Long" parameterType="Map">
+        SELECT
+            count(*)
+        FROM
+            sale_workorder sw
+        WHERE
+         sw.liable_company = #{liableCompany}
+        AND sw.liable_department= #{liableDepartment}
+        AND  DATE_FORMAT(sw.create_date, '%Y-%m-%d') &gt;= #{beginDate}
+        AND DATE_FORMAT(sw.create_date, '%Y-%m-%d') &lt; #{endDate}
+    </select>
+    <select id="getCountByOperationType" resultType="java.lang.Long" parameterType="Map">
+        SELECT
+        COUNT( DISTINCT sw.id)
+        FROM
+        sale_workorder sw
+        JOIN sale_workorder_rmk swr ON sw.id = swr.work_order_id
+        WHERE
+        swr.operation_type = #{operationType}
+        <if test="orderStatus!=null and orderStatus!=''">
+            AND sw.order_status=#{orderStatus}
+        </if>
+        <if test="copyFlag!=null and copyFlag!=''">
+            AND sw.copy_flag=#{copyFlag}
+        </if>
+        AND DATE_FORMAT(swr.operation_date, '%Y-%m-%d') &gt;= #{beginDate}
+        AND DATE_FORMAT(swr.operation_date, '%Y-%m-%d') &lt; #{endDate}
+        AND sw.liable_company=#{liableCompany}
+        AND sw.liable_department=#{liableDepartment}
+    </select>
+    <select id="getExcessiveFeedback" resultType="java.lang.Long">
+        SELECT
+         COUNT( DISTINCT
+        if(
+        DATE_FORMAT(
+        date_add(
+        a.operation_date
+        ,
+        INTERVAL 1 DAY
+        ) ,'%Y-%m-%d %h:%i:%s')&lt; DATE_FORMAT(IFNULL(b.operation_date,NOW()),'%Y-%m-%d %h:%i:%s'),a.id,NULL
+        ))
+        FROM
+        (
+        SELECT
+        sw.id,
+        swr.operation_date
+        FROM
+        sale_workorder sw
+        JOIN sale_workorder_rmk swr ON sw.id = swr.work_order_id
+        WHERE
+        DATE_FORMAT(swr.operation_date, '%Y-%m-%d')
+         &gt;= #{beginDate}
+        AND DATE_FORMAT(swr.operation_date, '%Y-%m-%d')  &lt; #{endDate}
+        AND swr.operation_type = 'CREATE'
+        AND sw.liable_company = #{liableCompany}
+        AND sw.liable_department = #{liableDepartment}
+        ) a
+        LEFT JOIN (
+        SELECT
+        sw.id,
+        swr.operation_date
+        FROM
+        sale_workorder sw
+        JOIN sale_workorder_rmk swr ON sw.id = swr.work_order_id
+        WHERE
+        swr.operation_type = 'OPERATION'
+        OR swr.operation_type = 'ASSIGN'
+        ) b ON a.id = b.id
+    </select>
+    <select id="getOnSchedule" resultType="java.lang.Long">
+        SELECT
+        COUNT(DISTINCT sw.id)
+        FROM
+        sale_workorder sw
+        LEFT JOIN sale_workorder_rmk swr ON sw.id = swr.work_order_id
+        WHERE
+        <if test="flag==&quot;Y&quot;">
+            sw.treament_time &gt;=swr.operation_date
+        </if>
+        <if test="flag==&quot;N&quot;">
+            sw.treament_time &lt; IFNULL(swr.operation_date,NOW())
+        </if>
+        AND DATE_FORMAT(swr.operation_date, '%Y-%m-%d') &gt;= #{beginDate}
+        AND DATE_FORMAT(swr.operation_date, '%Y-%m-%d') &lt; #{endDate}
+        AND swr.operation_type = 'FINISHORDER'
+        AND sw.liable_company = #{liableCompany}
+        AND sw.liable_department = #{liableDepartment}
+    </select>
+    <select id="getExpires" resultType="java.lang.Long">
+        SELECT
+        count(*)
+        FROM
+        sale_workorder sw
+        WHERE
+        DATE_FORMAT(sw.treament_time, '%Y-%m-%d')
+         &gt;= #{beginDate}
+        AND  DATE_FORMAT(sw.treament_time, '%Y-%m-%d') &lt; #{endDate}
+        AND sw.liable_company = #{liableCompany}
+        AND sw.liable_department = #{liableDepartment}
+    </select>
+
+    <select id="getGoodReceive" resultType="java.lang.Long">
+        SELECT
+        COUNT(DISTINCT sw.id)
+        FROM
+        sale_workorder sw
+        JOIN sale_workorder_rmk swr ON sw.id = swr.work_order_id
+        WHERE
+        DATE_FORMAT( date_add(sw.create_date,INTERVAL 30 MINUTE),'%Y-%m-%d %h:%i:%s')
+         &gt;= DATE_FORMAT(swr.operation_date,'%Y-%m-%d %h:%i:%s')
+        AND  DATE_FORMAT(swr.operation_date, '%Y-%m-%d')
+         &gt;= #{beginDate}
+        AND DATE_FORMAT(swr.operation_date, '%Y-%m-%d') &lt; #{endDate}
+        AND swr.operation_type = 'RECEIVE'
+        AND sw.liable_company = #{liableCompany}
+        AND sw.liable_department = #{liableDepartment}
+
+    </select>
+    <!--个人业绩    -->
+    <select id="getFirstTimeCount" resultType="java.lang.Long">
+        SELECT
+        COUNT(DISTINCT sw.id)
+        FROM
+        sale_workorder sw
+        WHERE
+        sw.create_user = #{id}
+        AND DATE_FORMAT(sw.create_date, '%Y-%m-%d') &gt;= DATE_FORMAT(#{beginDate}, '%Y-%m-%d')
+        AND DATE_FORMAT(sw.create_date, '%Y-%m-%d') &lt;= DATE_FORMAT(#{endDate}, '%Y-%m-%d')
+        <if test="flag==&quot;Y&quot;">
+            AND sw.order_status!= 'CONSULTOVER'
+        </if>
+        <if test="flag==&quot;N&quot;">
+            AND sw.order_status = 'CONSULTOVER'
+        </if>
+
+    </select>
+
+    <select id="getReminderCount" resultType="java.lang.Long" parameterType="Map">
+        SELECT
+        COUNT(DISTINCT sw.id)
+        FROM
+        sale_workorder sw
+        JOIN sale_workorder_rmk swr ON sw.id = swr.work_order_id
+        WHERE
+        DATE_FORMAT(swr.operation_date, '%Y-%m-%d') &gt;= DATE_FORMAT(#{beginDate}, '%Y-%m-%d')
+        AND DATE_FORMAT(swr.operation_date, '%Y-%m-%d')
+         &lt;= DATE_FORMAT(#{endDate}, '%Y-%m-%d')
+        AND swr.operation_user=#{id}
+        AND swr.operation_type='REMAINDER'
+    </select>
+
+    <select id="getResultCount" resultType="java.lang.Long">
+         SELECT
+        COUNT(DISTINCT sw.id)
+        FROM
+        sale_workorder sw
+        JOIN sale_workorder_rmk swr ON sw.id = swr.work_order_id
+        WHERE
+        DATE_FORMAT(swr.operation_date, '%Y-%m-%d') &gt;= DATE_FORMAT(#{beginDate}, '%Y-%m-%d')
+        AND DATE_FORMAT(swr.operation_date, '%Y-%m-%d') &lt;= DATE_FORMAT(#{endDate}, '%Y-%m-%d')
+        AND swr.operation_user=#{id}
+        AND swr.operation_type=#{optionType}
+        AND sw.order_status=#{orderStatus}
+    </select>
+
+    <update id="serviceUpdate">
+        UPDATE sale_workorder
+        <set>
+            <if test="orderStatus!=null">
+                order_status=#{orderStatus},
+            </if>
+            <if test="treamentPlan!=null">
+                treament_plan=#{treamentPlan},
+            </if>
+            <if test="treamentTime!=null">
+                treament_time=#{treamentTime},
+            </if>
+            <if test="refuseTime!=null">
+                refuse_time=#{refuseTime},
+            </if>
+        </set>
+        WHERE workorder_code = #{workOrderCode}
+    </update>
+    <select id="getByCode" resultType="java.lang.Long">
+        SELECT id FROM  sale_workorder
+        WHERE  workorder_code=#{code}
+    </select>
+
+    <select id="getOrderInfoFailList" parameterType="map" resultMap="BaseResultMap">
+        select
+        swpf.work_order_id,
+        swpf.work_order_code,
+        swpf.remarks,
+        swpf.push_date,
+        swpf.push_result,swpf.syn_date,swpf.push_number,swpf.push_type,
+        mw.id,mw.workorder_code,mw.order_id,mw.brand,mw.source,mw.treament_time_update,
+        mw.customer_id,mw.customer_name,mw.customer_mobile,mw.customer_address,mw.contract_start_time,mw.contract_complete_time,
+        mw.stylist_name,mw.stylist_mobile,mw.contractor_name,mw.contractor_mobile,mw.supervisor_name,mw.supervisor_mobile,
+        mw.important_degree1,md.name as important_degree1_name,
+        mw.important_degree2,md2.name as important_degree2_name,
+        mw.question_type1,que.name question_type1_name,mw.fenpai_date,
+        mw.question_type2,que2.name question_type2_name,
+        mw.src_company,mo1.org_code as src_company_code,mo1.org_name as src_company_name,
+        mw.src_department,mo.org_code as src_department_code,mo.org_name as src_department_name,
+        mw.reception_person,mu.name as reception_person_name,mw.reception_time,mw.work_type,
+        mw.problem,mw.photo,mw.liable_department,mo2.org_name as liable_department_name,
+        mw.liable_person,IFNULL(mu1.NAME,'') as liable_person_name,
+        mw.liable_type1,mdl.name as liable_type1_name,
+        mw.urge_times,mw.is_read,
+        mu2.name as create_user_name,mw.brand,mw.refuse_time,mw.refusedagain_time,
+        mw.treament_plan,mw.treament_time,mw.feedback_time,mw.visit_result,
+        mw.order_status,mw.copy_flag,mw.create_user,mw.create_date,mw.customer_feedback_time
+        from sale_workorder_push_fail swpf
+        JOIN sale_workorder mw ON swpf.work_order_id=mw.id
+        left join sale_dictionary md on mw.important_degree1=md.id
+        left join sale_dictionary md2 on mw.important_degree2=md2.id
+        left join sale_dictionary mdl on mw.liable_type1 = mdl.id
+        left join sale_dictionary que on mw.question_type1 = que.id
+        left join sale_dictionary que2 on mw.question_type2 = que2.id
+        left join sale_organization mo on mw.src_department=mo.id
+        left join sale_organization mo1 on mw.src_company=mo1.id
+        left join sale_organization mo2 on mw.liable_department=mo2.id
+        left join sale_user mu on mw.reception_person=mu.id
+        left join sale_user mu1 on mw.liable_person=mu1.id
+        left join sale_user mu2 on mw.create_user=mu2.id
+        where mw.statu_flag=1 AND swpf.push_result='0'
+        <if test="keyword != null and keyword != ''">
+            and (mw.customer_name like '%${keyword}%' or customer_mobile = #{keyword})
+        </if>
+        <if test="liableCompany != null and liableCompany != ''">
+            AND mw.liable_company = #{liableCompany}
+        </if>
+        <if test="liableDepartment != null and liableDepartment != ''">
+            AND mw.liable_department = #{liableDepartment}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            AND DATE_FORMAT(swpf.push_date, '%Y-%m-%d') &lt;= #{endDate}
+        </if>
+        <if test="startDate != null and startDate != ''">
+            AND DATE_FORMAT(swpf.push_date, '%Y-%m-%d') &gt;= #{startDate}
+        </if>
+        ORDER BY
+        mw.create_date DESC
+        <if test="limit!=null and limit!=''">
+            LIMIT #{offset} ,#{limit}
+        </if>
+    </select>
+    <select id="getOrderInfoFailListTotal" parameterType="map" resultType="java.lang.Long">
+        select
+        count(*)
+        from sale_workorder_push_fail swpf
+        JOIN sale_workorder mw ON swpf.work_order_id=mw.id
+        left join sale_dictionary md on mw.important_degree1=md.id
+        left join sale_dictionary md2 on mw.important_degree2=md2.id
+        left join sale_dictionary mdl on mw.liable_type1 = mdl.id
+        left join sale_dictionary que on mw.question_type1 = que.id
+        left join sale_dictionary que2 on mw.question_type2 = que2.id
+        left join sale_organization mo on mw.src_department=mo.id
+        left join sale_organization mo1 on mw.src_company=mo1.id
+        left join sale_organization mo2 on mw.liable_department=mo2.id
+        left join sale_user mu on mw.reception_person=mu.id
+        left join sale_user mu1 on mw.liable_person=mu1.id
+        left join sale_user mu2 on mw.create_user=mu2.id
+        where mw.statu_flag=1 AND swpf.push_result='0'
+        <if test="keyword != null and keyword != ''">
+            and (mw.customer_name like '%${keyword}%' or customer_mobile = #{keyword})
+        </if>
+        <if test="liableCompany != null and liableCompany != ''">
+            AND mw.liable_company = #{liableCompany}
+        </if>
+        <if test="liableDepartment != null and liableDepartment != ''">
+            AND mw.liable_department = #{liableDepartment}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            AND DATE_FORMAT(swpf.push_date, '%Y-%m-%d') &lt;= #{endDate}
+        </if>
+        <if test="startDate != null and startDate != ''">
+            AND DATE_FORMAT(swpf.push_date, '%Y-%m-%d') &gt;= #{startDate}
+        </if>
+    </select>
+
+
+    <select id="findAllListForCall" resultMap="BaseResultMap">
+       SELECT
+            mw.id,
+            mw.workorder_code,
+            mw.liable_company,
+            mo1.org_name AS liable_company_name,
+            mw.liable_department,
+            mo2.org_name AS liable_department_name,
+            mo2.dep_type AS liable_department_type,
+            mw.work_type,
+            mw.treament_time,
+            mw.feedback_time,
+            mw.visit_result,
+            mw.order_status,
+            mw.create_date,
+            mw.complaint_type,
+            swrr. NAME AS complaint_type_name
+        FROM
+            sale_workorder mw
+        LEFT JOIN sale_organization mo1 ON mw.liable_company = mo1.id
+        LEFT JOIN sale_organization mo2 ON mw.liable_department = mo2.id
+        LEFT JOIN sale_dictionary sd ON mw.complaint_type = sd.id
+        LEFT JOIN (
+            SELECT DISTINCT
+                sd.work_order_id,
+                dd.NAME
+            FROM
+                sale_workorder_rmk sd
+            JOIN (
+                SELECT
+                    id,
+                    NAME
+                FROM
+                    sale_dictionary
+                WHERE
+                    NAME = '回访未执行'
+            ) dd ON sd.complaint_type_id = dd.id
+            WHERE sd.operation_type='VISIT'
+        ) swrr ON mw.id = swrr.work_order_id
+        WHERE
+            mw.statu_flag = "1"
+        AND mw.create_date &gt;#{date1}
+        AND mw.create_date &lt;= #{date2}
+        AND mw.id NOT IN (
+            SELECT
+                work_order_id
+            FROM
+                sale_workorder_rmk
+            WHERE
+                operation_type = 'OPERATIONAGAIN'
+            AND operation_date &gt;= #{date3}
+        AND operation_date &lt;#{date4}
+        )
+    </select>
+</mapper>

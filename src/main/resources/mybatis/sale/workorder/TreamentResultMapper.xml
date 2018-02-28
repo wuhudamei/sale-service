@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rocoinfo.repository.sale.workorder.TreamentResultDao">
+  <resultMap id="BaseResultMap" type="TreamentResult">
+    <id column="id"  property="id" />
+    <result column="create_date"  property="createDate" />
+    <result column="create_user"  property="createUser" />
+    <result column="approval_result"  property="approvalResult" />
+    <result column="remarks"  property="remarks" />
+    <result column="approval_id"  property="approvalId" />
+    <result column="workorder_id"  property="workorderId" />
+    <result column="name"  property="name" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_date, create_user, approval_result, remarks,approval_id
+  </sql>
+  <select id="getById"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sale_treament_result
+    where id = #{id}
+  </select>
+  <delete id="deleteById" >
+    delete from sale_treament_result
+    where id = #{id}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    insert into sale_treament_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="approvalResult != null">
+        approval_result,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="approvalId != null">
+        approval_id,
+      </if>
+      <if test="workorderId != null">
+        workorder_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createDate != null">
+        #{createDate},
+      </if>
+      <if test="createUser != null">
+        #{createUser},
+      </if>
+      <if test="approvalResult != null">
+        #{approvalResult},
+      </if>
+      <if test="remarks != null">
+        #{remarks},
+      </if>
+      <if test="approvalId != null">
+        #{approvalId},
+      </if>
+      <if test="workorderId != null">
+        #{workorderId},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" >
+    update sale_treament_result
+    <set>
+      <if test="createDate != null">
+        create_date = #{createDate},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser},
+      </if>
+      <if test="approvalResult != null">
+        approval_result = #{approvalResult},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks},
+      </if>
+      <if test="approvalId != null">
+        approval_id=#{approvalId},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <select id="getBack"  resultMap="BaseResultMap">
+      SELECT
+          str.*, su.`name`
+      FROM
+          sale_treament_result str
+      JOIN sale_user su ON str.create_user = su.id
+      WHERE
+          str.workorder_id = #{workorderId}
+      AND str.approval_result = '2'
+      ORDER BY
+          str.create_date DESC
+      LIMIT 1
+  </select>
+</mapper>

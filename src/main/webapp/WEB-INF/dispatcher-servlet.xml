@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+  <!-- 启用注解的驱动 -->
+  <mvc:annotation-driven/>
+
+  <!-- 启用spring mvc 注解 -->
+  <context:annotation-config/>
+
+  <!-- 设置使用注解的类所在的jar包 -->
+  <context:component-scan base-package="com.rocoinfo.rest"/>
+
+  <!--aop 使用cglib代理(要切入controller层,必须将此配置放于此处)-->
+  <aop:aspectj-autoproxy />
+
+  <!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+  <bean id="mappingJacksonHttpMessageConverter"
+        class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+    <property name="supportedMediaTypes">
+      <list>
+        <value>text/html;charset=UTF-8</value>
+      </list>
+    </property>
+  </bean>
+
+  <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+  <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+    <property name="messageConverters">
+      <list>
+        <ref bean="mappingJacksonHttpMessageConverter"/>
+        <!-- json转换器 -->
+      </list>
+    </property>
+  </bean>
+
+  <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="maxUploadSize" value="5242880"/>
+    <!-- 最大上传5MB -->
+  </bean>
+  <!-- 定义JSP文件的位置 --><!-- 视图解释类 -->
+  <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="prefix" value="/WEB-INF/views/"/>
+    <property name="suffix" value=".jsp"/>
+  </bean>
+
+  <!-- 定义无需Controller就跳转的页面 -->
+  <mvc:view-controller path="/" view-name="admin/index"/>
+<!--   <mvc:view-controller path="/login" view-name="admin/login"/> -->
+  <mvc:view-controller path="/index" view-name="admin/index"/>
+  <mvc:view-controller path="/logout" view-name="admin/logout"/>
+  
+  <!--		客户管理 		-->
+  <mvc:view-controller path="admin/users" view-name="admin/sale/user/users"/>
+  <!-- 门店客户库 -->
+  <mvc:view-controller path="admin/user/storeCustomer" view-name="admin/sale/user/storeCustomer"/>
+  <!-- 集团客户库 -->
+  <mvc:view-controller path="admin/user/groupCustomer" view-name="admin/sale/user/groupCustomer"/>
+  <!-- 黑名单客户库 -->
+  <mvc:view-controller path="admin/user/blackCustomer" view-name="admin/sale/user/blackCustomer"/>
+
+  <!--	 	工单回访	 	-->
+  <!-- 已完成 -->
+  <mvc:view-controller path="/workorder/workOrderListWithComplete" view-name="admin/sale/workorder/workOrderListWithComplete"/>
+  <!-- 暂无评价 -->
+  <mvc:view-controller path="/workorder/workOrderListWithInvalid" view-name="admin/sale/workorder/workOrderListWithInvalid"/>
+  <!-- 回访不成功 -->
+  <mvc:view-controller path="/workorder/workOrderListWithUnsuccessful" view-name="admin/sale/workorder/workOrderListWithUnsuccessful"/>
+  <!-- 回访页面 -->
+  <mvc:view-controller path="/workorder/visit" view-name="admin/sale/workorder/visit"/>
+  
+  
+  <!--	 	工单库	 	-->
+  <!-- 门店库 -->
+  <mvc:view-controller path="/workorder/storeWorkOrderList" view-name="admin/sale/workorder/storeWorkOrderList"/>
+  <!-- 集团库 -->
+  <mvc:view-controller path="/workorder/groupWorkOrderList" view-name="admin/sale/workorder/groupWorkOrderList"/>
+  <!-- 工单库中催单 -->
+  <mvc:view-controller path="/workorder/reminder" view-name="admin/sale/workorder/reminder"/>
+  <!-- 工单详情页 -->
+  <mvc:view-controller path="/workorder/workOrderInfo" view-name="admin/sale/workorder/workOrderInfo"/>
+  
+  <mvc:view-controller path="/admin/timeLimit" view-name="admin/sale/timelimit/timeLimit"/>
+  <mvc:view-controller path="admin/roles" view-name="admin/sale/user/roles"/>
+  <mvc:view-controller path="/admin/resetPassword" view-name="admin/sale/user/resetPassword"/>
+  <mvc:view-controller path="/organization/list" view-name="admin/sale/organization/orglist"/>
+  <mvc:view-controller path="/dictionary/list" view-name="admin/sale/dictionary/diclist"/>
+  <mvc:view-controller path="/brand/list" view-name="admin/sale/brand/list"/>
+  <mvc:view-controller path="/workorder/add" view-name="admin/sale/workorder/add"/>
+  <mvc:view-controller path="/workorder/list" view-name="admin/sale/workorder/list"/>
+  <mvc:view-controller path="/workorder/settle" view-name="admin/sale/workorder/settle"/>
+  <mvc:view-controller path="/workorder/edit" view-name="admin/sale/workorder/edit"/>
+  <mvc:view-controller path="/workorder/followup" view-name="admin/sale/workorder/followup"/>
+  <mvc:view-controller path="/workorder/remaindList" view-name="admin/sale/workorder/remaindList"/>
+  <mvc:view-controller path="/workorder/statistics" view-name="admin/sale/workorder/statistics"/>
+  <!--材料部才有的 转派-->
+  <mvc:view-controller path="/workorder/turnSend" view-name="admin/sale/workorder/turnSend"/>
+
+  <!--待审核列表-->
+  <mvc:view-controller path="/workorder/approvalList" view-name="admin/sale/workorder/approvalList"/>
+  <!--审核页-->
+  <mvc:view-controller path="/workorder/approval" view-name="admin/sale/workorder/approval"/>
+  <!--树例子-->
+  <mvc:view-controller path="/demo/tree" view-name="admin/demo/tree"/>
+  <!--责任部门 问题设置 -->
+  <mvc:view-controller path="/organization/question" view-name="admin/sale/question/question"/>
+  <!--事项分类数据字典 列表 -->
+  <mvc:view-controller path="/proCatBrand/list" view-name="admin/sale/problemCatBrand/proBrandList"/>
+
+
+  <!--集客报表-->
+  <mvc:view-controller path="/report/grathercustomer" view-name="admin/report/grathercustomer"/>
+  <!--报表中心 -->
+  <!--工单报表 -->
+  <mvc:view-controller path="/reportCenter/workReturn" view-name="admin/sale/reportCenter/workReturn"/>
+  <mvc:view-controller path="/reportCenter/workDeal" view-name="admin/sale/reportCenter/workDeal"/>
+  <mvc:view-controller path="/reportCenter/workReturnGroup" view-name="admin/sale/reportCenter/workReturnGroup"/>
+  <mvc:view-controller path="/reportCenter/workDealGroup" view-name="admin/sale/reportCenter/workDealGroup"/>
+  <mvc:view-controller path="/reportCenter/personalWork" view-name="admin/sale/reportCenter/personalWork"/>
+  <!-- 微信登录页面 -->
+  <mvc:view-controller path="wx/login" view-name="wx/login"/>
+
+  <!--工单同步失败列表-->
+  <mvc:view-controller path="/workorder/synList" view-name="admin/sale/workorder/synList"/>
+</beans>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.rocoinfo.repository.sale.account.RoleDao">
+
+    <insert id="insert" parameterType="Role">
+        INSERT INTO sale_role(name,description)
+        VALUES (#{name,jdbcType=VARCHAR},#{description,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="deleteById" parameterType="long">
+        DELETE FROM sale_role WHERE id = #{id} AND id &lt;&gt; 1
+    </insert>
+
+    <update id="update" parameterType="Role">
+        UPDATE sale_role SET NAME = #{name,jdbcType=VARCHAR},description = #{description,jdbcType=VARCHAR} WHERE id = #{id}
+    </update>
+
+    <select id="getById" parameterType="long" resultType="Role">
+        SELECT id, NAME, description
+        FROM sale_role
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByName" parameterType="string" resultType="Role">
+        SELECT id, name, description
+        FROM sale_role
+        WHERE name = #{name}
+    </select>
+
+    <select id="checkRoleExistByName" parameterType="string" resultType="Role">
+        SELECT id, name, description
+        FROM sale_role
+        WHERE name = #{name}
+        <if test="id != null">
+            AND id != #{id}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="Role">
+        SELECT id, name, description FROM sale_role WHERE id &lt;&gt; 1
+    </select>
+
+    <select id="getRolesByUserId" parameterType="long" resultType="Role">
+        SELECT
+        r.*, CASE
+        WHEN ur.role_id IS NOT NULL THEN
+        'true'
+        ELSE
+        'false'
+        END AS checked
+        FROM
+        sale_role r LEFT JOIN sale_user_role ur ON (r.id = ur.role_id AND ur.user_id = #{id} )
+        WHERE r.id &lt;&gt; 1
+        ORDER BY r.id
+    </select>
+
+    <select id="deleteUserRolesByUserId" parameterType="long">
+    	DELETE FROM sale_user_role WHERE user_id = #{id}
+    </select>
+
+    <select id="deleteUserRolesByRoleId" parameterType="long">
+    	DELETE FROM sale_user_role WHERE role_id = #{id}
+    </select>
+
+    <insert id="insertUserRoles">
+    	 INSERT INTO sale_user_role(role_id,user_id) VALUES (#{roleId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="searchTotal" parameterType="map" resultType="long">
+        SELECT COUNT(*)
+        <include refid="searchFromWhere"/>
+    </select>
+
+    <select id="search" parameterType="map" resultType="Role">
+        SELECT id,NAME,description
+        <include refid="searchFromWhere"/>
+        <if test="sort != null">
+            ORDER BY
+            <foreach collection="sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+        limit #{offset},#{pageSize}
+    </select>
+
+    <sql id="searchFromWhere">
+        FROM sale_role
+        <where>
+            id &lt;&gt; 1
+            <if test="keyword != null">
+                AND name LIKE CONCAT('%',#{keyword},'%')
+            </if>
+        </where>
+    </sql>
+</mapper>

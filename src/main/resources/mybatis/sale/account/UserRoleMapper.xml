@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.rocoinfo.repository.sale.account.UserRoleDao">
+    <insert id="insert" parameterType="UserRole">
+        INSERT INTO sale_user_role (user_id, role_id) values (#{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER})
+    </insert>
+
+    <select id="getRoleIdsByUserId" parameterType="long" resultType="long">
+        SELECT role_id
+        FROM sale_user_role
+        WHERE user_id = #{userId}
+    </select>
+
+    <delete id="deleteByUserId" parameterType="long">
+        DELETE FROM sale_user_role WHERE user_id = #{userId}
+    </delete>
+
+    <delete id="deleteByRoleId" parameterType="long">
+        DELETE FROM sale_user_role WHERE role_id = #{roleId}
+    </delete>
+</mapper>

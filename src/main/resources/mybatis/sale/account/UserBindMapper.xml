@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rocoinfo.repository.sale.account.UserBindDao">
+
+  <resultMap id="BaseResultMap" type="UserBind">
+    <id property="id" column="id"/>
+    <result property="user.id" column="user_id"/>
+    <result property="oid" column="oid"/>
+    <result property="platform" column="platform"/>
+    <result property="bindTime" column="bind_time"/>
+  </resultMap>
+
+  <sql id="SelectInfo">
+    id,user_id,oid,platform,bind_time
+  </sql>
+
+  <insert id="insert" parameterType="UserBind" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO sale_user_bind(user_id,oid,platform,bind_time)
+        VALUES (#{user.id},#{oid},#{platform},#{bindTime})
+    </insert>
+
+  <select id="getByOidAndPlatform" resultMap="BaseResultMap">
+    SELECT
+    <include refid="SelectInfo"/>
+    FROM sale_user_bind WHERE oid = #{oid} and platform = #{platform}
+  </select>
+</mapper>

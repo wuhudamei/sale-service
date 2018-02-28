@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rocoinfo.repository.sale.workorder.WorkorderPushFailDao">
+  <resultMap id="BaseResultMap" type="WorkorderPushFail">
+    <id column="id"  property="id" />
+    <result column="work_order_id"  property="workOrderId" />
+    <result column="work_order_code"  property="workOrderCode" />
+    <result column="remarks"  property="remarks" />
+    <result column="push_date"  property="pushDate" />
+    <result column="push_result"  property="pushResult" />
+    <result column="syn_date"  property="synDate" />
+    <result column="push_number"  property="pushNumber" />
+    <result column="push_type"  property="pushType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, work_order_id, work_order_code, remarks, push_date, push_result, syn_date, push_number,push_type
+  </sql>
+  <select id="getById"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sale_workorder_push_fail
+    where id = #{id}
+  </select>
+  <select id="getByWorkorderId"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sale_workorder_push_fail
+    where work_order_id=#{workorderId}
+  </select>
+  <delete id="deleteById" >
+    delete from sale_workorder_push_fail
+    where id = #{id}
+  </delete>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    insert into sale_workorder_push_fail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="workOrderId != null">
+        work_order_id,
+      </if>
+      <if test="workOrderCode != null">
+        work_order_code,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="pushDate != null">
+        push_date,
+      </if>
+      <if test="pushResult != null">
+        push_result,
+      </if>
+      <if test="synDate != null">
+        syn_date,
+      </if>
+      <if test="pushNumber != null">
+        push_number,
+      </if>
+      <if test="pushType != null">
+        push_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="workOrderId != null">
+        #{workOrderId},
+      </if>
+      <if test="workOrderCode != null">
+        #{workOrderCode},
+      </if>
+      <if test="remarks != null">
+        #{remarks},
+      </if>
+      <if test="pushDate != null">
+        #{pushDate},
+      </if>
+      <if test="pushResult != null">
+        #{pushResult},
+      </if>
+      <if test="synDate != null">
+        #{synDate},
+      </if>
+      <if test="pushNumber != null">
+        #{pushNumber},
+      </if>
+      <if test="pushType != null">
+        #{pushType},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" >
+    update sale_workorder_push_fail
+    <set>
+      <if test="workOrderId != null">
+        work_order_id = #{workOrderId},
+      </if>
+      <if test="workOrderCode != null">
+        work_order_code = #{workOrderCode},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks},
+      </if>
+      <if test="pushDate != null">
+        push_date = #{pushDate},
+      </if>
+      <if test="pushResult != null">
+        push_result = #{pushResult},
+      </if>
+      <if test="synDate != null">
+        syn_date = #{synDate},
+      </if>
+      <if test="pushNumber != null">
+        push_number = #{pushNumber},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+
+</mapper>

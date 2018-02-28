@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rocoinfo.repository.wechat.WechatUserDao">
+    <resultMap id="BaseResultMap" type="com.rocoinfo.entity.wechat.WechatUser">
+        <id column="id" property="id"/>
+        <result column="openid" property="openid"/>
+        <result column="nickname" property="nickname"/>
+        <result column="sex" property="sex"/>
+        <result column="city" property="city"/>
+        <result column="country" property="country"/>
+        <result column="province" property="province"/>
+        <result column="language" property="language"/>
+        <result column="headimgurl" property="headimgurl"/>
+        <result column="subscribe_time" property="subscribeTime"/>
+        <result column="unionid" property="unionid"/>
+        <result column="remark" property="remark"/>
+        <result column="groupid" property="groupid"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, openid, CAST(nickname AS CHAR CHARACTER SET utf8) AS nickname, sex, city, country, province, language, headimgurl, subscribe_time,
+    unionid, remark, groupid
+  </sql>
+    <select id="selectById" resultMap="BaseResultMap" parameterType="long">
+        select
+        <include refid="Base_Column_List"/>
+        from wechat_user
+        where id = #{id}
+    </select>
+    <delete id="deleteById" parameterType="long">
+    delete from wechat_user
+    where id = #{id}
+  </delete>
+    <insert id="insert" parameterType="com.rocoinfo.entity.wechat.WechatUser" useGeneratedKeys="true" keyProperty="id">
+        insert into wechat_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="openid != null">
+                openid,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="country != null">
+                country,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="language != null">
+                language,
+            </if>
+            <if test="headimgurl != null">
+                headimgurl,
+            </if>
+            <if test="subscribeTime != null">
+                subscribe_time,
+            </if>
+            <if test="unionid != null">
+                unionid,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="groupid != null">
+                groupid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="openid != null">
+                #{openid},
+            </if>
+            <if test="nickname != null">
+                #{nickname},
+            </if>
+            <if test="sex != null">
+                #{sex},
+            </if>
+            <if test="city != null">
+                #{city},
+            </if>
+            <if test="country != null">
+                #{country},
+            </if>
+            <if test="province != null">
+                #{province},
+            </if>
+            <if test="language != null">
+                #{language},
+            </if>
+            <if test="headimgurl != null">
+                #{headimgurl},
+            </if>
+            <if test="subscribeTime != null">
+                #{subscribeTime},
+            </if>
+            <if test="unionid != null">
+                #{unionid},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            <if test="groupid != null">
+                #{groupid},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.rocoinfo.entity.wechat.WechatUser">
+        update wechat_user
+        <set>
+            <if test="openid != null">
+                openid = #{openid},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="city != null">
+                city = #{city},
+            </if>
+            <if test="country != null">
+                country = #{country},
+            </if>
+            <if test="province != null">
+                province = #{province},
+            </if>
+            <if test="language != null">
+                language = #{language},
+            </if>
+            <if test="headimgurl != null">
+                headimgurl = #{headimgurl},
+            </if>
+            <if test="subscribeTime != null">
+                subscribe_time = #{subscribeTime},
+            </if>
+            <if test="unionid != null">
+                unionid = #{unionid},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="groupid != null">
+                groupid = #{groupid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <insert id="batchInsert">
+        INSERT INTO wechat_user(openid, nickname, sex, city, country, province, language, headimgurl, subscribe_time,
+        unionid, remark, groupid) VALUES
+        <foreach collection="users" item="user" separator=",">
+            (#{openid},#{nickname},#{sex},#{city},#{country},#{province},#{language},#{headimgurl},#{subscribeTime},
+            #{unionid},#{remark},#{groupid})
+        </foreach>
+    </insert>
+
+    <select id="getByNickname" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wechat_user
+        where nickname LIKE CONCAT('%',#{nickname},'%')
+    </select>
+
+    <delete id="clean">
+        DELETE FROM wechat_user
+    </delete>
+</mapper>

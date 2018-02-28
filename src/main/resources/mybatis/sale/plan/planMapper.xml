@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.rocoinfo.repository.sale.plan.PlanDao">
+
+    <resultMap id="BaseResultMap" type="UserPlan">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="content" column="content"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="Base_column">
+        id,user_id,content,start_time,end_time,status
+    </sql>
+
+    <insert id="insert" parameterType="UserPlan">
+        INSERT INTO sale_user_plan(user_id,content,start_time,end_time,status)
+        VALUES (#{userId},#{content},#{startTime},#{endTime},#{status})
+    </insert>
+
+    <select id="getPlans" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_column"/>
+        FROM sale_user_plan WHERE user_id=#{userId} AND
+        ((start_time &gt;= #{startTime} AND start_time &lt;=#{endTime})
+        OR
+        (end_time &gt;= #{startTime} AND end_time &lt;= #{endTime})
+        )
+    </select>
+
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rocoinfo.repository.sale.customerManagement.CustomerManagementDao">
+    <resultMap id="BaseResultMap" type="CustomerManagement">
+        <result property="orderNo" column="order_no"/>
+        <result property="questionType1.id" column="question_type1"/>
+        <result property="questionType1.name" column="question_type1_name"/>
+        <result property="questionType2.id" column="question_type2"/>
+        <result property="questionType2.name" column="question_type2_name"/>
+        <result property="liableDepartment.id" column="liable_department"/>
+        <result property="liableDepartment.orgName" column="liable_department_name"/>
+        <result property="source.id" column="source"/>
+        <result property="source.name" column="source_name"/>
+        <result property="orderStatus" column="order_status"/>
+        <result property="createDate" column="create_date"/>
+        <result property="complaintType.id" column="complaint_type"/>
+        <result property="complaintType.name" column="complaint_type_name"/>
+        <result property="operationDate" column="operation_date"/>
+        <result property="workCount" column="workCount"/>
+        <result property="completCount" column="completCount"/>
+        <result property="receptionTime" column="reception_time"/>
+        <result property="treamentTime" column="treament_time"/>
+    </resultMap>
+
+    <select id="findCustomerManagementByOrderNo" resultMap="BaseResultMap">
+        SELECT
+            DISTINCT
+            dicc.`name` as complaint_type_name,
+            sw.create_date,
+            org.org_name as liable_department_name,
+            dic.`name` as question_type1_name,
+            dict.`name` as question_type2_name,
+            dics.`name` as source_name,
+            sw.order_status,
+            swr.operation_date,
+            sw.reception_time,
+            sw.treament_time,
+            (SELECT count(id) FROM sale_workorder WHERE order_no = #{orderno}) as workCount,
+            (SELECT count(id) FROM sale_workorder WHERE order_no= #{orderno} AND order_status in
+              ('COMPLETED', 'SATISFIED', 'COMMONLY', 'UNSATISFIED', 'INVALIDVISIT', 'FAILUREVISIT',
+               'NVISIT', 'CONSULTOVER', 'UNEXECUTED')) AS completCount
+        FROM sale_workorder sw
+        LEFT JOIN sale_workorder_rmk swr ON sw.id = swr.work_order_id AND swr.operation_type='FINISHORDER'
+        LEFT JOIN sale_dictionary dic on dic.id=sw.question_type1
+        LEFT JOIN sale_dictionary dict on dict.id=sw.question_type2
+        LEFT JOIN sale_dictionary dics ON sw.source = dics.id
+        LEFT JOIN sale_dictionary dicc ON sw.complaint_type = dicc.id
+        LEFT JOIN sale_organization org ON sw.liable_department = org.id
+        WHERE sw.order_no= #{orderno}
+    </select>
+
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.rocoinfo.repository.sale.dict.ProblemCatBrandDao">
+
+    <resultMap id="BaseResultMap" type="ProblemCatBrand">
+        <id property="id" column="id"/>
+        <result property="questionType1.id" column="question_type1_id"/>
+        <result property="questionType1.name" column="question_type1_name"/>
+        <result property="brand.id" column="brand_id"/>
+        <result property="brand.name" column="brand_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUser" column="create_user"/>
+    </resultMap>
+
+    <sql id="Base_column">
+        id,question_type1_id,brand_id,create_time,create_user
+    </sql>
+
+	<!-- 分页列表显示 -->
+    <select id="search" parameterType="Map" resultMap="BaseResultMap">
+        SELECT proBrand.id, proBrand.create_time, proBrand.create_user, 
+			brand.name brand_name, dict.name question_type1_name
+		FROM sale_pro_brand proBrand
+		LEFT JOIN sale_brand brand
+		ON proBrand.brand_id = brand.id
+		LEFT JOIN sale_dictionary dict
+		ON proBrand.question_type1_id = dict.id
+		<where>
+			<if test="keyword != null and keyword != ''">
+				brand.name LIKE CONCAT("%",#{keyword},"%")
+			</if>
+			<if test="questionType1 != null and questionType1 != ''">
+				AND proBrand.question_type1_id = #{questionType1}
+			</if>
+		</where>
+		
+        <if test="sort != null">
+            ORDER BY
+            <foreach collection="sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    <!-- 查询总数 -->
+    <select id="searchTotal" parameterType="map" resultType="Long">
+        SELECT 
+        	COUNT(*)
+		FROM sale_pro_brand proBrand
+		<if test="keyword != null and keyword != ''">
+			LEFT JOIN sale_brand brand
+			ON proBrand.brand_id = brand.id
+		</if>
+		<if test="questionType1 != null and questionType1 != ''">
+			LEFT JOIN sale_dictionary dict
+			ON proBrand.question_type1_id = dict.id
+		</if>
+		<where>
+			<if test="keyword != null and keyword != ''">
+				brand.name LIKE CONCAT("%",#{keyword},"%")
+			</if>
+			<if test="questionType1 != null and questionType1 != ''">
+				AND proBrand.question_type1_id = #{questionType1}
+			</if>
+		</where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sale_pro_brand(question_type1_id,brand_id,create_time,create_user)
+        VALUES (#{questionType1.id},#{brand.id},#{createTime},#{createUser})
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM sale_pro_brand
+        WHERE id=#{id}
+    </delete>
+
+	<!-- 通过question_type1_id和brand_id 查询OrgQuestion集合 -->
+	<select id="getByProIdAndBrandId" parameterType="ProblemCatBrand" resultMap="BaseResultMap">
+		SELECT
+           <include refid="Base_column" />
+        FROM
+            sale_pro_brand 
+		WHERE question_type1_id = #{questionType1.id}
+		AND brand_id = #{brand.id}
+	</select>
+	
+	<!-- 通过事项分类id 查询品牌事项分类集合:用于下拉框 -->
+	<select id="findBrandsByQuestionId" parameterType="Long" resultMap="BaseResultMap">
+		SELECT proBrand.id, brand.id brand_id,brand.name brand_name
+		FROM sale_pro_brand proBrand
+		LEFT JOIN sale_brand brand
+		ON proBrand.brand_id = brand.id
+		WHERE proBrand.question_type1_id = #{questionType1Id}
+	</select>
+</mapper>

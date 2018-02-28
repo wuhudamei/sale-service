@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rocoinfo.repository.sale.workorder.WorkOrderRemarkDao">
+	<!-- 工单轨迹mapper -->
+	<resultMap id="BaseResultMap" type="WorkOrder">
+		<result property="id" column="id"/>
+		<result property="remark" column="remark"/>
+		<result property="complaintType.name" column="complaint_type_name"/>
+		<result property="operationDate" column="operation_date"/>
+	</resultMap>
+	<!-- 新增工单轨迹 -->
+	<insert id="insertOrderRemark" parameterType="WorkOrderRemark" keyProperty="id" keyColumn="id"
+            useGeneratedKeys="true">
+		INSERT INTO sale_workorder_rmk
+       		(work_order_id,remark,operation_type,operation_user,operation_date,complaint_type_id)
+		VALUES 
+			(#{workOrderId},#{remark},#{operationType},#{operationUser.id},#{operationDate},#{complaintType.id})
+	</insert>
+
+	<select id="findRemainderById" parameterType="long" resultMap="BaseResultMap">
+			SELECT
+				swr.*, sd. NAME complaint_type_name
+			FROM
+				sale_workorder_rmk swr
+			LEFT JOIN sale_dictionary sd ON swr.complaint_type_id = sd.id
+			WHERE
+				swr.work_order_id = #{orderId}
+				and operation_type='REMAINDER'
+				order by operation_date desc
+	</select>
+	
+	 <!-- 通过工单id和操作类型  获取工单轨迹操作时间 -->
+	 <select id="getByOrderIdAndType" parameterType="long" resultType="Date">
+	 	SELECT operation_date from sale_workorder_rmk
+	 	where work_order_id = #{workOrderId}
+	 	AND operation_type = 'FINISHORDER'
+	 	ORDER BY id DESC limit 1;
+	 </select>
+
+	<insert id="insert" keyProperty="id"  useGeneratedKeys="true" parameterType="WorkOrderRemark">
+			INSERT INTO sale_workorder_rmk
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="workOrderId != null">
+				work_order_id,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="operationType != null">
+				operation_type,
+			</if>
+			<if test="operationUser != null">
+				operation_user,
+			</if>
+			<if test="operationDate != null">
+				operation_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="workOrderId != null">
+				#{workOrderId},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="operationType != null">
+				#{operationType},
+			</if>
+			<if test="operationUser != null">
+				#{operationUser.id},
+			</if>
+			<if test="operationDate != null">
+				#{operationDate},
+			</if>
+		</trim>
+	</insert>
+</mapper>

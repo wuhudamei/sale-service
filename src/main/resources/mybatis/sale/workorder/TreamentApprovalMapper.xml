@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rocoinfo.repository.sale.workorder.TreamentApprovalDao">
+    <resultMap id="BaseResultMap" type="TreamentApproval">
+        <id column="id" property="id"/>
+        <result column="old_time" property="oldTime"/>
+        <result column="new_time" property="newTime"/>
+        <result column="workorder_id" property="workorderId"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_date" property="createDate"/>
+        <result column="remarks" property="remarks"/>
+        <result column="name" property="name"/>
+        <result column="workorderStatus" property="workorderStatus"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, old_time, new_time, workorder_id, create_user, create_date, remarks
+  </sql>
+    <select id="getById" resultMap="BaseResultMap">
+    SELECT
+        sta.*,su.name
+    FROM
+        sale_treament_approval sta
+    JOIN sale_user su ON sta.create_user=su.id
+    where sta.id = #{id}
+  </select>
+    <delete id="deleteById">
+    delete from sale_treament_approval
+    where id = #{id}
+  </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into sale_treament_approval
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="oldTime != null">
+                old_time,
+            </if>
+            <if test="newTime != null">
+                new_time,
+            </if>
+            <if test="workorderId != null">
+                workorder_id,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="oldTime != null">
+                #{oldTime},
+            </if>
+            <if test="newTime != null">
+                #{newTime},
+            </if>
+            <if test="workorderId != null">
+                #{workorderId},
+            </if>
+            <if test="createUser != null">
+                #{createUser},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="remarks != null">
+                #{remarks},
+            </if>
+        </trim>
+    </insert>
+    <update id="update">
+        update sale_treament_approval
+        <set>
+            <if test="oldTime != null">
+                old_time = #{oldTime},
+            </if>
+            <if test="newTime != null">
+                new_time = #{newTime},
+            </if>
+            <if test="workorderId != null">
+                workorder_id = #{workorderId},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <select id="approvalList" resultMap="BaseResultMap">
+        SELECT
+        sta.*,su.name,sw.order_status AS workorderStatus
+        FROM
+        sale_treament_approval sta
+        JOIN sale_workorder sw ON sta.workorder_id=sw.id
+        JOIN sale_user su ON sta.create_user=su.id
+        LEFT JOIN sale_treament_result rtr ON sta.id=rtr.approval_id
+        WHERE sw.liable_company=#{company}
+        <!--部门id集合-->
+        <if test="partTimeJobList != null">
+            AND sw.liable_department IN
+            <foreach collection="partTimeJobList" item="depId" open="(" separator="," close=")">
+                #{depId}
+            </foreach>
+        </if>
+        AND sw.treament_time_update=#{status}
+        AND rtr.id is NULL
+        <if test="keyword!=null">
+            <if test="keyword==&quot;PROCESSING&quot;">
+                AND sw.order_status='PROCESSING'
+            </if>
+            <if test="keyword==&quot;COMPLETED&quot;">
+                AND sw.order_status!='PROCESSING'
+            </if>
+        </if>
+        <if test="sort != null">
+            ORDER BY
+            <foreach collection="sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+        <if test="limit!=null and limit!=''">
+            LIMIT #{offset} ,#{limit}
+        </if>
+    </select>
+</mapper>

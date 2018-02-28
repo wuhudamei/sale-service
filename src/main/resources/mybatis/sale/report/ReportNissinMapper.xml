@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rocoinfo.repository.sale.report.ReportNissinDao">
+  <resultMap id="BaseResultMap" type="ReportNissin">
+    <id column="id"  property="id" />
+    <result column="org_name"  property="orgName" />
+    <result column="sort"  property="sort" />
+    <result column="org_id"  property="orgId" />
+    <result column="day_assign"  property="dayAssign" />
+    <result column="day_refused_again"  property="dayRefusedAgain" />
+    <result column="day_create"  property="dayCreate" />
+    <result column="day_receive"  property="dayReceive" />
+    <result column="score1"  property="score1" />
+    <result column="month_maturity"  property="monthMaturity" />
+    <result column="month_no_processing"  property="monthNoProcessing" />
+    <result column="month_processing_rate"  property="monthProcessingRate" />
+    <result column="score2"  property="score2" />
+    <result column="month_size"  property="monthSize" />
+    <result column="month_solve"  property="monthSolve" />
+    <result column="month_no_solve"  property="monthNoSolve" />
+    <result column="month_solve_rate"  property="monthSolveRate" />
+    <result column="score3"  property="score3" />
+    <result column="visit_satisfied"  property="visitSatisfied" />
+    <result column="visit_commonly"  property="visitCommonly" />
+    <result column="visit_unsatisfied"  property="visitUnsatisfied" />
+    <result column="score4"  property="score4" />
+    <result column="visit_invalid"  property="visitInvalid" />
+    <result column="visit_fail"  property="visitFail" />
+    <result column="visit_completed"  property="visitCompleted" />
+    <result column="visit_unsatisfied_complain"  property="visitUnsatisfiedComplain" />
+    <result column="month_unsatisfied_complain_rate"  property="monthUnsatisfiedComplainRate" />
+    <result column="score5"  property="score5" />
+    <result column="score"  property="score" />
+    <result column="day_size"  property="daySize" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, org_name, sort, org_id, day_assign, day_refused_again, day_create, day_receive, 
+    score1, month_maturity, month_no_processing, month_processing_rate, score2, month_size, 
+    month_solve, month_no_solve, month_solve_rate, score3, visit_satisfied, visit_commonly, 
+    visit_unsatisfied, score4, visit_invalid, visit_fail, visit_completed, visit_unsatisfied_complain, 
+    month_unsatisfied_complain_rate, score5, score, create_date,day_size
+  </sql>
+  <select id="getById"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sale_report_nissin
+    where id = #{id}
+  </select>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    insert into sale_report_nissin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orgName != null">
+        org_name,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="dayAssign != null">
+        day_assign,
+      </if>
+      <if test="dayRefusedAgain != null">
+        day_refused_again,
+      </if>
+      <if test="dayCreate != null">
+        day_create,
+      </if>
+      <if test="dayReceive != null">
+        day_receive,
+      </if>
+      <if test="score1 != null">
+        score1,
+      </if>
+      <if test="monthMaturity != null">
+        month_maturity,
+      </if>
+      <if test="monthNoProcessing != null">
+        month_no_processing,
+      </if>
+      <if test="monthProcessingRate != null">
+        month_processing_rate,
+      </if>
+      <if test="score2 != null">
+        score2,
+      </if>
+      <if test="monthSize != null">
+        month_size,
+      </if>
+      <if test="monthSolve != null">
+        month_solve,
+      </if>
+      <if test="monthNoSolve != null">
+        month_no_solve,
+      </if>
+      <if test="monthSolveRate != null">
+        month_solve_rate,
+      </if>
+      <if test="score3 != null">
+        score3,
+      </if>
+      <if test="visitSatisfied != null">
+        visit_satisfied,
+      </if>
+      <if test="visitCommonly != null">
+        visit_commonly,
+      </if>
+      <if test="visitUnsatisfied != null">
+        visit_unsatisfied,
+      </if>
+      <if test="score4 != null">
+        score4,
+      </if>
+      <if test="visitInvalid != null">
+        visit_invalid,
+      </if>
+      <if test="visitFail != null">
+        visit_fail,
+      </if>
+      <if test="visitCompleted != null">
+        visit_completed,
+      </if>
+      <if test="visitUnsatisfiedComplain != null">
+        visit_unsatisfied_complain,
+      </if>
+      <if test="monthUnsatisfiedComplainRate != null">
+        month_unsatisfied_complain_rate,
+      </if>
+      <if test="score5 != null">
+        score5,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="daySize != null">
+        day_size,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orgName != null">
+        #{orgName},
+      </if>
+      <if test="sort != null">
+        #{sort},
+      </if>
+      <if test="orgId != null">
+        #{orgId},
+      </if>
+      <if test="dayAssign != null">
+        #{dayAssign},
+      </if>
+      <if test="dayRefusedAgain != null">
+        #{dayRefusedAgain},
+      </if>
+      <if test="dayCreate != null">
+        #{dayCreate},
+      </if>
+      <if test="dayReceive != null">
+        #{dayReceive},
+      </if>
+      <if test="score1 != null">
+        #{score1},
+      </if>
+      <if test="monthMaturity != null">
+        #{monthMaturity},
+      </if>
+      <if test="monthNoProcessing != null">
+        #{monthNoProcessing},
+      </if>
+      <if test="monthProcessingRate != null">
+        #{monthProcessingRate},
+      </if>
+      <if test="score2 != null">
+        #{score2},
+      </if>
+      <if test="monthSize != null">
+        #{monthSize},
+      </if>
+      <if test="monthSolve != null">
+        #{monthSolve},
+      </if>
+      <if test="monthNoSolve != null">
+        #{monthNoSolve},
+      </if>
+      <if test="monthSolveRate != null">
+        #{monthSolveRate},
+      </if>
+      <if test="score3 != null">
+        #{score3},
+      </if>
+      <if test="visitSatisfied != null">
+        #{visitSatisfied},
+      </if>
+      <if test="visitCommonly != null">
+        #{visitCommonly},
+      </if>
+      <if test="visitUnsatisfied != null">
+        #{visitUnsatisfied},
+      </if>
+      <if test="score4 != null">
+        #{score4},
+      </if>
+      <if test="visitInvalid != null">
+        #{visitInvalid},
+      </if>
+      <if test="visitFail != null">
+        #{visitFail},
+      </if>
+      <if test="visitCompleted != null">
+        #{visitCompleted},
+      </if>
+      <if test="visitUnsatisfiedComplain != null">
+        #{visitUnsatisfiedComplain},
+      </if>
+      <if test="monthUnsatisfiedComplainRate != null">
+        #{monthUnsatisfiedComplainRate},
+      </if>
+      <if test="score5 != null">
+        #{score5},
+      </if>
+      <if test="score != null">
+        #{score},
+      </if>
+      <if test="createDate != null">
+        #{createDate},
+      </if>
+      <if test="daySize != null">
+        #{daySize},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" >
+    update sale_report_nissin
+    <set>
+      <if test="orgName != null">
+        org_name = #{orgName},
+      </if>
+      <if test="sort != null">
+        sort = #{sort},
+      </if>
+      <if test="orgId != null">
+        org_id = #{orgId},
+      </if>
+      <if test="dayAssign != null">
+        day_assign = #{dayAssign},
+      </if>
+      <if test="dayRefusedAgain != null">
+        day_refused_again = #{dayRefusedAgain},
+      </if>
+      <if test="dayCreate != null">
+        day_create = #{dayCreate},
+      </if>
+      <if test="dayReceive != null">
+        day_receive = #{dayReceive},
+      </if>
+      <if test="score1 != null">
+        score1 = #{score1},
+      </if>
+      <if test="monthMaturity != null">
+        month_maturity = #{monthMaturity},
+      </if>
+      <if test="monthNoProcessing != null">
+        month_no_processing = #{monthNoProcessing},
+      </if>
+      <if test="monthProcessingRate != null">
+        month_processing_rate = #{monthProcessingRate},
+      </if>
+      <if test="score2 != null">
+        score2 = #{score2},
+      </if>
+      <if test="monthSize != null">
+        month_size = #{monthSize},
+      </if>
+      <if test="monthSolve != null">
+        month_solve = #{monthSolve},
+      </if>
+      <if test="monthNoSolve != null">
+        month_no_solve = #{monthNoSolve},
+      </if>
+      <if test="monthSolveRate != null">
+        month_solve_rate = #{monthSolveRate},
+      </if>
+      <if test="score3 != null">
+        score3 = #{score3},
+      </if>
+      <if test="visitSatisfied != null">
+        visit_satisfied = #{visitSatisfied},
+      </if>
+      <if test="visitCommonly != null">
+        visit_commonly = #{visitCommonly},
+      </if>
+      <if test="visitUnsatisfied != null">
+        visit_unsatisfied = #{visitUnsatisfied},
+      </if>
+      <if test="score4 != null">
+        score4 = #{score4},
+      </if>
+      <if test="visitInvalid != null">
+        visit_invalid = #{visitInvalid},
+      </if>
+      <if test="visitFail != null">
+        visit_fail = #{visitFail},
+      </if>
+      <if test="visitCompleted != null">
+        visit_completed = #{visitCompleted},
+      </if>
+      <if test="visitUnsatisfiedComplain != null">
+        visit_unsatisfied_complain = #{visitUnsatisfiedComplain},
+      </if>
+      <if test="monthUnsatisfiedComplainRate != null">
+        month_unsatisfied_complain_rate = #{monthUnsatisfiedComplainRate},
+      </if>
+      <if test="score5 != null">
+        score5 = #{score5},
+      </if>
+      <if test="score != null">
+        score = #{score},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate},
+      </if>
+      <if test="daySize != null">
+        day_size=#{daySize},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <insert id="insertBatch"  parameterType="java.util.List">
+    INSERT INTO sale_report_nissin(
+    org_name, sort, org_id, day_assign, day_refused_again, day_create, day_receive,
+    score1, month_maturity, month_no_processing, month_processing_rate, score2, month_size,
+    month_solve, month_no_solve, month_solve_rate, score3, visit_satisfied, visit_commonly,
+    visit_unsatisfied, score4, visit_invalid, visit_fail, visit_completed, visit_unsatisfied_complain,
+    month_unsatisfied_complain_rate, score5, score, create_date,day_size) VALUES
+    <foreach collection="list" item="report" separator=",">
+      (#{report.orgName},#{report.sort},#{report.orgId},
+      #{report.dayAssign},#{report.dayRefusedAgain},#{report.dayCreate},
+      #{report.dayReceive}, #{report.score1}, #{report.monthMaturity},
+      #{report.monthNoProcessing}, #{report.monthProcessingRate},
+      #{report.score2}, #{report.monthSize}, #{report.monthSolve},
+      #{report.monthNoSolve}, #{report.monthSolveRate}, #{report.score3},
+      #{report.visitSatisfied}, #{report.visitCommonly}, #{report.visitUnsatisfied},
+      #{report.score4}, #{report.visitInvalid}, #{report.visitFail},
+      #{report.visitCompleted}, #{report.visitUnsatisfiedComplain},
+      #{report.monthUnsatisfiedComplainRate},#{report.score5},#{report.score},
+      #{report.createDate,jdbcType=TIMESTAMP},#{report.daySize})
+    </foreach>
+  </insert>
+  <select id="findReportNissinList" resultMap="BaseResultMap">
+    SELECT
+      <include refid="Base_Column_List"></include>
+    FROM
+      sale_report_nissin
+    WHERE org_id IN (
+      SELECT
+          ss.id
+      FROM
+          sale_organization ss
+      WHERE
+          <if test="companyId!=null and companyId!=''">
+            ss.parent_id=#{companyId}
+          </if>
+    ) AND DATE_FORMAT(create_date, '%Y-%m-%d') =DATE_FORMAT(#{date}, '%Y-%m-%d')
+  </select>
+
+
+</mapper>

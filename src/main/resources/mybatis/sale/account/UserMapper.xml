@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rocoinfo.repository.sale.account.UserDao">
+
+    <resultMap id="BaseResultMap" type="User">
+        <id property="id" column="id"/>
+        <result property="account" column="account"/>
+        <result property="depCode" column="dep_code"/>
+        <result property="orgCode" column="org_code"/>
+        <result property="name" column="name"/>
+        <result property="passWord" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="sex" column="sex"/>
+        <result property="department.id" column="department"/>
+        <result property="department.orgCode" column="department_code"/>
+        <result property="department.orgName" column="department_name"/>
+        <result property="department.depType" column="dep_type"/>
+        <result property="company.id" column="company"/>
+        <result property="company.orgCode" column="company_code"/>
+        <result property="company.orgName" column="company_name"/>
+        <result property="status" column="status"/>
+        <result property="createDate" column="create_date"/>
+        <result property="createUser" column="create_user"/>
+        <result property="departmentHead" column="department_head"/>
+        <result property="remindFlag" column="remind_flag"/>
+        <result property="partTimeJob" column="part_time_job"/>
+    </resultMap>
+
+    <sql id="SelectInfo">
+        id,account,dep_code,org_code,name,password,salt,phone,email,sex,department,company,status,
+        create_date,create_user,remind_flag,part_time_job
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="SelectInfo"/>
+        from sale_user WHERE status != 'DELETE'
+    </select>
+
+    <!--查询所有用户,包含删除的-->
+    <select id="findAllWithDelete" resultMap="BaseResultMap">
+        select
+        <include refid="SelectInfo"/>
+        from sale_user
+    </select>
+
+    <insert id="insert" parameterType="User" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO sale_user
+            (account,dep_code,org_code,name,password,salt,phone,email,sex,department,company,
+              status,create_date,create_user,remind_flag)
+        VALUES
+            (#{account},#{depCode},#{orgCode},#{name},#{passWord},#{salt},#{phone},#{email},
+              #{sex},#{department.id},#{company.id},#{status},#{createDate},#{createUser},#{remindFlag})
+    </insert>
+
+    <update id="update">
+        UPDATE sale_user
+        <set>
+            <if test="depCode != null">
+                dep_code = #{depCode},
+            </if>
+            <if test="orgCode != null">
+                org_code = #{orgCode},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="passWord != null">
+                password = #{passWord},
+            </if>
+            <if test="salt != null">
+                salt = #{salt},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="departmentHead != null">
+                department_head = #{departmentHead},
+            </if>
+            <if test="department != null">
+                department = #{department.id},
+            </if>
+            <if test="company != null">
+                company = #{company.id},
+            </if>
+            <if test="remindFlag != null">
+                remind_flag = #{remindFlag},
+            </if>
+            <if test="partTimeJob != null">
+                part_time_job = #{partTimeJob},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="getByUserAccount" resultMap="BaseResultMap">
+        SELECT
+        <include refid="SelectInfo"/>
+        FROM sale_user WHERE account = #{userAccount}
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="SelectInfo"/>
+        FROM sale_user WHERE id = #{id}
+    </select>
+
+    <!--通过id查询可以发送微信通知的用户-->
+    <select id="getByIdWithRemind" resultMap="BaseResultMap">
+        SELECT
+        <include refid="SelectInfo"/>
+        FROM sale_user
+        WHERE remind_flag = 1 AND id = #{id}
+    </select>
+
+    <select id="findByCondition" parameterType="User" resultMap="BaseResultMap">
+        SELECT
+        <include refid="SelectInfo"/>
+        FROM sale_user where status &lt;&gt; 'DELETE'
+        <if test="id != null">
+            and id=#{id}
+        </if>
+        <if test="orgCode != null">
+            and org_code=#{orgCode}
+        </if>
+    </select>
+
+    <delete id="deleteById">
+        update sale_user set status='DELETE'  WHERE id = #{id}
+    </delete>
+
+    <select id="searchTotal" parameterType="map" resultType="Long">
+        SELECT
+        COUNT(*)
+        FROM sale_user U where status &lt;&gt; 'DELETE'
+        <include refid="searchWhere"/>
+    </select>
+
+    <select id="search" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+            U.id,U.account,U.dep_code,U.org_code,U.name,U.password,U.salt,U.phone,
+            U.email,U.sex,U.department,U.company,U.status,U.create_date,U.create_user,
+            U.department_head,U.remind_flag, M.org_code as company_code,M.org_name company_name,
+            P.org_code as department_code,P.org_name department_name
+        FROM sale_user as U LEFT JOIN sale_organization M  ON U.company=M.id
+        LEFT JOIN sale_organization P ON U.department = P.id
+        where U.status &lt;&gt; 'DELETE'
+        <include refid="searchWhere"/>
+        <if test="sort != null">
+            ORDER BY
+            <foreach collection="sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+    <sql id="searchWhere">
+        <if test="keyword != null">
+            AND (U.org_code LIKE CONCAT('%',#{keyword},'%') OR
+            U.name LIKE CONCAT('%',#{keyword},'%'))
+        </if>
+        <if test="status != null">
+            AND U.status = #{status}
+        </if>
+        <if test="companyId != null">
+            AND U.company = #{companyId}
+        </if>
+
+        <if test="departmentId != null">
+            <if test="supplierId != null">
+                AND U.department = #{supplierId}
+            </if>
+            <if test="supplierId == null">
+                AND U.department = #{departmentId}
+            </if>
+        </if>
+    </sql>
+
+    <!-- 包含用户角色、权限信息-->
+    <resultMap type="User" id="userAllInfoResultMap" extends="BaseResultMap">
+        <collection property="roles" ofType="Role">
+            <result property="name" column="role_name"/>
+            <collection property="permission" ofType="Permission">
+                <result property="permission" column="permission"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getAllInfo"  resultMap="userAllInfoResultMap">
+		SELECT
+			u.*, r.name role_name,
+			p.permission
+		FROM
+			sale_user u
+		LEFT JOIN sale_user_role ur ON u.id = ur.user_id
+		LEFT JOIN sale_role r ON r.id = ur.role_id
+		LEFT JOIN sale_role_permission rp ON r.id = rp.role_id
+		LEFT JOIN sale_permission p ON p.id = rp.permission_id
+		WHERE
+			u.id = ${id}
+    </select>
+
+    <select id="getAllInfoByAccount" parameterType="String" resultMap="userAllInfoResultMap">
+        SELECT
+			u.*,r.name role_name, p.permission,
+			mo1.org_code as department_code,mo1.org_name as department_name,
+			mo1.dep_type,
+			mo2.org_code as company_code ,mo2.org_name as company_name
+		FROM
+			sale_user u
+		LEFT JOIN sale_user_role ur ON u.id = ur.user_id
+		LEFT JOIN sale_role r ON r.id = ur.role_id
+		LEFT JOIN sale_role_permission rp ON r.id = rp.role_id
+		LEFT JOIN sale_permission p ON p.id = rp.permission_id
+		LEFT JOIN sale_organization mo1 on u.department=mo1.id
+		LEFT JOIN sale_organization mo2 on u.company=mo2.id
+		WHERE
+			u.org_code = #{orgCode} or u.account = #{orgCode}
+    </select>
+    <select id="findDepartmentHead" resultMap="BaseResultMap">
+        SELECT
+            U.id,
+            U.account,
+            U.dep_code,
+            U.org_code,
+            U.NAME,
+            U.PASSWORD,
+            U.salt,
+            U.phone,
+            U.email,
+            U.sex,
+            U.department,
+            U.company,
+            U. STATUS,
+            U.create_date,
+            U.create_user,
+            U.remind_flag,
+            M.org_code AS company_code,
+            M.org_name company_name,
+            P.org_code AS department_code,
+            P.org_name department_name
+        FROM sale_user as U LEFT JOIN sale_organization M  ON U.company=M.id
+        LEFT JOIN sale_organization P ON U.department = P.id
+        where U.status &lt;&gt; 'DELETE'
+        AND  U.department=#{department}
+        AND U.company=#{company}
+        AND U.department_head='1'
+    </select>
+
+    <!--根据 部门 查找 所有用户是否有兼职当前部门领导的-->
+    <select id="findPartTimeJobHead" resultMap="BaseResultMap">
+        SELECT id,part_time_job,remind_flag,account FROM sale_user
+        WHERE part_time_job IS NOT NULL
+              AND part_time_job LIKE CONCAT('%',#{department},'%');
+    </select>
+
+</mapper>

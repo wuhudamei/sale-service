@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.rocoinfo.repository.sale.question.OrgQuestionDao">
+
+    <resultMap id="BaseResultMap" type="OrgQuestion">
+        <id property="id" column="id"/>
+        <result property="dicId" column="dic_id"/>
+        <result property="dicName" column="name"/>
+        <result property="orgId" column="org_id"/>
+        <result property="orgName" column="org_name"/>
+        <result property="company" column="company"/>
+        <result property="companyId" column="companyId"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUser" column="create_user"/>
+    </resultMap>
+
+    <sql id="Base_column">
+        id,dic_id,org_id,create_time,create_user
+    </sql>
+
+    <select id="search" resultMap="BaseResultMap">
+        SELECT
+        soq.id,
+        soq.dic_id,
+        soq.org_id,
+        soq.create_time,
+        soq.create_user,
+        sd.`name`,
+        so.org_name,
+        sso.org_name AS company,
+        sso.id AS companyId
+        FROM
+        sale_org_question soq
+        JOIN sale_dictionary sd ON soq.dic_id = sd.id
+        JOIN sale_organization so ON soq.org_id = so.id
+        JOIN sale_organization sso ON so.parent_id = sso.id
+        WHERE
+        sd.type = '5'
+        <if test="orgId!=null and orgId!=''">
+            AND soq.org_id=#{orgId}
+        </if>
+        <if test="companyId!=null and companyId!=''">
+            AND sso.id=#{companyId}
+        </if>
+        <if test="sort != null">
+            ORDER BY
+            <foreach collection="sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+        LIMIT #{offset},#{pageSize}
+    </select>
+    <select id="searchTotal" parameterType="map" resultType="Long">
+        SELECT
+        COUNT(*)
+        FROM
+        sale_org_question soq
+        JOIN sale_dictionary sd
+        ON soq.dic_id=sd.id
+        JOIN sale_organization so ON soq.org_id = so.id
+        WHERE
+        sd.type = '5'
+        <if test="orgId!=null and orgId!=''">
+            AND soq.org_id=#{orgId}
+        </if>
+    </select>
+
+
+    <select id="findAll" resultMap="BaseResultMap">
+       SELECT
+            soq.id,
+            soq.dic_id,
+            soq.org_id,
+            soq.create_time,
+            soq.create_user,
+            sd.`name`,
+            so.org_name
+        FROM
+            sale_org_question soq
+        JOIN sale_dictionary sd
+        ON soq.dic_id=sd.id
+        JOIN sale_organization so ON soq.org_id = so.id
+        WHERE
+         sd.type = '5'
+    </select>
+    <select id="findListByOrgId" resultMap="BaseResultMap">
+        SELECT
+            soq.id,
+            soq.dic_id,
+            soq.org_id,
+            soq.create_time,
+            soq.create_user,
+            sd.`name`,
+            so.org_name
+        FROM
+            sale_org_question soq
+        JOIN sale_dictionary sd
+        ON soq.dic_id=sd.id
+        JOIN sale_organization so ON soq.org_id = so.id
+        WHERE
+            soq.org_id = #{orgId}
+        AND sd.type = '5'
+    </select>
+    <select id="findOrgQuestion" resultType="map">
+			SELECT
+			  a.id,
+			  b.id dicId,
+			  a.org_id,
+			  b.name dicName
+			FROM
+			  `sale_org_question` a
+			  LEFT JOIN sale_dictionary b
+			    ON a.dic_id = b.id
+			WHERE org_id =  #{orgId}
+    </select>
+    <insert id="insert">
+        INSERT INTO sale_org_question(dic_id,org_id,create_time,create_user)
+        VALUES (#{dicId},#{orgId},#{createTime},#{createUser})
+    </insert>
+
+
+
+    <delete id="deleteById">
+        DELETE FROM sale_org_question
+        WHERE id=#{id}
+    </delete>
+
+	<!-- 通过dicId和orgId 查询OrgQuestion集合 -->
+	<select id="getByOrgIdAndDicId" parameterType="OrgQuestion" resultMap="BaseResultMap">
+		SELECT
+           <include refid="Base_column" />
+        FROM
+            sale_org_question 
+		WHERE org_id = #{orgId} AND dic_id = #{dicId}
+	</select>
+</mapper>

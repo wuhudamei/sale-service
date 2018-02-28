@@ -1,0 +1,233 @@
+@charset "UTF-8";
+/* iphone5 */
+@media only screen and (min-width: 320px) {
+    html {
+        /* 320/375 = 0.853333*/
+        font-size: 533.333333% !important;
+    }
+}
+
+/* android */
+@media only screen and (min-width: 360px) {
+    html {
+        /* 360/375 = 0.96  */
+        font-size: 600% !important;
+    }
+}
+
+/* iphone6 */
+@media only screen and (min-width: 375px) {
+    html {
+        /* 375/375 = 1  */
+        font-size: 625% !important;
+    }
+}
+
+/* iphone6Plus */
+@media only screen and (min-width: 414px) {
+    html {
+        /* 414/375 = 1.104 */
+        font-size: 690% !important;
+    }
+}
+
+html {
+    font-family: sans-serif;
+    /* 1 */
+    -ms-text-size-adjust: 100%;
+    /* 2 */
+    -webkit-text-size-adjust: 100%;
+    /* 2 */
+    font-size: 625%;
+    /* 取消手机点击屏幕时，会出现的灰块 */
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-size: .12rem;
+}
+
+/* css for reset.scss */
+html, body, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr,
+address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong,
+sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure,
+footer, header, menu, nav, section, time, mark, audio, video, details,
+summary {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+html {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background: #f0f0f0;
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+ul, li {
+    list-style: none;
+}
+
+.chart {
+    width: 3.5rem;
+    /*border: 1px solid #dddddd;*/
+    /*background: #eeeeee;*/
+    margin: .1rem;
+}
+
+.chart-line {
+    /*width: 3rem;*/
+    height: 3.5rem;
+    margin: .3rem .3rem .3rem .5rem;
+    border-left: 1px solid #666666;
+    border-bottom: 1px solid #666666;
+    position: relative;
+}
+
+.alert-line {
+    width: 1px;
+    height: .3rem;
+    background: #ee274e;
+    position: absolute;
+    top: 0;
+    left: 1.5rem;
+    z-index: 111;
+    color: #ee274e;
+    text-indent: 5px;
+    font-size: .14rem;
+}
+
+.alert-line i {
+    position: absolute;
+    top: -.2rem;
+    left: -.1rem;
+}
+
+.weekend-line {
+    width: .4rem;
+    position: absolute;
+    left: -.4rem;
+    font-size: .12rem;
+}
+
+.weekend-line li {
+    height: .3rem;
+    line-height: .3rem;
+    position: relative;
+}
+
+.weekend-line li:before {
+    display: inline-block;
+    content: '';
+    width: .05rem;
+    height: 1px;
+    position: absolute;
+    right: 0px;
+    background: #666666;
+}
+
+.time-line {
+    height: .5rem;
+    line-height: .5rem;
+    overflow: hidden;
+    position: absolute;
+    bottom: -.5rem;
+    left: .2rem;
+    font-size: .12rem;
+}
+
+.time-line li {
+    float: left;
+    width: .35rem;
+    position: relative;
+}
+
+.time-line li:before {
+    display: inline-block;
+    content: '';
+    width: 1px;
+    height: 5px;
+    position: absolute;
+    background: #666666;
+}
+
+.item-box {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: .3rem;
+}
+
+.item {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: .3rem;
+    line-height: .3rem;
+    color: #2e2e2e;
+    background: #c1e3d3;
+    text-align: right;
+}
+
+.item i {
+    padding-right: .1rem;
+    font-style: normal;
+    font-size: .14rem;
+}
+
+/*.time{*/
+/*padding-left: .1rem;*/
+/*font-style: normal;*/
+/*font-size: .14rem;*/
+/*position: relative;*/
+/*z-index: 111;*/
+/*top: .15rem;*/
+/*color: #222222;*/
+/*}*/
+
+.item01 {
+    z-index: 2;
+    width: 1rem;
+    background: #4eab7e;
+}
+
+.item02 {
+    z-index: 1;
+    width: 100%;
+    background: #c1e3d3;
+}
+
+.chart-title {
+    text-align: center;
+    font-size: .16rem;
+    margin: .1rem 0;
+    color: #2e2e2e;
+}
+
+.project-title{
+    text-align: left;
+    font-size: .16rem;
+    margin-left:.1rem;
+}
+
+.total-time {
+    font-size: 14px;
+    font-weight: bold;
+}

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rocoinfo.repository.sale.customer.CustomerDao">
+    <resultMap id="BaseResultMap" type="com.rocoinfo.entity.sale.customer.Customer">
+        <result column="id" property="id"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="customer_mobile" property="customerMobile"/>
+        <result column="customer_address" property="customerAddress"/>
+        <result column="amount" property="amount"/>
+        <result column="black_flag" property="blackFlag"/>
+    </resultMap>
+    <sql id="SelectInfo">
+		id,customer_name,customer_mobile,customer_address,company,black_flag
+	</sql>
+
+    <insert id="insert" keyProperty="id" parameterType="Customer" useGeneratedKeys="true">
+        insert into sale_customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerName != null">
+                customer_name,
+            </if>
+            <if test="customerMobile != null">
+                customer_mobile,
+            </if>
+            <if test="customerAddress != null">
+                customer_address,
+            </if>
+            <if test="company != null and company.id!=''">
+                company,
+            </if>
+            <if test="blackFlag != null">
+                black_flag
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerName != null">
+                #{customerName},
+            </if>
+            <if test="customerMobile != null">
+                #{customerMobile},
+            </if>
+            <if test="customerAddress != null">
+                #{customerAddress},
+            </if>
+            <if test="company != null and company.id!=''">
+                #{company.id},
+            </if>
+            <if test="blackFlag != null">
+                #{blackFlag}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Customer">
+        update sale_customer
+        <set>
+            <if test="customerName != null">
+                customer_name = #{customerName},
+            </if>
+            <if test="customerMobile != null">
+                customer_mobile = #{customerMobile},
+            </if>
+            <if test="customerAddress != null">
+                customer_address = #{customerAddress},
+            </if>
+            <if test="company != null and company.id!=''">
+                company = #{company.id},
+            </if>
+            <if test="blackFlag != null">
+                black_flag = #{blackFlag}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <select id="findCustomerByNameAndMobile" resultMap="BaseResultMap">
+      select * from sale_customer
+      where  customer_name = #{customerName}
+        AND customer_mobile = #{customerMobile}
+        AND company = #{companyId}
+    </select>
+
+    <select id="findCustomerByNameOrMobile" resultMap="BaseResultMap">
+        select * from sale_customer
+        where (customer_name like CONCAT('%',#{keyword},'%')
+            or customer_mobile like CONCAT('%',#{keyword},'%'))
+            and company=#{companyId}
+    </select>
+
+
+    <select id="search" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="SelectInfo"/>
+        from sale_customer sc
+        where 1=1
+        <include refid="searchWhere"/>
+        <if test="sort != null">
+            ORDER BY
+            <foreach collection="sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+    <select id="searchTotal" parameterType="map" resultType="Long">
+        SELECT
+        COUNT(*)
+        FROM sale_customer sc where 1=1
+        <include refid="searchWhere"/>
+    </select>
+
+    <sql id="searchWhere">
+        <if test="keyword!=null">
+            AND (sc.customer_name LIKE CONCAT('%', #{keyword}, '%')
+                OR sc.customer_mobile= #{keyword})
+        </if>
+        <if test="cusCompany != null">
+            AND sc.company = #{cusCompany}
+        </if>
+        <if test="blackFlag != null">
+            AND sc.black_flag = #{blackFlag}
+        </if>
+    </sql>
+
+    <!-- 搜索门店列表/集团客户列表,关联工单表查询工单数 -->
+    <select id="findCustomerWithStore" parameterType="Map" resultMap="BaseResultMap">
+        SELECT cust.id, cust.customer_name, cust.customer_mobile, cust.customer_address, cust.company,
+            cust.company2, cust.black_flag, wordorder.amount
+        FROM sale_customer cust
+        LEFT JOIN (
+            SELECT customer_id, COUNT(0) amount
+            FROM sale_workorder
+            <!--WHERE customer_id IN (
+                  SELECT CONCAT(id) FROM sale_customer
+                )-->
+            GROUP BY customer_id
+            ) wordorder
+        ON CONCAT(cust.id) = wordorder.customer_id
+        <where>
+            <if test="company != null">
+                cust.company = #{company}
+            </if>
+            <if test="blackFlag != null">
+                AND cust.black_flag = #{blackFlag}
+            </if>
+
+            <if test="keyword != null">
+                AND (cust.customer_name like CONCAT('%',#{keyword},'%')
+                OR cust.customer_mobile = #{keyword})
+            </if>
+        </where>
+        <if test="sort != null">
+            ORDER BY
+            <foreach collection="sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+        <if test="limit!=null and limit!=''">
+            LIMIT #{offset} ,#{limit}
+        </if>
+    </select>
+
+    <!-- 搜索门店列表/集团客户 总条数 -->
+    <select id="countCustomerWithStore" parameterType="Map" resultType="long">
+        SELECT count(*)
+        FROM sale_customer cust
+        <where>
+            <if test="company != null">
+                cust.company = #{company}
+            </if>
+            <if test="blackFlag != null">
+                AND cust.black_flag = #{blackFlag}
+            </if>
+
+            <if test="keyword != null">
+                AND (cust.customer_name like CONCAT('%',#{keyword},'%')
+                  OR cust.customer_mobile = #{keyword})
+            </if>
+        </where>
+    </select>
+</mapper>

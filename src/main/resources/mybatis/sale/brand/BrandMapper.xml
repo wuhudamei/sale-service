@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rocoinfo.repository.sale.dict.BrandDao">
+    <resultMap id="BaseResultMap" type="Brand">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="sort" property="sort"/>
+    </resultMap>
+    <sql id="SelectInfo">
+    id,name,sort
+  </sql>
+    <select id="getById" resultMap="BaseResultMap" parameterType="long">
+        select
+        <include refid="SelectInfo"/>
+        from sale_brand
+        where id = #{id}
+    </select>
+    <select id="getByName" resultMap="BaseResultMap" parameterType="String">
+        SELECT
+        dic.id,dic.name
+        from sale_brand dic where name=#{name}
+    </select>
+    <delete id="deleteById" parameterType="long">
+    delete from sale_brand
+    where id = #{id}
+  </delete>
+    <insert id="insert" parameterType="MdniDictionary" useGeneratedKeys="true" keyProperty="id">
+        insert into sale_brand
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="Brand">
+        update sale_brand
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <select id="search" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="SelectInfo"/>
+        from sale_brand
+        where 1=1
+        <include refid="searchWhere"/>
+        <if test="sort != null">
+            ORDER BY
+            <foreach collection="sort" item="order" separator=",">
+                ${order.property} ${order.direction}
+            </foreach>
+        </if>
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+    <select id="searchTotal" parameterType="map" resultType="Long">
+        SELECT
+        COUNT(*)
+        FROM sale_brand md where 1=1
+        <include refid="searchWhere"/>
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM sale_brand
+    </select>
+
+    <sql id="searchWhere">
+        <if test="keyword!=null">
+            AND name LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    </sql>
+
+</mapper>

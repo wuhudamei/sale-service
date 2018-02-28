@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.rocoinfo.repository.sale.account.RolePermissionDao">
+
+	<insert id="insert">
+		insert into sale_role_permission (role_id, permission_id) values (#{roleId}, #{permissionId})
+	</insert>
+
+	<insert id="insertList">
+		insert into sale_role_permission (role_id, permission_id)
+		values
+		<foreach collection="permIdList" index="idx" item="permissionId" separator=",">
+			(${roleId}, ${permissionId})
+		</foreach>
+	</insert>
+
+	<delete id="deleteByRoleId" parameterType="long">
+		delete from sale_role_permission where role_id = #{roleId}
+	</delete>
+
+	<select id="findRolePermission" parameterType="long" resultType="Permission">
+		SELECT DISTINCT
+		p.*,
+		CASE
+		WHEN rp.role_id IS NOT NULL THEN
+		'true'
+		ELSE
+		'false'
+		END AS checked
+		FROM
+		sale_permission p
+		LEFT JOIN sale_role_permission rp ON (p.id = rp.permission_id AND rp.role_id = #{roleId})
+		where p.module &lt;&gt; 'embed'
+		order by seq, p.id
+	</select>
+
+	<select id="getOwnPermissionsByRoleId" parameterType="long" resultType="Permission">
+		SELECT p.* from sale_permission p join sale_role_permission rp on (p.id = rp.permission_id)
+		where rp.role_id = #{roleId}
+	</select>
+
+</mapper>

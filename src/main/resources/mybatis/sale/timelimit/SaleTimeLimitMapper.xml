@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rocoinfo.repository.sale.timelimit.TimeLimitDao">
+  <resultMap id="BaseResultMap" type="com.rocoinfo.entity.sale.timelimit.SaleTimeLimit">
+    <id column="id"  property="id" />
+    <result column="company_id"  property="companyId" />
+    <result column="department_id"  property="departmentId" />
+    <result column="question_category_id"  property="questionCategoryId" />
+    <result column="question_type_id"  property="questionTypeId" />
+    <result column="duration"  property="duration" />
+    <result column="create_user"  property="createUser" />
+    <result column="crate_date"  property="crateDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, company_id, department_id, question_category_id, question_type_id, duration,create_user,crate_date
+  </sql>
+  <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sale_time_limit
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from sale_time_limit
+    where id = #{id}
+  </delete>
+  <insert id="insert" >
+    insert into sale_time_limit (
+    	id, company_id, department_id,question_category_id, question_type_id, duration,create_user,crate_date
+      )
+    values (
+    	#{id}, #{companyId}, #{departmentId}, #{questionCategoryId}, #{questionTypeId}, #{duration}, #{createUser}, #{crateDate}
+      )
+  </insert>
+  <insert id="insertSelective">
+    insert into sale_time_limit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="questionCategoryId != null">
+        question_category_id,
+      </if>
+      <if test="questionTypeId != null">
+        question_type_id,
+      </if>
+      <if test="duration != null">
+        duration,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="crateDate != null">
+        crate_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="companyId != null">
+        #{companyId},
+      </if>
+      <if test="departmentId != null">
+        #{departmentId},
+      </if>
+      <if test="questionCategoryId != null">
+        #{questionCategoryId},
+      </if>
+      <if test="questionTypeId != null">
+        #{questionTypeId},
+      </if>
+      <if test="duration != null">
+        #{duration},
+      </if>
+      <if test="createUser != null">
+        #{createUser},
+      </if>
+      <if test="crateDate != null">
+        #{crateDate},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" >
+    update sale_time_limit
+    <set>
+      <if test="companyId != null">
+        company_id = #{companyId},
+      </if>
+      <if test="departmentId != null">
+        department_id = #{departmentId},
+      </if>
+      <if test="questionCategoryId != null">
+        question_category_id = #{questionCategoryId},
+      </if>
+      <if test="questionTypeId != null">
+        question_type_id = #{questionTypeId},
+      </if>
+      <if test="duration != null">
+        duration = #{duration},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser},
+      </if>
+      <if test="crateDate != null">
+        crate_date = #{crateDate},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" >
+    update sale_time_limit
+    set company_id = #{companyId},
+      department_id = #{departmentId},
+      question_category_id = #{questionCategoryId},
+      question_type_id = #{questionTypeId},
+      duration = #{duration},
+      create_user=#{createUser},
+      crate_date=#{crateDate}
+    where id = #{id}
+  </update>
+     <select id="searchTotal" parameterType="map" resultType="long">
+        SELECT COUNT(*)
+        <include refid="searchFromWhere"/>
+    </select>
+     <select id="info" parameterType="map" resultMap="BaseResultMap">
+      SELECT
+		  a.id,
+		  a.company_id,
+		  a.department_id,
+		  a.question_category_id,
+		  a.question_type_id,
+		  a.duration,
+		  a.duration durationHour,
+		  a.create_user,
+		  a.crate_date
+		  FROM `sale_time_limit` a
+		where a.id=#{id}
+     </select>
+    <!--通过门店,部门,类别,类型查询-->
+     <select id="checkResult" parameterType="SaleTimeLimit" resultMap="BaseResultMap">
+     	SELECT
+		  *
+		FROM
+		  sale_time_limit
+		WHERE company_id = #{companyId}
+		  AND department_id = #{departmentId}
+		  AND question_category_id = #{questionCategoryId}
+		  AND question_type_id = #{questionTypeId}
+     </select>
+     <select id="search" parameterType="Long" resultType="map">
+      SELECT
+		  a.id,
+		  a.company_id,
+		  a.department_id,
+		  a.question_category_id,
+		  a.question_type_id,
+		  a.duration,
+		  a.duration durationHour,
+		  a.create_user,
+		  a.crate_date,
+		  (SELECT
+		    b.org_name
+		  FROM
+		    sale_organization b
+		  WHERE b.id = a.`company_id`) orgName,
+		  (SELECT
+		    c.org_name
+		  FROM
+		    sale_organization c
+		  WHERE c.id = a.`department_id`) departmentName,
+		  (SELECT
+		    d.name
+		  FROM
+		    `sale_dictionary` d
+		  WHERE d.id = a.question_category_id) uestionCategory,
+		  (SELECT
+		    d.name
+		  FROM
+		    `sale_dictionary` d
+		  WHERE d.id = a.question_type_id) questionType
+		FROM
+		  sale_time_limit a
+ 		<where>
+            <if test="companyId != null and companyId != ''">
+	            AND a.company_id=#{companyId}
+	        </if>
+            <if test="departmentId != null and departmentId != ''">
+	            AND a.department_id=#{departmentId}
+	        </if>
+            <if test="questionCategoryId != null and questionCategoryId != ''">
+	            AND a.question_category_id=#{questionCategoryId}
+	        </if>
+            <if test="questionTypeId != null and questionTypeId != ''">
+	            AND a.question_type_id=#{questionTypeId}
+	        </if>
+            <if test="duration != null and duration != ''">
+	            AND a.duration=#{duration}
+	        </if>
+        </where>
+       <if test="sort != null">
+           ORDER BY 
+           <foreach collection="sort" item="order" separator=",">
+               ${order.property} ${order.direction}
+           </foreach>
+       </if> 
+       limit #{offset},#{pageSize}
+   </select>
+    <sql id="searchFromWhere">
+        FROM sale_time_limit
+        <where>
+            <if test="keyword != null">
+                
+            </if>
+        </where>
+    </sql>
+     <delete id="deleteById" parameterType="long">
+    	delete from sale_time_limit where id = #{id}
+  	</delete>
+
+</mapper>
