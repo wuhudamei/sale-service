@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rocoinfo.repository.sale.timelimit.TimeLimitDao">
-  <resultMap id="BaseResultMap" type="com.rocoinfo.entity.sale.timelimit.SaleTimeLimit">
+<mapper namespace="com.damei.repository.sale.timelimit.TimeLimitDao">
+  <resultMap id="BaseResultMap" type="com.damei.entity.sale.timelimit.SaleTimeLimit">
     <id column="id"  property="id" />
     <result column="company_id"  property="companyId" />
     <result column="department_id"  property="departmentId" />

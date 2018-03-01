@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>美得你售后管理系统</title>
+    <title>大美售后管理系统</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <%@include file="/include/admin/head.jsp" %>

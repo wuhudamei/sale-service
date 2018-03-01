@@ -1,7 +1,3 @@
-/**
-* Bootstrap Table German translation
-* Author: Paul Mohr - Sopamo<p.mohr@sopamo.de>
-*/
 (function ($) {
   'use strict';
 

@@ -3,23 +3,19 @@
 <portable-config>
     <!-- application.properties -->
     <config-file path="WEB-INF/classes/application.properties">
-    <!-- 原售后系统 -->
 <!--         <replace key="jdbc.url">jdbc:mysql://rm-2zebk0455jdg842i0.mysql.rds.aliyuncs.com/mdny_sale_cm?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;transformedBitIsBoolean=true&amp;allowMultiQueries=true</replace> -->
 <!--         <replace key="jdbc.username">mdnysaleuser</replace> -->
 <!--         <replace key="jdbc.password">TPQFuXMP8fTM2iG3scxhRAxZo4SfUa</replace> -->
-        <!-- 售后2.0单独部署的环境 -->
         <replace key="jdbc.url">jdbc:mysql://rm-2zebk0455jdg842i0.mysql.rds.aliyuncs.com/mdny_sale_cm?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;transformedBitIsBoolean=true&amp;allowMultiQueries=true</replace>
         <replace key="jdbc.username">mdny_sale_cmuser</replace>
         <replace key="jdbc.password">xXcJqPdyeZ1e1FiU9OHPF4FiZ9</replace>
 
-		<!-- 美得你北京合同查询 -->
         <replace key="jdbc.url.mdni">jdbc:sqlserver://rm-2ze604cr10th7uxka.sqlserver.rds.aliyuncs.com:3433;database=Mdnbjorder</replace>
         <replace key="jdbc.username.mdni">mdnidbmemnegerusers</replace>
         <replace key="jdbc.password.mdni">Xb7Y10EsLHlxZsssagIuxpTJ</replace>
         <replace key="base.url">http://cm.mdni.net.cn</replace>
         <!--产业工人的url-->
         <replace key="order.service.url">http://mps.mdni.cn</replace>
-        <!-- 美得你太原合同查询 -->
         <replace key="jdbc.url.mdni">jdbc:sqlserver://rm-2ze604cr10th7uxka.sqlserver.rds.aliyuncs.com:3433;DatabaseName=TY_MdnBJOrder</replace>
         <replace key="jdbc.username.mdni">tymdnidbmemnegerusers</replace>
         <replace key="jdbc.password.mdni">Xb7Y10EsLHlxZsssagIuxpTJ</replace>

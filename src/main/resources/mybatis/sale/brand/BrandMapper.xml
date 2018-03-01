@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.rocoinfo.repository.sale.dict.BrandDao">
+<mapper namespace="com.damei.repository.sale.dict.BrandDao">
     <resultMap id="BaseResultMap" type="Brand">
         <id column="id" property="id"/>
         <result column="name" property="name"/>

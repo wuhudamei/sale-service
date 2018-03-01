@@ -12,7 +12,6 @@
         <replace key="oa.base.url">http://oatest.mdni.net.cn</replace>
         <replace key="profile">test</replace>
 
-        <!--产业工人的url-->
         <replace key="order.service.url">http://59.110.170.55:60101</replace>
  </config-file>
 

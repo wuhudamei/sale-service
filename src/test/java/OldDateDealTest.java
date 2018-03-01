@@ -1,10 +1,5 @@
 import java.sql.*;
 
-/**
- * Created by 闪电侠 on 2017/9/8.
- *
- * 对工单中旧数据中的customer_id的36位干掉后,查询对应的客户,如果有更新工单,没有新增后更新customer_id
- */
 public class OldDateDealTest {
     //注册驱动程序常量
     class Constant{

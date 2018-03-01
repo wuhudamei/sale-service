@@ -189,7 +189,7 @@ CREATE TABLE `sale_pro_brand` (
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --日期时间 2017/9/1
---修改人：Ryze
+--修改人：
 --描  述：
 -- 1: 新增审批表
 --执行状态 已执行
@@ -206,7 +206,7 @@ CREATE TABLE `sale_treament_approval` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --日期时间 2017/9/1
---修改人：Ryze
+--修改人：
 --描  述：
 -- 1: 新增审批结果表
 --执行状态 已执行

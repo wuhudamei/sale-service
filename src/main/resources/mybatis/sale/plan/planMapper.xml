@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace必须指向Dao接口 -->
-<mapper namespace="com.rocoinfo.repository.sale.plan.PlanDao">
+<mapper namespace="com.damei.repository.sale.plan.PlanDao">
 
     <resultMap id="BaseResultMap" type="UserPlan">
         <id property="id" column="id"/>

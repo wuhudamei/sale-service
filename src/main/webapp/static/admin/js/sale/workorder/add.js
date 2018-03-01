@@ -709,7 +709,6 @@ var vueModal11;
     }
 
 
-    // 显示美得你合同列表
     function showMdniOrder() {
         var _modal = $('#mdnOrder').clone();
         var $el = _modal.modal({

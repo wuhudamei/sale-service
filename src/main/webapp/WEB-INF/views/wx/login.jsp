@@ -10,9 +10,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="renderer" content="webkit">
 
-  <title>美得你登录</title>
-  <meta name="keywords" content="美得你,售后服务系统,登录">
-  <meta name="description" content="美得你售后服务系统登录">
+  <title>大美登录</title>
+  <meta name="keywords" content="大美,售后服务系统,登录">
+  <meta name="description" content="大美售后服务系统登录">
 
   <link rel="shortcut icon" href="/static/admin/img/favicon.ico">
   <link rel="stylesheet" href="/static/admin/css/lib.css">
@@ -30,7 +30,7 @@
     <div>
       <h1 class="logo-name"><img src="/static/img/logo.png"></h1>
     </div>
-    <h3>欢迎使用 美得你售后管理系统</h3>
+    <h3>欢迎使用 大美售后管理系统</h3>
 
     <form v-on:submit.prevent="submit" role="form">
       <div class="form-group">

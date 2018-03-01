@@ -2,14 +2,6 @@ import org.eclipse.jetty.server.Server;
 import org.springside.modules.test.jetty.JettyFactory;
 import org.springside.modules.test.spring.Profiles;
 
-/**
- * <dl>
- * <dd>描述:快速启动的Server</dd>
- * <dd>公司: 大城若谷信息技术有限公司</dd>
- * <dd>@创建时间：2015/12/9 11:34</dd>
- * <dd>@author：huyt</dd>
- * </dl>
- */
 public class QuickStartServer {
 
     public static final int PORT = 8012;

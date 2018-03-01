@@ -577,7 +577,6 @@
     </div>
 </div>
 
-    <%--美得你合同--%>
 <div id="mdnOrder" class="modal fade" tabindex="-1" data-width="1000">
     <!-- ibox start -->
     <div class="ibox">

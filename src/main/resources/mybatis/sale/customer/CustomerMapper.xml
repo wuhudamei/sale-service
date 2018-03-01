@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rocoinfo.repository.sale.customer.CustomerDao">
-    <resultMap id="BaseResultMap" type="com.rocoinfo.entity.sale.customer.Customer">
+<mapper namespace="com.damei.repository.sale.customer.CustomerDao">
+    <resultMap id="BaseResultMap" type="com.damei.entity.sale.customer.Customer">
         <result column="id" property="id"/>
         <result column="customer_name" property="customerName"/>
         <result column="customer_mobile" property="customerMobile"/>

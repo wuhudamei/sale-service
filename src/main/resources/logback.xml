@@ -31,7 +31,7 @@
 
 
     <!-- project default level -->
-    <logger name="com.rocoinfo" level="DEBUG"/>
+    <logger name="com.damei" level="DEBUG"/>
     <logger name="org.springframework.web" level="DEBUG"/>
 
     <root level="WARN">

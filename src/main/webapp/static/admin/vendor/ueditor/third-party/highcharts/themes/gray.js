@@ -1,7 +1,3 @@
-/**
- * Gray theme for Highcharts JS
- * @author Torstein Hønsi
- */
 
 Highcharts.theme = {
 	colors: ["#DDDF0D", "#7798BF", "#55BF3B", "#DF5353", "#aaeeee", "#ff0066", "#eeaaee",

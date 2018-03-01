@@ -1,8 +1,5 @@
-import com.rocoinfo.utils.TemplateUtils;
+import com.damei.utils.TemplateUtils;
 
-/**
- * Created by 闪电侠 on 2017/8/31.
- */
 public class TemplateTest {
     public static void main(String[] args) {
 
