@@ -1,5 +1,5 @@
 var tt = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     // 引入文件:
     // /static/admin/js/directives/clickoutside.js 全局引入就可以了,本系统已引入在 include/admin/head.jsp
     // /static/css/wx/zTreeStyle.css
@@ -90,4 +90,4 @@ var tt = null;
         }
     });
 
-})(RocoUtils);
+})(DameiUtils);

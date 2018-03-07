@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace必须指向Dao接口 -->
-<mapper namespace="com.damei.repository.sale.account.RoleDao">
+<mapper namespace="cn.damei.repository.sale.account.RoleDao">
 
     <insert id="insert" parameterType="Role">
         INSERT INTO sale_role(name,description)

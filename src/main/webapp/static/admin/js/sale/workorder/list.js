@@ -2,7 +2,7 @@ var order;
 var orderList;
 var operation;
 var time;
-+(function (RocoUtils,moment) {
++(function (DameiUtils,moment) {
     $('#workOrderList').addClass('active');
     orderList = new Vue({
         validators: {
@@ -16,9 +16,9 @@ var time;
             }
         },
         el: '#container',
-        mixins: [RocoVueMixins.DataTableMixin],
+        mixins: [DameiVueMixins.DataTableMixin],
         data: {
-            user:_.extend({}, window.RocoUser),
+            user:_.extend({}, window.DameiUser),
             fUser: null,
             deal:false, //是否显示延期列
             form: {
@@ -112,7 +112,7 @@ var time;
                 var receptionStartTime = self.form.receptionStartTime;
                 var receptionEndTime = self.form.receptionEndTime;
                 var personName = self.form.personName;
-                window.open('/mdni/workorder/export?keyword=' + keyword + '&queryLiableType1=' +
+                window.open('/damei/workorder/export?keyword=' + keyword + '&queryLiableType1=' +
                     queryLiableType1 + '&status=' + status + '&liableId=' + liableId + '&srcId=' + srcId + '&receptionStartTime=' +
                     receptionStartTime + '&receptionEndTime=' + receptionEndTime + '&personName=' + personName + '&manage=' + manage);
             },
@@ -144,7 +144,7 @@ var time;
             drawTable: function () {
                 var self = this;
                 self.$dataTable = $(this.$els.dataTable).bootstrapTable({
-                    url: '/mdni/workorder/workOrderList',
+                    url: '/damei/workorder/workOrderList',
                     method: 'get',
                     dataType: 'json',
                     cache: false, //去缓存
@@ -407,14 +407,14 @@ var time;
                                      + pageNumber +'" class="m-r-xs btn btn-xs btn-primary">处理</a>');*/
                                     //fragment += ('<button data-handle="order-operation" data-index="' + index + '" data-id="' + row.id + '" type="button" class="m-r-xs btn btn-xs btn-primary">处理</button>');
                                     fragment += ('<a onclick="orderList.storeParams()" href="/workorder/settle?id='+ row.id + '" class="m-r-xs btn btn-xs btn-primary">处理</a>');
-                                    if (RocoUser.departmentName == "材料部"){
+                                    if (DameiUser.departmentName == "材料部"){
                                         //已接受 仅材料部可见 可以随时转派
                                         fragment += ('<a onclick="orderList.storeParams()" href="/workorder/turnSend?id=' + row.id + '" class="m-r-xs btn btn-xs btn-warning">转派</a>');
                                     }
                                 } else if (row.orderStatus == "PROCESSING") {//已接收
-                                    // if (RocoUtils.hasPermission('workorder:deal') || RocoUtils.hasRole('超级管理员') || RocoUtils.isLoginUser(row.liablePerson.id)) {
+                                    // if (DameiUtils.hasPermission('workorder:deal') || DameiUtils.hasRole('超级管理员') || DameiUtils.isLoginUser(row.liablePerson.id)) {
                                     fragment += ('<a onclick="orderList.storeParams()" href="/workorder/followup?id=' + row.id + '" class="m-r-xs btn btn-xs btn-primary">跟进</a>');
-                                     if (RocoUtils.hasPermission('workorder:time-update')){
+                                     if (DameiUtils.hasPermission('workorder:time-update')){
                                         if (row.treamentTimeUpdate != '0') {
                                             fragment += ('<button data-handle="order-time"  data-id="' + row.id + '" data-time="' + row.treamentTime + '" type="button" class="m-r-xs btn btn-xs btn-warning">申请延期</button>');
                                         }
@@ -460,7 +460,7 @@ var time;
                         id: id.toString(),
                         operationType: 'RECEIVE',//接收
                     };
-                    self.$http.post('/mdni/workorder/updateWorkOrder', data).then(function (res) {
+                    self.$http.post('/damei/workorder/updateWorkOrder', data).then(function (res) {
                         if (res.data.code == 1) {
                             self.$toastr.success('提交成功');
                             orderList.$dataTable.bootstrapTable('selectPage', 1);
@@ -520,7 +520,7 @@ var time;
                         id: id.toString(),
                         operationType: 'SELECTREMAINDER'//查看催单
                     };
-                    self.$http.post('/mdni/workorder/updateWorkOrder', data).then(function (res) {
+                    self.$http.post('/damei/workorder/updateWorkOrder', data).then(function (res) {
                         window.location.href = "/workorder/remaindList?id=" + id;
                         if (res.data.code == 1) {
 
@@ -709,7 +709,7 @@ var time;
         },
 
         created: function () {
-            this.fUser = window.RocoUser;
+            this.fUser = window.DameiUser;
             this.findProblemCategories();
             this.findComplaintTypes();
             this.findImportances();
@@ -717,7 +717,7 @@ var time;
         },
         ready: function () {
             this.queryImportantDegree();
-            var params = RocoUtils.parseQueryString(window.location.search.substr(1));
+            var params = DameiUtils.parseQueryString(window.location.search.substr(1));
             if (params) {
                 for (var key in params) {
                     var value = params[key];
@@ -729,7 +729,7 @@ var time;
             }
             this.addActiveClass(this.form.status);
             //画表
-            var deal = RocoUtils.parseQueryString()['status'];
+            var deal = DameiUtils.parseQueryString()['status'];
             if(deal=='PROCESSING'){
                 this.deal=true;
             }
@@ -777,7 +777,7 @@ var time;
             el: el,
 
             // 模式窗体必须引用 ModalMixin
-            mixins: [RocoVueMixins.ModalMixin],
+            mixins: [DameiVueMixins.ModalMixin],
             $modal: $modal, //模式窗体 jQuery 对象
             data: {
                 orderId: id,
@@ -799,7 +799,7 @@ var time;
             methods: {
                 getOrderDetails: function (orderId) {
                     var self = this;
-                    self.$http.get('/mdni/workorder/' + orderId + '/get').then(function (res) {
+                    self.$http.get('/damei/workorder/' + orderId + '/get').then(function (res) {
                         if (res.data.code == 1) {
                             self.order = res.data.data;
                         }
@@ -839,7 +839,7 @@ var time;
                         treamentPlan: formData.treamentPlan,
                         feedbackRmk: formData.feedbackRmk
                     };
-                    self.$http.post('/mdni/workorder/updateWorkOrder', data).then(function (res) {
+                    self.$http.post('/damei/workorder/updateWorkOrder', data).then(function (res) {
                         if (res.data.code == 1) {
                             self.$toastr.success('提交成功');
                             $modal.modal('hide');
@@ -872,7 +872,7 @@ var time;
                         };
                     }
 
-                    self.$http.post('/mdni/workorder/updateWorkOrder', data).then(function (res) {
+                    self.$http.post('/damei/workorder/updateWorkOrder', data).then(function (res) {
                         if (res.data.code == 1) {
                             window.location.href = "/"
                         }
@@ -908,7 +908,7 @@ var time;
         remark = new Vue({
             el: el,
             // 模式窗体必须引用 ModalMixin
-            mixins: [RocoVueMixins.ModalMixin],
+            mixins: [DameiVueMixins.ModalMixin],
             $modal: $el, //模式窗体 jQuery 对象
             data: {
                 //控制 按钮是否可点击
@@ -923,7 +923,7 @@ var time;
             methods: {
                 getOrderDetails: function (orderId) {
                     var self = this;
-                    self.$http.get('/mdni/workorder/' + orderId + '/get').then(function (res) {
+                    self.$http.get('/damei/workorder/' + orderId + '/get').then(function (res) {
                         if (res.data.code == 1) {
                             self.order = res.data.data;
                         }
@@ -949,7 +949,7 @@ var time;
                         operationType: 'REMARK',
                         remark: formData.remark
                     };
-                    self.$http.post('/mdni/workorder/saveRemark', data).then(function (res) {
+                    self.$http.post('/damei/workorder/saveRemark', data).then(function (res) {
                         if (res.data.code == 1) {
                             self.$toastr.success('提交成功');
                             $el.modal('hide');
@@ -987,7 +987,7 @@ var time;
          time = new Vue({
             el: el,
             // 模式窗体必须引用 ModalMixin
-            mixins: [RocoVueMixins.ModalMixin],
+            mixins: [DameiVueMixins.ModalMixin],
             $modal: $modal, //模式窗体 jQuery 对象
             data: {
                oldTime:date,
@@ -1014,7 +1014,7 @@ var time;
                                 remarks:self.remarks
                             };
                             $modal.modal('hide');
-                            self.$http.post('/mdni/worktime/approval', treamentApproval).then(function (res) {
+                            self.$http.post('/damei/worktime/approval', treamentApproval).then(function (res) {
                                 if (res.data.code == 1) {
                                     self.$toastr.success('提交成功');
                                     orderList.$dataTable.bootstrapTable('selectPage', 1);
@@ -1056,7 +1056,7 @@ var time;
         var back = new Vue({
             el: el,
             // 模式窗体必须引用 ModalMixin
-            mixins: [RocoVueMixins.ModalMixin],
+            mixins: [DameiVueMixins.ModalMixin],
             $modal: $modal, //模式窗体 jQuery 对象
             data: {
                 result:null
@@ -1076,7 +1076,7 @@ var time;
             methods: {
                 fetchDetail: function () {
                     var self=this;
-                    self.$http.get('/mdni/worktime/back?workorderId='+id).then(function (res) {
+                    self.$http.get('/damei/worktime/back?workorderId='+id).then(function (res) {
                         if (res.data.code == 1) {
                             self.result=res.data.data;
                         }
@@ -1095,6 +1095,6 @@ var time;
         return back;
     }
 
-})(RocoUtils,moment);
+})(DameiUtils,moment);
 
 

@@ -52,7 +52,7 @@
                         if (res.code == "1") {
                             var user_info = JSON.stringify(res.data);
                             sessionStorage.setItem("USER_INFO", user_info);
-                            location.href = RocoUtils.parseQueryString().successUrl || ctx + '/admin/index';
+                            location.href = DameiUtils.parseQueryString().successUrl || ctx + '/admin/index';
                         } else if (res.code == "0") {
                             $('#showMsgContainer').html(res.message);
                         } else if (res.code == "1000") {

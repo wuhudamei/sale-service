@@ -1,11 +1,11 @@
 var order;
 var orderList;
 var operation;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#orderStatistics').addClass('active');
     orderList = new Vue({
         el: '#container',
-        mixins: [RocoVueMixins.DataTableMixin],
+        mixins: [DameiVueMixins.DataTableMixin],
         http: {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -29,9 +29,9 @@ var operation;
         methods: {
             exportWorkOrder: function () {
                 var self = this;
-                self.$http.get('/mdni/workorder/checkNull', {params: self.form}).then(function (res) {
+                self.$http.get('/damei/workorder/checkNull', {params: self.form}).then(function (res) {
                     if (res.data.code == 1) {
-                        window.location.href = '/mdni/workorder/export?receptionStartTime=' + self.form.startDate + '&receptionEndTime=' + self.form.endDate;
+                        window.location.href = '/damei/workorder/export?receptionStartTime=' + self.form.startDate + '&receptionEndTime=' + self.form.endDate;
                     } else {
                         self.$toastr.error(res.data.message);
                     }
@@ -61,11 +61,11 @@ var operation;
                 self.form.endDate = moment().format('YYYY-MM-DD');
             },
             activeDatepiker: function () {
-                RocoUtils.initDateControl($(this.$els.startDate), $(this.$els.endDate), 'yyyy-mm-dd');
+                DameiUtils.initDateControl($(this.$els.startDate), $(this.$els.endDate), 'yyyy-mm-dd');
             },
             query: function () {
                 var self = this;
-                self.$http.post('/mdni/workorder/statisticsOrderNum',
+                self.$http.post('/damei/workorder/statisticsOrderNum',
                     self.form, {emulateJSON: true}).then(function (res) {
                     if (res.data.code == 1) {
                         self.customs = res.data.data.customs;
@@ -89,6 +89,6 @@ var operation;
         }
     });
 
-})(RocoUtils);
+})(DameiUtils);
 
 

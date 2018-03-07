@@ -1,5 +1,5 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#workOrderList').addClass('active');
     $('#assign').addClass('active');
     vueIndex = new Vue({
@@ -72,7 +72,7 @@ var vueIndex = null;
                     workType: self.form.workType,
                     suggestion:  self.form.suggestion
                 };
-                self.$http.post('/mdni/workorder/updateWorkOrder',data).then(function (res) {
+                self.$http.post('/damei/workorder/updateWorkOrder',data).then(function (res) {
                     if (res.data.code == 1) {
                         self.$toastr.success('提交成功');
                         window.location.href = "/workorder/list?status=ASSIGN";
@@ -130,7 +130,7 @@ var vueIndex = null;
                 };
                 self.submitting = true;
 
-                self.$http.post('/mdni/workorder/updateWorkOrder', data).then(function (res) {
+                self.$http.post('/damei/workorder/updateWorkOrder', data).then(function (res) {
                     if (res.data.code == 1) {
                         self.$toastr.success('提交成功');
                         window.location.href = "/workorder/list?status=ASSIGN";
@@ -146,7 +146,7 @@ var vueIndex = null;
             },
             getOrderDetails: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/get').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/get').then(function (res) {
                     if (res.data.code == 1) {
                         self.order = res.data.data;
 
@@ -228,7 +228,7 @@ var vueIndex = null;
             },
             getRemarks: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/getRemarks').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/getRemarks').then(function (res) {
                     if (res.data.code == 1) {
                         self.remarks = res.data.data;
                         self.remarks.forEach(function (remark) {
@@ -297,7 +297,7 @@ var vueIndex = null;
             }
         },
         created: function () {
-            this.user = window.RocoUser;
+            this.user = window.DameiUser;
 
         },
         watch: {
@@ -312,7 +312,7 @@ var vueIndex = null;
         },
         ready: function () {
             this.activeDatePicker();
-            var params = RocoUtils.parseQueryString(window.location.search.substr(1));
+            var params = DameiUtils.parseQueryString(window.location.search.substr(1));
             if (params) {
                 for (var key in params) {
                     var value = params[key];
@@ -327,4 +327,4 @@ var vueIndex = null;
     });
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

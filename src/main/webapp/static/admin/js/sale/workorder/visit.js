@@ -1,5 +1,5 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#workOrderVisit').addClass('active');
     vueIndex = new Vue({
         el: '#container',
@@ -140,7 +140,7 @@ var vueIndex = null;
                     	copyFlag: copyFlag
             	};
             	//更新工单
-                self.$http.post('/mdni/workorder/updateWorkOrderById', workOrder,{
+                self.$http.post('/damei/workorder/updateWorkOrderById', workOrder,{
 	              		emulateJSON: true }).then(function (res) {
 	              			if(res.data.code == 1){
 	              				//插入工单轨迹
@@ -155,7 +155,7 @@ var vueIndex = null;
 	              	                	remark: self.form.remark
 	              	                };
 	              	            	//添加工单轨迹表
-	              	                self.$http.post('/mdni/workOrderRmk/add', data,{
+	              	                self.$http.post('/damei/workOrderRmk/add', data,{
 	              	              		emulateJSON: true }).then(function (res) {
 	              	                    if (res.data.code == 1) {
 	              	                    }else{
@@ -190,11 +190,11 @@ var vueIndex = null;
                         	//重要程度
                         	'importantDegree1.id': self.form.importantDegree1,
                         	//工单状态
-                        	orderStatus: RocoUtils.parseQueryString()['orderStatus']
+                        	orderStatus: DameiUtils.parseQueryString()['orderStatus']
                         	
                 	};
                 	//生成新工单,同时新增工单轨迹
-                	self.$http.post('/mdni/workorder/addNewOrderByOldIdWithOrderRMK', workOrder,{
+                	self.$http.post('/damei/workorder/addNewOrderByOldIdWithOrderRMK', workOrder,{
   	              		emulateJSON: true }).then(function (res) {
 	                    if (res.data.code == 1) {
 	                    }
@@ -230,8 +230,8 @@ var vueIndex = null;
             //初始化数据
             initParam: function(){
             	var self = this;
-            	self.workOrderId = RocoUtils.parseQueryString()['workOrderId'];
-            	self.source = RocoUtils.parseQueryString()['source'];
+            	self.workOrderId = DameiUtils.parseQueryString()['workOrderId'];
+            	self.source = DameiUtils.parseQueryString()['source'];
             	if(self.source == 'completed'){
             		$('#completedWordOrder').addClass('active');
             	}else if(self.source == 'invalidVisit'){
@@ -244,7 +244,7 @@ var vueIndex = null;
             	self.params = window.location.href.split("?")[1]; 
             	
             	//通过客户id查询客户信息
-            	self.$http.get('/mdni/workorder/'+ self.workOrderId +'/get').then(function (res) {
+            	self.$http.get('/damei/workorder/'+ self.workOrderId +'/get').then(function (res) {
                     if (res.data.code == 1) {
                     	self.order = res.data.data;
                     	////给出当前工单的重要程度
@@ -273,7 +273,7 @@ var vueIndex = null;
             //处理记录
             getRemarks: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/getRemarks').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/getRemarks').then(function (res) {
                     if (res.data.code == 1) {
                         self.remarks = res.data.data;
                         self.remarks.forEach(function (remark) {
@@ -290,7 +290,7 @@ var vueIndex = null;
             //工单信息
             getOrderDetails: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/get').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/get').then(function (res) {
                     if (res.data.code == 1) {
                         self.order = res.data.data;
 
@@ -385,4 +385,4 @@ var vueIndex = null;
     });
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

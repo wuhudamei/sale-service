@@ -1,5 +1,5 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#ordermanage').addClass('active');
     vueIndex = new Vue({
         el: '#container',
@@ -85,7 +85,7 @@ var vueIndex = null;
                 };
                 self.submitting = true;
                 
-                self.$http.post('/mdni/workOrderRmk/remainder', data,{
+                self.$http.post('/damei/workOrderRmk/remainder', data,{
   	              		emulateJSON: true }).then(function (res) {
                     if (res.data.code == 1) {
                         self.$toastr.success('提交成功');
@@ -121,8 +121,8 @@ var vueIndex = null;
             //初始化数据
             initParam: function(){
             	var self = this;
-            	self.workOrderId = RocoUtils.parseQueryString()['workOrderId'];
-            	self.source = RocoUtils.parseQueryString()['source'];
+            	self.workOrderId = DameiUtils.parseQueryString()['workOrderId'];
+            	self.source = DameiUtils.parseQueryString()['source'];
             	if(self.source == 'store'){
             		$('#storeWorkOrder').addClass('active');
             	}else if(self.source == 'group'){
@@ -134,7 +134,7 @@ var vueIndex = null;
             	
                 
             	//通过客户id查询客户信息
-            	/*self.$http.get('/mdni/workorder/'+ self.workOrderId +'/get').then(function (res) {
+            	/*self.$http.get('/damei/workorder/'+ self.workOrderId +'/get').then(function (res) {
                     if (res.data.code == 1) {
                     	self.workOrder = res.data.data;
                     	//合同开始/竣工时间
@@ -161,7 +161,7 @@ var vueIndex = null;
           //处理记录
             getRemarks: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/getRemarks').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/getRemarks').then(function (res) {
                     if (res.data.code == 1) {
                         self.remarks = res.data.data;
                         self.remarks.forEach(function (remark) {
@@ -178,7 +178,7 @@ var vueIndex = null;
             //工单信息
             getOrderDetails: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/get').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/get').then(function (res) {
                     if (res.data.code == 1) {
                         self.order = res.data.data;
 
@@ -261,4 +261,4 @@ var vueIndex = null;
     });
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

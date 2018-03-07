@@ -10,15 +10,15 @@
         <replace key="jdbc.username">mdny_sale_cmuser</replace>
         <replace key="jdbc.password">xXcJqPdyeZ1e1FiU9OHPF4FiZ9</replace>
 
-        <replace key="jdbc.url.mdni">jdbc:sqlserver://rm-2ze604cr10th7uxka.sqlserver.rds.aliyuncs.com:3433;database=Mdnbjorder</replace>
-        <replace key="jdbc.username.mdni">mdnidbmemnegerusers</replace>
-        <replace key="jdbc.password.mdni">Xb7Y10EsLHlxZsssagIuxpTJ</replace>
+        <replace key="jdbc.url.damei">jdbc:sqlserver://rm-2ze604cr10th7uxka.sqlserver.rds.aliyuncs.com:3433;database=Mdnbjorder</replace>
+        <replace key="jdbc.username.damei">mdnidbmemnegerusers</replace>
+        <replace key="jdbc.password.damei">Xb7Y10EsLHlxZsssagIuxpTJ</replace>
         <replace key="base.url">http://cm.mdni.net.cn</replace>
         <!--产业工人的url-->
         <replace key="order.service.url">http://mps.mdni.cn</replace>
-        <replace key="jdbc.url.mdni">jdbc:sqlserver://rm-2ze604cr10th7uxka.sqlserver.rds.aliyuncs.com:3433;DatabaseName=TY_MdnBJOrder</replace>
-        <replace key="jdbc.username.mdni">tymdnidbmemnegerusers</replace>
-        <replace key="jdbc.password.mdni">Xb7Y10EsLHlxZsssagIuxpTJ</replace>
+        <replace key="jdbc.url.damei">jdbc:sqlserver://rm-2ze604cr10th7uxka.sqlserver.rds.aliyuncs.com:3433;DatabaseName=TY_MdnBJOrder</replace>
+        <replace key="jdbc.username.damei">tymdnidbmemnegerusers</replace>
+        <replace key="jdbc.password.damei">Xb7Y10EsLHlxZsssagIuxpTJ</replace>
         
         <replace key="oauth.center.url">http://login.mdni.net.cn</replace>
         <replace key="oauth.center.appid">8534a6b39f6e590daa</replace>

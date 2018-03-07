@@ -21,7 +21,7 @@
                 passWord: self.form.password
               };
               self.submitting = true;
-              self.$http.post(ctx + '/mdni/login', $.param(data)).then(function (res) {
+              self.$http.post(ctx + '/damei/login', $.param(data)).then(function (res) {
             	  if(res.data.code == 1){
             		  window.location.href= ctx + "/index";
             	  }else{

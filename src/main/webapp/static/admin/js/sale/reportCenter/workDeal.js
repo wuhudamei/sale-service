@@ -1,5 +1,5 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#reportCenter').addClass('active');
     $('#processingReport').addClass('active');
     vueIndex = new Vue({
@@ -125,7 +125,7 @@ var vueIndex = null;
             },
             queryOrg: function () {
                 var self = this;
-                var company = RocoUser.company;
+                var company = DameiUser.company;
                 if(company==''||company==null||company==undefined||company=='undefined'){
                     self.form.orgId = '';
                     self.$toastr.error("请为当前操作人设置公司")
@@ -146,7 +146,7 @@ var vueIndex = null;
             }
         },
         created: function () {
-            this.fUser = window.RocoUser;
+            this.fUser = window.DameiUser;
         },
         ready: function () {
             this.form.departmentId='';
@@ -158,4 +158,4 @@ var vueIndex = null;
 
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

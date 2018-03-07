@@ -1,9 +1,9 @@
-+(function (Vue, $, _, moment, RocoUtils) {
++(function (Vue, $, _, moment, DameiUtils) {
     var vueIndex = new Vue({
         el: '#container',
-        mixins: [RocoVueMixins.DataTableMixin],
+        mixins: [DameiVueMixins.DataTableMixin],
         data: {
-            user:_.extend({}, window.RocoUser),
+            user:_.extend({}, window.DameiUser),
             warnings: {
                 pendingNum: 0,
                 nreplyNum: 0,
@@ -19,7 +19,7 @@
         methods: {
             getCurrentWorkNum: function () {
                 var self = this;
-                self.$http.get('/mdni/workorder/getCurrentUserWorksNum').then(function (res) {
+                self.$http.get('/damei/workorder/getCurrentUserWorksNum').then(function (res) {
                     if (res.data.code == 1) {
                         self.warnings = res.data.data;
                     }
@@ -136,7 +136,7 @@
             }
         },
         created: function () {
-            this.fUser = window.RocoUser;
+            this.fUser = window.DameiUser;
             this.today = moment().format('YYYY-MM-DD');
         },
         ready: function () {
@@ -153,7 +153,7 @@
         var vueModal = new Vue({
             el: el,
             // 模式窗体必须引用 ModalMixin
-            mixins: [RocoVueMixins.ModalMixin],
+            mixins: [DameiVueMixins.ModalMixin],
             $modal: $el, //模式窗体 jQuery 对象
             data: {
                 //控制 按钮是否可点击
@@ -170,7 +170,7 @@
             },
             methods: {
                 activeDatepiker: function () {
-                    RocoUtils.initDateControl($(this.$els.startDate), $(this.$els.endDate));
+                    DameiUtils.initDateControl($(this.$els.startDate), $(this.$els.endDate));
                 },
                 submit: function () {
                     var self = this;
@@ -199,5 +199,5 @@
         // 创建的Vue对象应该被返回
         return vueModal;
     }
-})(Vue, jQuery, _, moment, RocoUtils);
+})(Vue, jQuery, _, moment, DameiUtils);
 

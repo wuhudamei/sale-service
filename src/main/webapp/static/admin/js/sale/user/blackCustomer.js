@@ -1,6 +1,6 @@
 //集团客户库
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
 	$('#customerMenu').addClass('active');
     $('#blackCustomer').addClass('active');
     vueIndex = new Vue({
@@ -22,7 +22,7 @@ var vueIndex = null;
             fUser: null,
             form: {
                 keyword: '',
-                companyId: RocoUser.company
+                companyId: DameiUser.company
             },
             organizations:[]
         },
@@ -154,7 +154,7 @@ var vueIndex = null;
             }
         },
         created: function () {
-            this.fUser = window.RocoUser;
+            this.fUser = window.DameiUser;
         },
         ready: function () {
         	this.queryOrganization();
@@ -242,9 +242,9 @@ var vueIndex = null;
 		           title:'完成时间',
 		           align: 'center'
 		       }];
-      /*var getUrl = '/api/employee/listCollection?store=' + RocoUser.storeCode
+      /*var getUrl = '/api/employee/listCollection?store=' + DameiUser.storeCode
       				+ '&dataSource=' + vueIndex.form.dataSource;*/
-      var getUrl = '/mdni/workorder/findWorkOrdersByCustomerId';
+      var getUrl = '/damei/workorder/findWorkOrdersByCustomerId';
       var $modal = $('#modalBrand').clone();
       $modal.modal({
     	width: 1000, 
@@ -256,7 +256,7 @@ var vueIndex = null;
         function () {
           vueModal2 = new Vue({
             el: $modal.get(0),
-            mixins: [RocoVueMixins.DataTableMixin],
+            mixins: [DameiVueMixins.DataTableMixin],
             data: {
               $dataTable: null,
               modalModel: null,
@@ -317,4 +317,4 @@ var vueIndex = null;
     }
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

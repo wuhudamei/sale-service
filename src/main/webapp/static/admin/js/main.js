@@ -142,9 +142,9 @@
     methods: {
       getUser: function() {
         var self = this;
-        var user = _.extend({}, window.RocoUser);
+        var user = _.extend({}, window.DameiUser);
         self.user = user;
-//        delete window.RocoUser;
+//        delete window.DameiUser;
         $('#userScript').remove();
       }
     }

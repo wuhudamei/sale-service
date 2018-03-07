@@ -1,5 +1,5 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#workOrderList').addClass('active');
     $('#urge').addClass('active');
     vueIndex = new Vue({
@@ -20,7 +20,7 @@ var vueIndex = null;
 
             getOrderDetails: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/get').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/get').then(function (res) {
                     if (res.data.code == 1) {
                         self.order = res.data.data;
                         if (self.order.photo) {
@@ -52,7 +52,7 @@ var vueIndex = null;
             },
             getRemarks: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workOrderRmk/getRemainder/' + orderId).then(function (res) {
+                self.$http.get('/damei/workOrderRmk/getRemainder/' + orderId).then(function (res) {
                     if (res.data.code == 1) {
                         self.remarks = res.data.data;
                     }
@@ -60,12 +60,12 @@ var vueIndex = null;
             }
         },
         created: function () {
-            this.user = window.RocoUser;
+            this.user = window.DameiUser;
 
         },
         ready: function () {
 
-            var params = RocoUtils.parseQueryString(window.location.search.substr(1));
+            var params = DameiUtils.parseQueryString(window.location.search.substr(1));
             if (params) {
                 for (var key in params) {
                     var value = params[key];
@@ -80,4 +80,4 @@ var vueIndex = null;
     });
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

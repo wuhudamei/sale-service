@@ -35,9 +35,8 @@
     try {
         $.fn.bootstrapTable.defaults.locale = 'zh-CN';
 
-        var RocoVueMixins = window.RocoVueMixins = {};
-        var RocoVueComponents = window.RocoVueComponents = {};
-        var MdniVueMixins = window.MdniVueMixins = {};
+        var DameiVueMixins = window.DameiVueMixins = {};
+        var DameiVueComponents = window.DameiVueComponents = {};
 
         // 打开 Vue 调试器
         Vue.config.devtools = /localhost|192\./.test(window.location.href);
@@ -84,7 +83,7 @@
     }
 </script>
 <script id="userScript">
-    window.RocoUser = {
+    window.DameiUser = {
         userId: '<shiro:principal property="id"/>',
         account: '<shiro:principal property="orgCode"/>',
         name: '<shiro:principal property="name" />',

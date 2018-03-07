@@ -1,5 +1,5 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#reportCenter').addClass('active');
     $('#groupReturnReport').addClass('active');
     vueIndex = new Vue({
@@ -149,7 +149,7 @@ var vueIndex = null;
             }
         },
         created: function () {
-            this.fUser = window.RocoUser;
+            this.fUser = window.DameiUser;
         },
         ready: function () {
             this.form.departmentId='';
@@ -167,4 +167,4 @@ var vueIndex = null;
 
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

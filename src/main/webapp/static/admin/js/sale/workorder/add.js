@@ -2,7 +2,7 @@ var order;
 var orderList;
 var operation;
 var vueModal11;
-+(function (RocoUtils) { 
++(function (DameiUtils) {
     $('#workOrderAddMenu').addClass('active');
 
     Vue.validator('telphone', function (tel) {
@@ -11,7 +11,7 @@ var vueModal11;
 
     orderList = new Vue({
         el: '#container',
-        mixins: [RocoVueMixins.DataTableMixin],
+        mixins: [DameiVueMixins.DataTableMixin],
         data: {
 
             form: {
@@ -71,7 +71,7 @@ var vueModal11;
                 var receptionStartTime = self.form.receptionStartTime;
                 var receptionEndTime = self.form.receptionEndTime;
                 var personName = self.form.personName;
-                window.open('/mdni/workorder/export?keyword=' + keyword + '&queryLiableType1=' +
+                window.open('/damei/workorder/export?keyword=' + keyword + '&queryLiableType1=' +
                     queryLiableType1 + '&status=' + status + '&liableId=' + liableId + '&srcId=' + srcId + '&receptionStartTime=' +
                     receptionStartTime + '&receptionEndTime=' + receptionEndTime + '&personName=' + personName + '&manage=' + manage);
             },
@@ -199,7 +199,7 @@ var vueModal11;
     function setTimeShowModel() {
         modal();
         setTimeout(function () {
-            showMdniOrder();
+            showDameiOrder();
         }, 200);
     }
 
@@ -210,12 +210,12 @@ var vueModal11;
         order = new Vue({
             el: '#container',
             components: {
-                'web-uploader': RocoVueComponents.WebUploaderComponent
+                'web-uploader': DameiVueComponents.WebUploaderComponent
             },
             // 模式窗体必须引用 ModalMixin
-            mixins: [RocoVueMixins.ModalMixin],
+            mixins: [DameiVueMixins.ModalMixin],
             data: {
-                user: _.extend({}, window.RocoUser),
+                user: _.extend({}, window.DameiUser),
                 links: [],
                 showOrgTree: false, // 是否显示机构树
                 showSrcOrgTree: false,
@@ -250,8 +250,8 @@ var vueModal11;
                     fileSingleSizeLimit: 5000 * 1024
                 },
                 form: {
-                    orderId: rowData && rowData.mdniOrder && rowData.mdniOrder.orderId || null,
-                    orderNo: rowData && rowData.mdniOrder && rowData.mdniOrder.orderNo || null,
+                    orderId: rowData && rowData.dameiOrder && rowData.dameiOrder.orderId || null,
+                    orderNo: rowData && rowData.dameiOrder && rowData.dameiOrder.orderNo || null,
                     customerId: rowData && rowData.customerId || null,
                     customerName: rowData && rowData.customerName || null,
                     customerMobile: rowData && rowData.customerMobile || null,
@@ -275,7 +275,7 @@ var vueModal11;
                     receptionPersonName: rowData && rowData.receptionPerson.name || null,
                     srcDepartment: rowData && rowData.srcDepartment.id || null,
                     srcDepartmentCode: rowData && rowData.srcDepartment.orgCode || null,
-                    srcDepartmentName: rowData && rowData.srcDepartment.orgName || window.RocoUser.departmentName,
+                    srcDepartmentName: rowData && rowData.srcDepartment.orgName || window.DameiUser.departmentName,
                     srcCompany: rowData && rowData.srcCompany.id || null,
                     srcCompanyCode: rowData && rowData.srcCompany.orgCode || null,
                     // liablePerson: rowData && rowData.liablePerson.id || null,
@@ -309,7 +309,7 @@ var vueModal11;
                     });
                 },
                 showOrderBtnClickHandler: function (e) { //显示合同信息单击事件
-                    showMdniOrder();
+                    showDameiOrder();
                 },
                 showCustomerBtnClickHandler: function (e) { //显示合同信息单击事件
                     showCustomers();
@@ -466,12 +466,12 @@ var vueModal11;
                 //提交工单
                 submit: function (val) {
                     var self = this;
-                    var baseurl = '/mdni/workorder';
+                    var baseurl = '/damei/workorder';
 
                     self.submitting = true;
                     var formData = _.cloneDeep(self.form);
                     var data = {
-                        mdniOrder: {
+                        dameiOrder: {
                             orderId: formData.orderId,
                             orderNo: formData.orderNo,
                         },
@@ -585,9 +585,9 @@ var vueModal11;
                 },
                 initFunction: function () {
                     var self = this;
-                    self.form.customerName = RocoUtils.parseQueryString()['customerName'] || '';
-                    self.form.customerMobile = RocoUtils.parseQueryString()['customerMobile'] || '';
-                    self.form.customerAddress = RocoUtils.parseQueryString()['customerAddress'] || '';
+                    self.form.customerName = DameiUtils.parseQueryString()['customerName'] || '';
+                    self.form.customerMobile = DameiUtils.parseQueryString()['customerMobile'] || '';
+                    self.form.customerAddress = DameiUtils.parseQueryString()['customerAddress'] || '';
                 },
                 //工单来源
                 getSourceList: function () {
@@ -683,13 +683,13 @@ var vueModal11;
             },
             ready: function () {
                 this.activeDatePicker();
-                this.form.receptionPerson = window.RocoUser.userId;
-                this.form.receptionPersonName = window.RocoUser.name;
-                this.form.srcDepartment = window.RocoUser.department;
-                this.form.srcDepartmentCode = window.RocoUser.departmentCode;
-                this.form.srcDepartmentName = window.RocoUser.departmentName;
-                this.form.srcCompany = window.RocoUser.company;
-                this.form.srcCompanyCode = window.RocoUser.companyCode;
+                this.form.receptionPerson = window.DameiUser.userId;
+                this.form.receptionPersonName = window.DameiUser.name;
+                this.form.srcDepartment = window.DameiUser.department;
+                this.form.srcDepartmentCode = window.DameiUser.departmentCode;
+                this.form.srcDepartmentName = window.DameiUser.departmentName;
+                this.form.srcCompany = window.DameiUser.company;
+                this.form.srcCompanyCode = window.DameiUser.companyCode;
                 //获取请求路径上的客户信息,并给相应的赋值
                 this.initFunction();
                 this.getSourceList();
@@ -709,7 +709,7 @@ var vueModal11;
     }
 
 
-    function showMdniOrder() {
+    function showDameiOrder() {
         var _modal = $('#mdnOrder').clone();
         var $el = _modal.modal({
             height: 800,
@@ -725,11 +725,11 @@ var vueModal11;
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
                     },
-                    mixins: [RocoVueMixins.ModalMixin],
+                    mixins: [DameiVueMixins.ModalMixin],
                     created: function () {
                     },
                     data: {
-                        user: _.extend({}, window.RocoUser),
+                        user: _.extend({}, window.DameiUser),
                         selectOrder: [],
                         form: {
                             contractCompany: ''
@@ -744,12 +744,12 @@ var vueModal11;
                                 return false;
                             }
                             
-                            if(RocoUser.departmentType=='GROUPCUSTOMERSERVICE' && (self.form.contractCompany == null || self.form.contractCompany == '')){//集团
+                            if(DameiUser.departmentType=='GROUPCUSTOMERSERVICE' && (self.form.contractCompany == null || self.form.contractCompany == '')){//集团
                             	self.$toastr.error("请选择门店!");
                             	return false;
                             }
-                            if(RocoUser.departmentType!='GROUPCUSTOMERSERVICE' && (self.form.contractCompany == null || self.form.contractCompany == '')){
-                            	self.form.contractCompany = RocoUser.company;
+                            if(DameiUser.departmentType!='GROUPCUSTOMERSERVICE' && (self.form.contractCompany == null || self.form.contractCompany == '')){
+                            	self.form.contractCompany = DameiUser.company;
                             }
                             self.checkUsed();
                             
@@ -764,7 +764,7 @@ var vueModal11;
 //                      },
                         checkUsed:function () {
                             var self = this;
-                            this.$http.get('/mdni/workorder/checkUsed/'+self.form.contractCompany).then(function (response) {
+                            this.$http.get('/damei/workorder/checkUsed/'+self.form.contractCompany).then(function (response) {
                                 var res = response.data;
                                 if (res.code == 1) {
                                     // self.companies = res.data;
@@ -792,7 +792,7 @@ var vueModal11;
                         drawTable: function () {
                             var self = this;
                             self.$dataTable = $('#dataTable', self._$el).bootstrapTable({
-                                url: '/mdni/workorder/mdnOrderList',
+                                url: '/damei/workorder/mdnOrderList',
                                 method: 'get',
                                 dataType: 'json',
                                 cache: false,
@@ -1047,13 +1047,13 @@ var vueModal11;
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
                     },
-                    mixins: [RocoVueMixins.ModalMixin],
+                    mixins: [DameiVueMixins.ModalMixin],
                     created: function () {
                     },
                     data: {
-                        user: _.extend({}, window.RocoUser),
+                        user: _.extend({}, window.DameiUser),
                         form: {
-                            cusCompany: RocoUser.company
+                            cusCompany: DameiUser.company
                         },
                         selectCustomer: [],
                         companies: null
@@ -1160,6 +1160,6 @@ var vueModal11;
      * @returns
      */
 
-})(RocoUtils);
+})(DameiUtils);
 
 

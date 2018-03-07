@@ -1,5 +1,5 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#setting').addClass('active');
     $('#roleManager').addClass('active');
     vueIndex = new Vue({
@@ -49,11 +49,11 @@ var vueIndex = null;
                         align: 'center',
                         formatter: function (value, row, index) {
                             var fragment = '';
-                            if (RocoUtils.hasPermission('admin:role:edit'))
+                            if (DameiUtils.hasPermission('admin:role:edit'))
                                 fragment += ('<button data-handle="operate-edit" data-id="' + row.id + '" type="button" class="m-r-xs btn btn-xs btn-info">编辑</button>');
-                            if (RocoUtils.hasPermission('admin:role:autho'))
+                            if (DameiUtils.hasPermission('admin:role:autho'))
                                 fragment += ('<button data-handle="operate-setPermission" data-id="' + row.id + '" type="button" class="m-r-xs btn btn-xs btn-info">设置权限</button>');
-                            if (RocoUtils.hasPermission('admin:role:delete'))
+                            if (DameiUtils.hasPermission('admin:role:delete'))
                                 fragment += ('<button data-handle="operate-delete" data-id="' + row.id + '" type="button" class="m-r-xs btn btn-xs btn-danger">删除</button>');
                             return fragment;
                         }
@@ -137,7 +137,7 @@ var vueIndex = null;
             }
         },
         created: function () {
-            this.fUser = window.RocoUser;
+            this.fUser = window.DameiUser;
         },
         ready: function () {
             this.drawTable();
@@ -151,7 +151,7 @@ var vueIndex = null;
         var vueModal = new Vue({
             el: el,
             // 模式窗体必须引用 ModalMixin
-            mixins: [RocoVueMixins.ModalMixin],
+            mixins: [DameiVueMixins.ModalMixin],
             $modal: $el, //模式窗体 jQuery 对象
             data: {
                 //控制 按钮是否可点击
@@ -206,7 +206,7 @@ var vueIndex = null;
         //创建Vue对象编译节点
         var vueModal = new Vue({
                 el: el,
-                minxins: [RocoVueMixins.ModalMixin],
+                minxins: [DameiVueMixins.ModalMixin],
                 $modal: $el, //模式窗体 jQuery 对象
                 data: {
                     permissions: {},
@@ -307,4 +307,4 @@ var vueIndex = null;
         return vueModal;
     }
 })
-(this.RocoUtils);
+(this.DameiUtils);

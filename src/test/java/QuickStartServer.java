@@ -19,7 +19,7 @@ public class QuickStartServer {
         try {
             server.start();
             System.out.println("[INFO] Server running at http://localhost:" + PORT + CONTEXT);
-            System.out.println("[INFO] Server running a for [mdni-sale-service]");
+            System.out.println("[INFO] Server running a for [damei-sale-service]");
             System.out.println("[HINT] Hit Enter to reload the application quickly");
 
             // 等待用户输入回车重载应用.

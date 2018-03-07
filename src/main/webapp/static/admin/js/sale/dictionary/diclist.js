@@ -1,5 +1,5 @@
 var tt = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $(document).ready(function () {
         $.fn.zTree.init($("#treeDemo"), tt.setting, tt.zNodes);
     });
@@ -168,7 +168,7 @@ var tt = null;
             }
         },
         created: function () {
-            this.fUser = window.RocoUser;
+            this.fUser = window.DameiUser;
         },
         ready: function () {
             this.drawTable();
@@ -183,7 +183,7 @@ var tt = null;
         var vueModal = new Vue({
             el: el,
             // 模式窗体必须引用 ModalMixin
-            mixins: [RocoVueMixins.ModalMixin],
+            mixins: [DameiVueMixins.ModalMixin],
             validators: {
                 validAppName: function (val) {
                     if (_.trim(val) === '') {
@@ -265,4 +265,4 @@ var tt = null;
         // 创建的Vue对象应该被返回
         return vueModal;
     }
-})(RocoUtils);
+})(DameiUtils);

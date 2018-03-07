@@ -1,5 +1,5 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     vueIndex = new Vue({
         el: '#container',
         data: {
@@ -48,9 +48,9 @@ var vueIndex = null;
             //初始化数据
             initParam: function(){
             	var self = this;
-            	self.workOrderId = RocoUtils.parseQueryString()['workOrderId'];
-            	var firstId = RocoUtils.parseQueryString()['firstId'];
-            	var secondId = RocoUtils.parseQueryString()['secondId'];
+            	self.workOrderId = DameiUtils.parseQueryString()['workOrderId'];
+            	var firstId = DameiUtils.parseQueryString()['firstId'];
+            	var secondId = DameiUtils.parseQueryString()['secondId'];
             	//激活左侧导航条
             	$('#'+ firstId +'').addClass('active');
             	$('#'+ secondId +'').addClass('active');
@@ -59,7 +59,7 @@ var vueIndex = null;
             //处理记录
             getRemarks: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/getRemarks').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/getRemarks').then(function (res) {
                     if (res.data.code == 1) {
                         self.remarks = res.data.data;
                         self.remarks.forEach(function (remark) {
@@ -76,7 +76,7 @@ var vueIndex = null;
             //工单信息
             getOrderDetails: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/get').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/get').then(function (res) {
                     if (res.data.code == 1) {
                         self.order = res.data.data;
                         
@@ -168,4 +168,4 @@ var vueIndex = null;
     });
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

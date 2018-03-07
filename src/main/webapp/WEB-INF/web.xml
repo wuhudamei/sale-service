@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
                              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
-    <display-name>mdni-webapp</display-name>
+    <display-name>damei-webapp</display-name>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -48,7 +48,7 @@
     <!-- 配置shiro过滤器 -->
      <filter>
          <filter-name>shiroFilter</filter-name>
-         <filter-class>com.damei.shiro.filter.MyDelegatingShiroFilterProxy</filter-class>
+         <filter-class>cn.damei.shiro.filter.MyDelegatingShiroFilterProxy</filter-class>
          <init-param>
              <param-name>targetFilterLifecycle</param-name>
              <param-value>true</param-value>
@@ -83,7 +83,7 @@
 
     <servlet>
         <servlet-name>staticContentServlet</servlet-name>
-        <servlet-class>com.damei.web.servlet.StaticContentServlet</servlet-class>
+        <servlet-class>cn.damei.web.servlet.StaticContentServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
 

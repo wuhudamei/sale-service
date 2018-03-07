@@ -1,5 +1,5 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#setting').addClass('active');
     $('#userManager').addClass('active');
     vueIndex = new Vue({
@@ -160,13 +160,13 @@ var vueIndex = null;
                                     'data-name="' + row.name+ '" ' +
                                     'type="button" class="m-r-xs btn btn-xs btn-danger">取消部门领导</button>');
                                 }
-                            // if (RocoUtils.hasPermission('admin:user:resetpwd'))
+                            // if (DameiUtils.hasPermission('admin:user:resetpwd'))
                             //     fragment += ('<button data-handle="operate-resetPassWord" data-id="' + row.id + '" type="button" class="m-r-xs btn btn-xs btn-info">重置密码</button>');
-                            // if (RocoUtils.hasPermission('admin:user:setrole'))
+                            // if (DameiUtils.hasPermission('admin:user:setrole'))
                             //     fragment += ('<button data-handle="operate-setRoles" data-id="' + row.id + '" type="button" class="m-r-xs btn btn-xs btn-info">设置角色</button>');
-                            // if (RocoUtils.hasPermission('admin:user:opt'))
+                            // if (DameiUtils.hasPermission('admin:user:opt'))
                             //     fragment += ('<button data-handle="operate-changeStatus" data-id="' + row.id + '"data-status="' + operateStatus + '" type="button" class="m-r-xs btn btn-xs btn-info">' + operateName + '</button>');
-                            // if (RocoUtils.hasPermission('admin:user:del'))
+                            // if (DameiUtils.hasPermission('admin:user:del'))
                             //     fragment += ('<button data-handle="operate-changeStatus" data-id="' + row.id + '" data-status="DELETE" type="button" class="m-r-xs btn btn-xs btn-danger">删除</button>');
                             return fragment;
                         }
@@ -433,7 +433,7 @@ var vueIndex = null;
             }
         },
         created: function () {
-            this.fUser = window.RocoUser;
+            this.fUser = window.DameiUser;
         },
         ready: function () {
             this.queryOrganization();
@@ -448,7 +448,7 @@ var vueIndex = null;
         var vueModal = new Vue({
             el: el,
             // 模式窗体必须引用 ModalMixin
-            mixins: [RocoVueMixins.ModalMixin],
+            mixins: [DameiVueMixins.ModalMixin],
             validators: {
                 mobile: function (val) {
                     return /^1[3|4|5|7|8]\d{9}$/.test(val);
@@ -605,7 +605,7 @@ var vueIndex = null;
         //创建Vue对象编译节点
         var vueModal = new Vue({
                 el: el,
-                minxins: [RocoVueMixins.ModalMixin],
+                minxins: [DameiVueMixins.ModalMixin],
                 $modal: $el, //模式窗体 jQuery 对象
                 data: {
                     roles: [],
@@ -708,7 +708,7 @@ var vueIndex = null;
         //创建Vue对象编译节点
         var jobModal = new Vue({
                 el: el,
-                minxins: [RocoVueMixins.ModalMixin],
+                minxins: [DameiVueMixins.ModalMixin],
                 $modal: _$modal, //模式窗体 jQuery 对象
                 data: {
                     //用户id
@@ -815,4 +815,4 @@ var vueIndex = null;
 
     }
 })
-(this.RocoUtils);
+(this.DameiUtils);

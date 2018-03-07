@@ -146,7 +146,7 @@ var tt = null;
             }
         },
         created: function () {
-            this.fUser = window.RocoUser;
+            this.fUser = window.DameiUser;
         },
         ready: function () {
             this.fetchJsTree();
@@ -160,7 +160,7 @@ var tt = null;
         var vueModal = new Vue({
             el: el,
             // 模式窗体必须引用 ModalMixin
-            mixins: [RocoVueMixins.ModalMixin],
+            mixins: [DameiVueMixins.ModalMixin],
             validators: {
                 validAppName: function (val) {
                     if (_.trim(val) === '') {

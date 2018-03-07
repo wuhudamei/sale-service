@@ -1,6 +1,6 @@
 //门店客户库
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#workOrderVisit').addClass('active');
     $('#unsuccessful').addClass('active');
     vueIndex = new Vue({
@@ -32,7 +32,7 @@ var vueIndex = null;
                 questionType1: '',
                 complaintType: '',
                 importantDegree1: '',
-                companyId: RocoUser.company,
+                companyId: DameiUser.company,
                 departmentId: '',
                 //过滤掉黑名单用户
                 blackFlag: false,
@@ -56,7 +56,7 @@ var vueIndex = null;
             drawTable: function () {
                 var self = this;
                 self.$dataTable = $(this.$els.dataTable).bootstrapTable({
-                    url: '/mdni/workorder/storeWorkOrderList',
+                    url: '/damei/workorder/storeWorkOrderList',
                     method: 'get',
                     dataType: 'json',
                     cache: false, //去缓存
@@ -262,7 +262,7 @@ var vueIndex = null;
                 self.form.complaintType = sessionStorage.getItem("complaintType") || '';
                 self.form.importantDegree1 = sessionStorage.getItem("importantDegree1") || '';
                 //如果获取不到companyId,那就给默认值:当前用户的company
-                self.form.companyId = sessionStorage.getItem("companyId") || RocoUser.company;
+                self.form.companyId = sessionStorage.getItem("companyId") || DameiUser.company;
                 self.form.departmentId = sessionStorage.getItem("departmentId") || '';
                 self.form.createDate = sessionStorage.getItem("createDate");
                 self.form.customerFeedbackTime = sessionStorage.getItem("customerFeedbackTime");
@@ -275,7 +275,7 @@ var vueIndex = null;
             }
         },
         created: function () {
-            this.fUser = window.RocoUser;
+            this.fUser = window.DameiUser;
             this.findProblemCategories();
             this.findComplaintTypes();
             this.findImportances();
@@ -292,4 +292,4 @@ var vueIndex = null;
     });
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

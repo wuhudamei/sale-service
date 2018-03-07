@@ -145,5 +145,5 @@
     }
   });
 
-  RocoVueComponents.WebUploaderComponent = WebUploaderComponent;
-})(Vue, RocoVueComponents);
+  DameiVueComponents.WebUploaderComponent = WebUploaderComponent;
+})(Vue, DameiVueComponents);

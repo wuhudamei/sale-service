@@ -1,11 +1,11 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#workOrderList').addClass('active');
     $('#processing').addClass('active');
     vueIndex = new Vue({
         el: '#container',
         components: {
-            'web-uploader': RocoVueComponents.WebUploaderComponent
+            'web-uploader': DameiVueComponents.WebUploaderComponent
         },
         data: {
             // 面包屑
@@ -90,7 +90,7 @@ var vueIndex = null;
                     operationType: 'REJECT'
                 };
                 self.submitting = true;
-                self.$http.post('/mdni/workorder/updateWorkOrder', data).then(function (res) {
+                self.$http.post('/damei/workorder/updateWorkOrder', data).then(function (res) {
                     if (res.data.code == 1) {
                         self.$toastr.success('提交成功');
                         setTimeout(function(){
@@ -138,7 +138,7 @@ var vueIndex = null;
                         closeOnConfirm: false
                     }, function () {
                         self.submitting = true;
-                        self.$http.post('/mdni/workorder/updateWorkOrder', data).then(function (res) {
+                        self.$http.post('/damei/workorder/updateWorkOrder', data).then(function (res) {
                             if (res.data.code == 1) {
                                 self.$toastr.success('提交成功');
                                 setTimeout(function () {
@@ -176,7 +176,7 @@ var vueIndex = null;
                 };
                 self.submitting = true;
 
-                self.$http.post('/mdni/workorder/updateWorkOrder', data).then(function (res) {
+                self.$http.post('/damei/workorder/updateWorkOrder', data).then(function (res) {
                     if (res.data.code == 1) {
                         self.$toastr.success('提交成功');
                         setTimeout(function(){
@@ -194,7 +194,7 @@ var vueIndex = null;
             },
             getOrderDetails: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/get').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/get').then(function (res) {
                     if (res.data.code == 1) {
                         self.order = res.data.data;
                         self.treamentPlan = self.order.treamentPlan;
@@ -274,7 +274,7 @@ var vueIndex = null;
             },
             getRemarks: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/getRemarks').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/getRemarks').then(function (res) {
                     if (res.data.code == 1) {
                         self.remarks = res.data.data;
                         self.remarks.forEach(function (remark) {
@@ -320,12 +320,12 @@ var vueIndex = null;
             },
         },
         created: function () {
-            this.user = window.RocoUser;
+            this.user = window.DameiUser;
             this.fetchBrand();
         },
         ready: function () {
 
-            var params = RocoUtils.parseQueryString(window.location.search.substr(1));
+            var params = DameiUtils.parseQueryString(window.location.search.substr(1));
             if (params) {
                 for (var key in params) {
                     var value = params[key];
@@ -364,4 +364,4 @@ var vueIndex = null;
     });
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

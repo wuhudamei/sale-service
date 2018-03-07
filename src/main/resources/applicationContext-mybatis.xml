@@ -15,7 +15,7 @@
   <context:property-placeholder location="classpath*:/*.properties" />
 
   <!-- 自动扫描package的位置 -->
-  <context:component-scan base-package="com.damei.repository"/>
+  <context:component-scan base-package="cn.damei.repository"/>
 
   <!-- 配置数据源 -->
   <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
@@ -42,12 +42,12 @@
     <property name="removeAbandoned" value="true"/>
   </bean>
 
-  <!-- mdni-北京-读取合同信息数据源 -->
-  <bean name="dataSourceMdni" class="com.alibaba.druid.pool.DruidDataSource">
-    <property name="driverClassName" value="${jdbc.driver.mdni}"/>
-    <property name="url" value="${jdbc.url.mdni}"/>
-    <property name="username" value="${jdbc.username.mdni}"/>
-    <property name="password" value="${jdbc.password.mdni}"/>
+  <!-- damei-北京-读取合同信息数据源 -->
+  <bean name="dataSourceDamei" class="com.alibaba.druid.pool.DruidDataSource">
+    <property name="driverClassName" value="${jdbc.driver.damei}"/>
+    <property name="url" value="${jdbc.url.damei}"/>
+    <property name="username" value="${jdbc.username.damei}"/>
+    <property name="password" value="${jdbc.password.damei}"/>
     <!-- Connection Pooling Info -->
     <property name="maxActive" value="150"/>
     <property name="minIdle" value="0"/>
@@ -66,11 +66,11 @@
   </bean>
 
   <!-- mdni-太原-读取合同信息数据源 -->
-  <bean name="taiyuanDataSourceMdni" class="com.alibaba.druid.pool.DruidDataSource">
-    <property name="driverClassName" value="${jdbc.driver.taiyuan.mdni}"/>
-    <property name="url" value="${jdbc.url.taiyuan.mdni}"/>
-    <property name="username" value="${jdbc.username.taiyuan.mdni}"/>
-    <property name="password" value="${jdbc.password.taiyuan.mdni}"/>
+  <bean name="taiyuanDataSourceDamei" class="com.alibaba.druid.pool.DruidDataSource">
+    <property name="driverClassName" value="${jdbc.driver.taiyuan.damei}"/>
+    <property name="url" value="${jdbc.url.taiyuan.damei}"/>
+    <property name="username" value="${jdbc.username.taiyuan.damei}"/>
+    <property name="password" value="${jdbc.password.taiyuan.damei}"/>
     <!-- Connection Pooling Info -->
     <property name="maxActive" value="150"/>
     <property name="minIdle" value="0"/>
@@ -88,13 +88,13 @@
     <property name="removeAbandoned" value="true"/>
   </bean>
 
-  <bean id="dynamicDataSource" class="com.damei.datasource.DynamicDataSource">
+  <bean id="dynamicDataSource" class="cn.damei.datasource.DynamicDataSource">
     <!-- 通过key-value的形式来关联数据源 -->
     <property name="targetDataSources">
       <map>
         <entry value-ref="dataSource" key="dataSource"></entry>
-        <entry value-ref="dataSourceMdni" key="dataSourceMdni"></entry>
-        <entry value-ref="taiyuanDataSourceMdni" key="taiyuanDataSourceMdni"></entry>
+        <entry value-ref="dataSourceDamei" key="dataSourceDamei"></entry>
+        <entry value-ref="taiyuanDataSourceDamei" key="taiyuanDataSourceDamei"></entry>
       </map>
     </property>
     <property name="defaultTargetDataSource" ref="dataSource"/>
@@ -106,14 +106,14 @@
       <ref bean="dynamicDataSource"/>
     </property>
     <!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
-    <property name="typeAliasesPackage" value="com.damei.entity"/>
+    <property name="typeAliasesPackage" value="cn.damei.entity"/>
     <!-- 扫描存放Mapping配置文件的目录 -->
     <property name="mapperLocations" value="classpath*:mybatis/**/*Mapper.xml"></property>
   </bean>
 
   <!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口-->
   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-    <property name="basePackage" value="com.damei.repository"/>
+    <property name="basePackage" value="cn.damei.repository"/>
     <property name="annotationClass" value="org.springframework.stereotype.Repository"/>
   </bean>
 

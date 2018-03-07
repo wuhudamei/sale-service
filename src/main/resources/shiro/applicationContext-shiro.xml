@@ -19,34 +19,34 @@
     </bean>
 
     <!-- custom shiro session listener -->
-    <bean id="customSessionListener" class="com.damei.shiro.listener.CustomSessionListener">
+    <bean id="customSessionListener" class="cn.damei.shiro.listener.CustomSessionListener">
         <property name="shiroSessionRepository" ref="jedisShiroSessionRepository"/>
     </bean>
 
     <!-- 管理员用户的realm -->
-    <bean id="shiroDbAdminRealm" class="com.damei.shiro.ShiroDbAdminRealm">
+    <bean id="shiroDbAdminRealm" class="cn.damei.shiro.ShiroDbAdminRealm">
         <property name="credentialsMatcher" ref="customCredentialsMather"/>
         <property name="userService" ref="userService"/>
     </bean>
 
-    <bean id="shiroSSORealm" class="com.damei.shiro.ShiroSSORealm">
+    <bean id="shiroSSORealm" class="cn.damei.shiro.ShiroSSORealm">
         <property name="userService" ref="userService"/>
     </bean>
 
 
     <!-- custom validate password -->
     <bean id="customCredentialsMather"
-          class="com.damei.shiro.CustomShiroCredentialsMatherFactoryBean"/>
+          class="cn.damei.shiro.CustomShiroCredentialsMatherFactoryBean"/>
 
     <!-- ...AUTHENTICATION INFO CACHE BEGIN... -->
     <!-- custom sessionDAO,must use class impl CustomShiroSessionRepository
         interface -->
-    <bean id="customShiroSessionDAO" class="com.damei.shiro.session.CustomShiroSessionDAO">
+    <bean id="customShiroSessionDAO" class="cn.damei.shiro.session.CustomShiroSessionDAO">
         <property name="shiroSessionRepository" ref="jedisShiroSessionRepository"/>
     </bean>
 
     <!-- custom save session by memory class impl ShiroSessionRepository interface -->
-    <bean id="jedisShiroSessionRepository" class="com.damei.shiro.session.MemoryShiroSessionRepository">
+    <bean id="jedisShiroSessionRepository" class="cn.damei.shiro.session.MemoryShiroSessionRepository">
         <property name="cacheManager" ref="memoryManager"/>
         <property name="sessionTimeOut" value="${session.timeout}"/>
     </bean>
@@ -54,7 +54,7 @@
 
     <!-- ...AUTHORIZATION INFO CACHE BEGIN... -->
     <!-- custom shiro authorization info cache manager class -->
-    <bean id="customShiroCacheManager" class="com.damei.shiro.cache.CustomShiroCacheManager">
+    <bean id="customShiroCacheManager" class="cn.damei.shiro.cache.CustomShiroCacheManager">
         <property name="shiroCacheManager" ref="memoryShiroCacheManager"/>
     </bean>
 
@@ -63,13 +63,13 @@
 
     <!-- ShiroCacheManager interface impl class by memory,save authorization
         info to memory -->
-    <bean id="memoryShiroCacheManager" class="com.damei.shiro.cache.JedisShiroCacheManager">
+    <bean id="memoryShiroCacheManager" class="cn.damei.shiro.cache.JedisShiroCacheManager">
         <property name="memoryManager" ref="memoryManager"/>
     </bean>
     <!-- ...AUTHORIZATION INFO CACHE END... -->
 
     <!-- memory manager class -->
-    <bean id="memoryManager" class="com.damei.shiro.MemoryManager">
+    <bean id="memoryManager" class="cn.damei.shiro.MemoryManager">
     </bean>
 
     <!-- default web session manager，session expire time 4 hours -->
@@ -117,7 +117,6 @@
                 /static-content/** = anon
                 /externalApi/** = anon
 <!--                 /report = anon -->
-<!--                 /mdni/** = anon -->
 <!--                 /login = anon -->
                 /service/** = anon
                 /wx = anon
@@ -127,7 +126,7 @@
 <!--                 /api/wx/login = anon -->
 <!--                 /MP_verify_KznZROUB9KVvgvAK.txt = anon -->
                 /admin/** = user[adm]
-                /mdni/** = user
+                /damei/** = user
 
                 / = user
        		    /index = user

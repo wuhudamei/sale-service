@@ -5,7 +5,7 @@
   Time: 18:38
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" import="com.rocoinfo.entity.account.User" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" import="cn.damei.entity.sale.account.User" %>
 <div class=" border-bottom white-bg">
     <nav class="navbar navbar-static-top" role="navigation">
         <div class="navbar-header">
@@ -81,7 +81,7 @@ User user = (User)request.getSession().getAttribute("login_user");
 String jobNo = "";
 Long userId = 0L;
 if(user != null){
-	jobNo = user.getJobNo();
+	jobNo = user.getOrgCode();
 	userId = user.getId();
 }
 %>

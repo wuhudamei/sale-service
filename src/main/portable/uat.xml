@@ -6,9 +6,9 @@
         <replace key="jdbc.username">mdnysaleqauser</replace>
         <replace key="jdbc.password">BCZOYXRt2EGTOCP3</replace>
 
-        <replace key="jdbc.url.mdni">jdbc:sqlserver://rm-sqlserver-uat.sqlserver.rds.aliyuncs.com:3433;database=Uat_MdnBjOrder</replace>
-        <replace key="jdbc.username.mdni">mdnidbmemnegeruatusers</replace>
-        <replace key="jdbc.password.mdni">Zhk9adLBUNBWVB7B</replace>
+        <replace key="jdbc.url.damei">jdbc:sqlserver://rm-sqlserver-uat.sqlserver.rds.aliyuncs.com:3433;database=Uat_MdnBjOrder</replace>
+        <replace key="jdbc.username.damei">mdnidbmemnegeruatusers</replace>
+        <replace key="jdbc.password.damei">Zhk9adLBUNBWVB7B</replace>
         <replace key="base.url">http://cmuat.mdni.net.cn</replace>
 
         <replace key="oauth.center.url">http://loginuat.mdni.net.cn</replace>

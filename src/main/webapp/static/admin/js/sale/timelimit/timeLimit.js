@@ -1,7 +1,7 @@
 var order;
 var orderList;
 var operation;
-+(function (RocoUtils,moment) {
++(function (DameiUtils,moment) {
     orderList = new Vue({
         validators: {
             laterThanStart: function (val, startTime) {
@@ -14,9 +14,9 @@ var operation;
             }
         },
         el: '#container',
-        mixins: [RocoVueMixins.DataTableMixin],
+        mixins: [DameiVueMixins.DataTableMixin],
         data: {
-            user:_.extend({}, window.RocoUser),
+            user:_.extend({}, window.DameiUser),
             fUser: null,
             form: {},
             // 事项分类
@@ -98,7 +98,7 @@ var operation;
 	            		  self.$validate(true, function () {
 	                          if (self.$validation.valid) {
 	                        	var formData = _.cloneDeep(self.form);
-	                        	Vue.http.post('/mdni/timeLimit/save', formData,{headers: {},emulateJSON: true}).then(function(response) {
+	                        	Vue.http.post('/damei/timeLimit/save', formData,{headers: {},emulateJSON: true}).then(function(response) {
 	                        		var responseText = response.data;
 	                        		if(responseText['code'] == '1'){  //操作成功，刷新列表
 	                        			self.$toastr.success(responseText['message']);
@@ -185,7 +185,7 @@ var operation;
             drawTable: function () {
                 var self = this;
                 self.$dataTable = $(this.$els.dataTable).bootstrapTable({
-                    url: '/mdni/timeLimit/list',
+                    url: '/damei/timeLimit/list',
                     method: 'get',
                     dataType: 'json',
                     cache: false, // 去缓存
@@ -286,7 +286,7 @@ var operation;
     	              methods: {
     	            	  setValues:function(id){
     	            		var self = this;
-	            			Vue.http.post('/mdni/timeLimit/info', {id:id},{headers: {},emulateJSON: true}).then(function(response) {
+	            			Vue.http.post('/damei/timeLimit/info', {id:id},{headers: {},emulateJSON: true}).then(function(response) {
                         		var responseText = response.data;
                         		var rdata = responseText.data;
                         		self.form.companyId = rdata.info.companyId;  //门店
@@ -307,7 +307,7 @@ var operation;
     	            		  self.$validate(true, function () {
     	                          if (self.$validation.valid) {
     	                        	var formData = _.cloneDeep(self.form);
-    	                        	Vue.http.post('/mdni/timeLimit/save', formData,{headers: {},emulateJSON: true}).then(function(response) {
+    	                        	Vue.http.post('/damei/timeLimit/save', formData,{headers: {},emulateJSON: true}).then(function(response) {
     	                        		var responseText = response.data;
     	                        		 self.$toastr.success('添加成功');
     	                        		 $modal.modal('hide');
@@ -368,7 +368,7 @@ var operation;
                 self.$dataTable.on('click', '[data-handle="del"]', function (e) {
                 	 var selfm = this;
                 	 var id = $(this).data('id');
-                	 Vue.http.post('/mdni/timeLimit/del', {id:id},{headers: {},emulateJSON: true}).then(function(response) {
+                	 Vue.http.post('/damei/timeLimit/del', {id:id},{headers: {},emulateJSON: true}).then(function(response) {
                 		orderList.$toastr.success('删除成功');
                  		orderList.$dataTable.bootstrapTable('refresh');
                  	    }, function(response) {
@@ -390,5 +390,5 @@ var operation;
         }
     });
 // 列表操作备注
-})(RocoUtils,moment);
+})(DameiUtils,moment);
 

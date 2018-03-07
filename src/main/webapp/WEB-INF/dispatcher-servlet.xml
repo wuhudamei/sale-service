@@ -18,7 +18,7 @@
   <context:annotation-config/>
 
   <!-- 设置使用注解的类所在的jar包 -->
-  <context:component-scan base-package="com.damei.rest"/>
+  <context:component-scan base-package="cn.damei.rest"/>
 
   <!--aop 使用cglib代理(要切入controller层,必须将此配置放于此处)-->
   <aop:aspectj-autoproxy />

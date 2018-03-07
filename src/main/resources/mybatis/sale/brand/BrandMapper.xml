@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.damei.repository.sale.dict.BrandDao">
+<mapper namespace="cn.damei.repository.sale.dict.BrandDao">
     <resultMap id="BaseResultMap" type="Brand">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
@@ -24,7 +24,7 @@
     delete from sale_brand
     where id = #{id}
   </delete>
-    <insert id="insert" parameterType="MdniDictionary" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="DameiDictionary" useGeneratedKeys="true" keyProperty="id">
         insert into sale_brand
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null">

@@ -1,4 +1,4 @@
-+(function (RocoUtils, moment) {
++(function (DameiUtils, moment) {
     $('#setting').addClass('active');
     $('#synList').addClass('active');
     orderList = new Vue({
@@ -13,9 +13,9 @@
             }
         },
         el: '#container',
-        mixins: [RocoVueMixins.DataTableMixin],
+        mixins: [DameiVueMixins.DataTableMixin],
         data: {
-            user: _.extend({}, window.RocoUser),
+            user: _.extend({}, window.DameiUser),
             fUser: null,
             deal: false, //是否显示延期列
             form: {
@@ -84,7 +84,7 @@
             drawTable: function () {
                 var self = this;
                 self.$dataTable = $(this.$els.dataTable).bootstrapTable({
-                    url: '/mdni/workorder/workOrderFailList',
+                    url: '/damei/workorder/workOrderFailList',
                     method: 'get',
                     dataType: 'json',
                     cache: false, //去缓存
@@ -232,7 +232,7 @@
                 self.$dataTable.on('click', '[data-handle="order-syn"]', function () {
                     var id = $(this).data('id');
                     var type = $(this).data('type');
-                    var url = '/mdni/workorder/workOrderSyn?id=' + id + "&pushType=" + type;
+                    var url = '/damei/workorder/workOrderSyn?id=' + id + "&pushType=" + type;
                     self.$http.get(url).then(function (res) {
                         if (res.data.code == 1) {
                             self.$toastr.success(res.data.message);
@@ -257,6 +257,6 @@
         beforeDestroy: function () {
         }
     });
-})(RocoUtils, moment);
+})(DameiUtils, moment);
 
 

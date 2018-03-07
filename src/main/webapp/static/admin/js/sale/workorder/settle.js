@@ -1,11 +1,11 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#workOrderList').addClass('active');
     $('#received').addClass('active');
     vueIndex = new Vue({
         el: '#container',
         components: {
-            'web-uploader': RocoVueComponents.WebUploaderComponent
+            'web-uploader': DameiVueComponents.WebUploaderComponent
         },
         data: {
             // 面包屑
@@ -55,7 +55,7 @@ var vueIndex = null;
             placeholder: '请选择预计完成时间',
             submitting: false,
             //是否展示申诉按钮
-            showRejectBtn: RocoUtils.hasPermission('workorder:reject-btn'),
+            showRejectBtn: DameiUtils.hasPermission('workorder:reject-btn'),
             //本次添加图片数组
             photoLinks: [],
             //本次添加图片
@@ -107,7 +107,7 @@ var vueIndex = null;
                 
                 self.$validate(true, function () {
                     if (self.$validation.valid) {
-                        self.$http.post('/mdni/workorder/updateWorkOrder', data).then(function (res) {
+                        self.$http.post('/damei/workorder/updateWorkOrder', data).then(function (res) {
                             if (res.data.code == 1) {
                                 self.$toastr.success('提交成功');
 				                setTimeout(function(){
@@ -129,9 +129,9 @@ var vueIndex = null;
                     return false;
                 }
                 //如果是 材料部、好得很、小定制、木门必须确认品牌
-                if((!self.brand || self.brand == 0) && (RocoUser.departmentName == '材料部'
-                    || RocoUser.departmentName == '好得很部' || RocoUser.departmentName == '小定制部'
-                    || RocoUser.departmentName == '木门事业部')){
+                if((!self.brand || self.brand == 0) && (DameiUser.departmentName == '材料部'
+                    || DameiUser.departmentName == '好得很部' || DameiUser.departmentName == '小定制部'
+                    || DameiUser.departmentName == '木门事业部')){
                     self.$toastr.error('材料部、好得很部、小定制部、木门事业部必须确认品牌!');
                     return ;
                 }
@@ -159,7 +159,7 @@ var vueIndex = null;
                     photo : self.order.photo + self.photo,
                 };
                 self.submitting = true;
-                self.$http.post('/mdni/workorder/updateWorkOrder', data).then(function (res) {
+                self.$http.post('/damei/workorder/updateWorkOrder', data).then(function (res) {
                     if (res.body.code == 1) {
                         self.$toastr.success('提交成功');
                         setTimeout(function(){
@@ -175,7 +175,7 @@ var vueIndex = null;
             //根据门店,部门,类别,类型 查询时限
             getDurationByQuery: function () {
                 var self = this;
-                self.$http.get('/mdni/timeLimit/getLimitTime?companyId=' + self.order.liableCompany.id
+                self.$http.get('/damei/timeLimit/getLimitTime?companyId=' + self.order.liableCompany.id
                     + '&departmentId=' + self.order.liableDepartment.id
                     + '&questionCategoryId=' + self.order.questionType1.id
                     + '&questionTypeId=' + self.order.questionType2.id
@@ -189,7 +189,7 @@ var vueIndex = null;
             },
             getOrderDetails: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/get').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/get').then(function (res) {
                     if (res.data.code == 1) {
                         self.order = res.data.data;
 
@@ -275,7 +275,7 @@ var vueIndex = null;
             },
             getRemarks: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/getRemarks').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/getRemarks').then(function (res) {
                     if (res.data.code == 1) {
                         self.remarks = res.data.data;
                         self.remarks.forEach(function (remark) {
@@ -316,12 +316,12 @@ var vueIndex = null;
             },
         },
         created: function () {
-            this.user = window.RocoUser;
+            this.user = window.DameiUser;
             this.fetchBrand();
         },
         ready: function () {
             this.activeDatePicker();
-            var params = RocoUtils.parseQueryString(window.location.search.substr(1));
+            var params = DameiUtils.parseQueryString(window.location.search.substr(1));
             if (params) {
                 for (var key in params) {
                     var value = params[key];
@@ -359,4 +359,4 @@ var vueIndex = null;
     });
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

@@ -1,5 +1,5 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     // 接口Url
     var httpUrl = 'http://report.rocozxb.cn';
     var key = '7bqwe2235df6aq2we4r3t6y1vxnmhjklpewd23';
@@ -156,4 +156,4 @@ var vueIndex = null;
             }
         }
     })
-})(this.RocoUtils)
+})(this.DameiUtils)

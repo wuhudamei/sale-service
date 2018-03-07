@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.damei.repository.sale.workorder.TreamentResultDao">
+<mapper namespace="cn.damei.repository.sale.workorder.TreamentResultDao">
   <resultMap id="BaseResultMap" type="TreamentResult">
     <id column="id"  property="id" />
     <result column="create_date"  property="createDate" />

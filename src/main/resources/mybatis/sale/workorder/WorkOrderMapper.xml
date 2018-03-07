@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.damei.repository.sale.workorder.WorkOrderDao">
+<mapper namespace="cn.damei.repository.sale.workorder.WorkOrderDao">
 
     <resultMap id="BaseResultMap" type="WorkOrder">
         <result property="id" column="id"/>
         <result property="workOrderCode" column="workorder_code"/>
-        <result property="mdniOrder.orderId" column="order_id"/>
-        <result property="mdniOrder.orderNo" column="order_no"/>
+        <result property="dameiOrder.orderId" column="dm_order_id"/>
+        <result property="dameiOrder.orderNo" column="dm_order_no"/>
         <result property="customerId" column="customer_id"/>
         <result property="customerName" column="customer_name"/>
         <result property="customerMobile" column="customer_mobile"/>
@@ -115,7 +115,7 @@
         <result property="source.id" column="source"/>
         <result property="source.name" column="source_name"/>
         <result property="photo" column="photo"/>
-        <result property="orderNo" column="order_no"/>
+        <result property="orderNo" column="dm_order_no"/>
         <result property="liableDepartment.id" column="liable_department"/>
         <result property="liableDepartment.orgName" column="liable_department_name"/>
         <result property="liableType1.id" column="liable_type1"/>
@@ -205,7 +205,7 @@
     </resultMap>
 
     <insert id="insert" parameterType="WorkOrder" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO sale_workorder(workorder_code,order_id,order_no,brand,source,
+        INSERT INTO sale_workorder(workorder_code,dm_order_id,dm_order_no,brand,source,
         	customer_id,customer_name,customer_mobile,customer_address,contract_start_time,
         	contract_complete_time,actual_start_time,actual_completion_time,stylist_name,stylist_mobile,
         	contractor_name,contractor_mobile, supervisor_name,supervisor_mobile,important_degree1,
@@ -214,7 +214,7 @@
         	liable_type1,liable_type2,treament_plan, treament_time,feedback_time,customer_feedback_time,
         	visit_result,statu_flag,order_status,copy_flag,create_user,create_date,complaint_type,refusedagain_time,
         	refuse_time,urge_times,is_read,fenpai_date,liable_supplier,suggestion)
-        VALUES (#{workOrderCode},#{mdniOrder.orderId},#{mdniOrder.orderNo},#{brand},#{source.id},#{customerId},#{customerName},#{customerMobile},#{customerAddress},#{contractStartTime},
+        VALUES (#{workOrderCode},#{dameiOrder.orderId},#{dameiOrder.orderNo},#{brand},#{source.id},#{customerId},#{customerName},#{customerMobile},#{customerAddress},#{contractStartTime},
         		#{contractCompleteTime},#{actualStartTime},#{actualCompletionTime},#{styListName},#{styListMobile},#{contractorName},#{contractorMobile},#{supervisorName},#{supervisorMobile},
         		#{importantDegree1.id},#{questionType1.id},#{questionType2.id},#{srcCompany.id},#{srcDepartment.id},
         		#{receptionPerson.id},#{receptionTime},#{workType},#{problem},#{photo},#{liableCompany.id},#{liableDepartment.id},#{liablePerson.id},#{liableType1.id},#{liableType2.id},
@@ -223,13 +223,13 @@
         		#{suggestion})
     </insert>
     <insert id="insertCopy" parameterType="WorkOrder" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO sale_workorder(workorder_code,order_id,order_no,brand,
+        INSERT INTO sale_workorder(workorder_code,dm_order_id,dm_order_no,brand,
         customer_id,customer_name,customer_mobile,customer_address,contract_start_time,contract_complete_time,stylist_name,stylist_mobile,
         contractor_name,contractor_mobile,supervisor_name,supervisor_mobile,
         important_degree1,question_type1,question_type2,src_company,src_department,reception_person,reception_time,work_type,
         problem,photo,liable_company,liable_department,liable_person,liable_type1,liable_type2,treament_plan,treament_time,feedback_time,customer_feedback_time,visit_result,
         statu_flag,order_status,copy_flag,create_user,create_date,urge_times)
-        SELECT workorder_code,order_id,order_no,brand,
+        SELECT workorder_code,dm_order_id,dm_order_no,brand,
         customer_id,customer_name,customer_mobile,customer_address,contract_start_time,contract_complete_time,stylist_name,stylist_mobile,
         contractor_name,contractor_mobile,supervisor_name,supervisor_mobile,
         (select id from sale_dictionary where
@@ -250,8 +250,8 @@
             <if test="workOrderCode != null">
                 workorder_code = #{workOrderCode},
             </if>
-            <if test="mdniOrder != null and mdniOrder.orderId != null">
-                order_id = #{mdniOrder.orderId},
+            <if test="dameiOrder != null and dameiOrder.orderId != null">
+                dm_order_id = #{dameiOrder.orderId},
             </if>
             <if test="customerId != null">
                 customer_id = #{customerId},
@@ -627,7 +627,7 @@
         customer_address ,
         problem ,
         sw.create_date ,
-        order_no,
+        dm_order_no,
         sw.important_degree1,
         sw.liable_department,
         so2.org_name liable_department_name ,
@@ -686,7 +686,7 @@
         customer_address ,
         problem ,
         sw.create_date ,
-        order_no,
+        dm_order_no,
         sw.important_degree1,
         sw.liable_department,
         so2.org_name liable_department_name ,
@@ -711,7 +711,7 @@
 
     <!--工单处理 各列表-->
     <select id="search" parameterType="map" resultMap="BaseResultMap">
-        select distinct mw.id,mw.workorder_code,mw.order_id,mw.brand,mw.source,mw.treament_time_update,
+        select distinct mw.id,mw.workorder_code,mw.dm_order_id,mw.brand,mw.source,mw.treament_time_update,
         mw.customer_id,mw.customer_name,mw.customer_mobile,mw.customer_address,mw.contract_start_time,mw.contract_complete_time,
         mw.stylist_name,mw.stylist_mobile,mw.contractor_name,mw.contractor_mobile,mw.supervisor_name,mw.supervisor_mobile,
         mw.important_degree1,md.name as important_degree1_name,
@@ -879,7 +879,7 @@
     </select>
 
     <select id="getById" parameterType="long" resultMap="BaseResultMap">
-        select distinct mw.id,mw.workorder_code,mw.order_id,mw.question_type1,mw.question_type2,mw.brand,mw.source,
+        select distinct mw.id,mw.workorder_code,mw.dm_order_id,mw.question_type1,mw.question_type2,mw.brand,mw.source,
         mw.customer_id,mw.customer_name,mw.customer_mobile,mw.customer_address,mw.contract_start_time,mw.contract_complete_time,
         mw.actual_start_time,mw.actual_completion_time,
         mw.stylist_name,mw.stylist_mobile,mw.contractor_name,mw.contractor_mobile,mw.supervisor_name,mw.supervisor_mobile,
@@ -910,11 +910,11 @@
     </select>
 
     <select id="findAll" resultMap="BaseResultMap">
-        SELECT id,workorder_code,order_id,liable_type1,liable_type2 FROM sale_workorder
+        SELECT id,workorder_code,dm_order_id,liable_type1,liable_type2 FROM sale_workorder
     </select>
 
     <select id="findAllInfo" resultMap="BaseResultMap">
-         select distinct mw.id,mw.workorder_code,mw.order_id,mw.brand,mw.source,
+         select distinct mw.id,mw.workorder_code,mw.dm_order_id,mw.brand,mw.source,
         	mw.customer_id,mw.customer_name,mw.customer_mobile,mw.customer_address,mw.contract_start_time,mw.contract_complete_time,
             mw.stylist_name,mw.stylist_mobile,mw.contractor_name,mw.contractor_mobile,mw.supervisor_name,mw.supervisor_mobile,
 	        mw.important_degree1,md.name as important_degree1_name,
@@ -940,7 +940,7 @@
     </select>
 
     <select id="findByLiableAndDate" resultMap="BaseResultMap">
-        SELECT id,workorder_code,order_id,liable_type1,liable_type2,customer_name,customer_mobile,customer_address FROM sale_workorder
+        SELECT id,workorder_code,dm_order_id,liable_type1,liable_type2,customer_name,customer_mobile,customer_address FROM sale_workorder
         WHERE liable_type1 = #{liable1} AND LEFT(create_date, 10) &gt;= #{startDate} AND LEFT(create_date,10) &lt; #{endDate}
     </select>
 
@@ -1323,7 +1323,7 @@
         </where>
     </select>
 
-    <select id="findAllList" resultType="com.damei.dto.WorkOrderReturnDto">
+    <select id="findAllList" resultType="cn.damei.dto.WorkOrderReturnDto">
         SELECT
         sw.id,
         sw.order_status AS orderStatus,
@@ -1548,7 +1548,7 @@
         swpf.remarks,
         swpf.push_date,
         swpf.push_result,swpf.syn_date,swpf.push_number,swpf.push_type,
-        mw.id,mw.workorder_code,mw.order_id,mw.brand,mw.source,mw.treament_time_update,
+        mw.id,mw.workorder_code,mw.dm_order_id,mw.brand,mw.source,mw.treament_time_update,
         mw.customer_id,mw.customer_name,mw.customer_mobile,mw.customer_address,mw.contract_start_time,mw.contract_complete_time,
         mw.stylist_name,mw.stylist_mobile,mw.contractor_name,mw.contractor_mobile,mw.supervisor_name,mw.supervisor_mobile,
         mw.important_degree1,md.name as important_degree1_name,

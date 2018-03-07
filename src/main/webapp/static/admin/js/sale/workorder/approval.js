@@ -1,5 +1,5 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#workOrderList').addClass('active');
     $('#').addClass('active');
     vueIndex = new Vue({
@@ -92,7 +92,7 @@ var vueIndex = null;
                     confirmButtonColor: '#ed5565',
                     closeOnConfirm: false
                 }, function () {
-                    self.$http.post('/mdni/worktime/result',self.result).then(function (res) {
+                    self.$http.post('/damei/worktime/result',self.result).then(function (res) {
                         if (res.data.code == 1) {
                             window.location.href="/workorder/approvalList";
                             self.$toastr.success('操作成功');
@@ -113,7 +113,7 @@ var vueIndex = null;
                 var self=this;
                 self.result.workorderId=ids;
                 self.result.approvalId=id;
-                self.$http.get('/mdni/worktime/approvalById?id='+id).then(function (res) {
+                self.$http.get('/damei/worktime/approvalById?id='+id).then(function (res) {
                     if (res.data.code == 1) {
                         self.approval=res.data.data;
                     }
@@ -126,7 +126,7 @@ var vueIndex = null;
             },
             getOrderDetails: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/get').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/get').then(function (res) {
                     if (res.data.code == 1) {
                         self.order = res.data.data;
 
@@ -202,7 +202,7 @@ var vueIndex = null;
             },
             getRemarks: function (orderId) {
                 var self = this;
-                self.$http.get('/mdni/workorder/' + orderId + '/getRemarks').then(function (res) {
+                self.$http.get('/damei/workorder/' + orderId + '/getRemarks').then(function (res) {
                     if (res.data.code == 1) {
                         self.remarks = res.data.data;
                         self.remarks.forEach(function (remark) {
@@ -240,7 +240,7 @@ var vueIndex = null;
             },
         },
         created: function () {
-            this.user = window.RocoUser;
+            this.user = window.DameiUser;
             this.fetchBrand();
         },
         ready: function () {
@@ -249,7 +249,7 @@ var vueIndex = null;
                 //来自微信端 替换成&
                 uri = uri.replace(';','&');
             }
-            var params = RocoUtils.parseQueryString(uri);
+            var params = DameiUtils.parseQueryString(uri);
             if (params) {
                 for (var key in params) {
                     var value = params[key];
@@ -263,4 +263,4 @@ var vueIndex = null;
     });
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

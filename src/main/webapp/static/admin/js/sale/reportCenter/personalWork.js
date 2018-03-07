@@ -1,5 +1,5 @@
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#personalPerformance').addClass('active');
     vueIndex = new Vue({
         el: '#container',
@@ -25,7 +25,7 @@ var vueIndex = null;
             }
         },
         created: function () {
-            this.fUser = window.RocoUser;
+            this.fUser = window.DameiUser;
         },
         ready: function () {
             this.queryOrg();
@@ -34,4 +34,4 @@ var vueIndex = null;
 
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

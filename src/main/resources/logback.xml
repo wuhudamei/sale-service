@@ -31,35 +31,11 @@
 
 
     <!-- project default level -->
-    <logger name="com.damei" level="DEBUG"/>
+    <logger name="cn.damei" level="DEBUG"/>
     <logger name="org.springframework.web" level="DEBUG"/>
 
     <root level="WARN">
         <appender-ref ref="Console"/>
-        <!--<appender-ref ref="RollingFile"/>-->
     </root>
 
-    <!--flume日志系统配置-->
-    <!--<appender name="flume" class="com.rocoinfo.appender.FlumeAppender">
-        <hosts>47.94.196.205:44444</hosts>
-        <batchSize>100</batchSize>
-        <maxIdleTime>2000</maxIdleTime>
-        <eventQueueSize>100000</eventQueueSize>
-        <additionHeaders>
-            webapp=oauth
-        </additionHeaders>
-        <additionProps>
-            connect-timeout = 2000
-        </additionProps>
-        <maxThreadPoolSize>4</maxThreadPoolSize>
-        <workQueueSize>100</workQueueSize>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%message</pattern>
-        </layout>
-    </appender>-->
-
-    <!--接口调用日志-->
-    <!--<logger name="com.rocoinfo.api" level="INFO" additivity="false">
-        <appender-ref ref="flume" />
-    </logger>-->
 </configuration>

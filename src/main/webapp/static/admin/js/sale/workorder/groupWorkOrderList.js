@@ -1,6 +1,6 @@
 //集团工单库
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#ordermanage').addClass('active');
     $('#groupWorkOrder').addClass('active');
     vueIndex = new Vue({
@@ -30,7 +30,7 @@ var vueIndex = null;
                 treamentTime: null,
                 startDate: '',
                 endDate: '',
-                companyId: RocoUser.company,
+                companyId: DameiUser.company,
                 departmentId: '',
                 //事项分类
                 questionType1: '',
@@ -80,7 +80,7 @@ var vueIndex = null;
             drawTable: function () {
                 var self = this;
                 self.$dataTable = $(this.$els.dataTable).bootstrapTable({
-                    url: '/mdni/workorder/storeWorkOrderList',
+                    url: '/damei/workorder/storeWorkOrderList',
                     method: 'get',
                     dataType: 'json',
                     cache: false, //去缓存
@@ -259,7 +259,7 @@ var vueIndex = null;
                                 && row.orderStatus != "COMPLETED" && row.orderStatus != "INVALIDITY"){
                                 fragment += '<a onclick="vueIndex.storeParams()" href="/workorder/reminder?source=group&workOrderId='+ row.id + '" class="m-r-xs btn btn-xs btn-primary">催单</a>';
                             }
-                            if(RocoUtils.hasPermission('workorder:btn-invalid') && row.orderStatus != "INVALIDITY"){
+                            if(DameiUtils.hasPermission('workorder:btn-invalid') && row.orderStatus != "INVALIDITY"){
                                 fragment += '<button class="m-r-xs btn btn-xs btn-danger" data-handle="order-invalid" data-id="' + row.id + '">无效</button>';
                             }
                             return fragment;
@@ -292,7 +292,7 @@ var vueIndex = null;
                             operationType: 'INVALID',
                             orderStatus: 'INVALIDITY'
                         };
-                        self.$http.post('/mdni/workorder/updateWorkOrder',data).then(function (res) {
+                        self.$http.post('/damei/workorder/updateWorkOrder',data).then(function (res) {
                             if (res.data.code == 1) {
                                 self.$toastr.success('操作成功!');
                                 //刷新页面
@@ -373,7 +373,7 @@ var vueIndex = null;
                 var self = this;
                 var count = -1;
                 //查询本次导出的总数据
-                self.$http.get('/mdni/workorder/countWorkOrderByQuery?keyword=' + self.form.keyword
+                self.$http.get('/damei/workorder/countWorkOrderByQuery?keyword=' + self.form.keyword
 	                    + '&createDate=' + self.form.createDate
 	                    + '&customerFeedbackTime=' + self.form.customerFeedbackTime
 	                    + '&orderStatus=' + self.form.orderStatus
@@ -394,7 +394,7 @@ var vueIndex = null;
                         	self.$toastr.error("导出的数据量超过了1000条!");
                         	return;
                         }else{
-                        	window.location.href ='/mdni/workorder/exportWorkorders?keyword=' + self.form.keyword
+                        	window.location.href ='/damei/workorder/exportWorkorders?keyword=' + self.form.keyword
 	                        	+ '&createDate=' + self.form.createDate
 	                        	+ '&customerFeedbackTime=' + self.form.customerFeedbackTime
 	                        	+ '&orderStatus=' + self.form.orderStatus
@@ -448,7 +448,7 @@ var vueIndex = null;
                 self.form.complaintType = sessionStorage.getItem("complaintType") || '';
                 self.form.importantDegree1 = sessionStorage.getItem("importantDegree1") || '';
                 //如果获取不到companyId,那就给默认值:当前用户的company
-                self.form.companyId = sessionStorage.getItem("companyId") || RocoUser.company;
+                self.form.companyId = sessionStorage.getItem("companyId") || DameiUser.company;
                 self.form.departmentId = sessionStorage.getItem("departmentId") || '';
                 self.form.orderStatus = sessionStorage.getItem("orderStatus") || '';
                 self.form.createDate = sessionStorage.getItem("createDate");
@@ -462,7 +462,7 @@ var vueIndex = null;
             }
         },
         created: function () {
-            this.fUser = window.RocoUser;
+            this.fUser = window.DameiUser;
             this.findProblemCategories();
             this.findComplaintTypes();
             this.findImportances();
@@ -480,4 +480,4 @@ var vueIndex = null;
     });
 
 })
-(this.RocoUtils);
+(this.DameiUtils);

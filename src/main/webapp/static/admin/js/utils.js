@@ -1,8 +1,8 @@
 (function (window) {
-    var RocoUtils = window.RocoUtils = {};
+    var DameiUtils = window.DameiUtils = {};
 
     //获取地址栏指定参数值
-    RocoUtils.getQueryString = function (name) {
+    DameiUtils.getQueryString = function (name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
         if (r != null)return unescape(r[2]);
@@ -10,7 +10,7 @@
     };
 
     //把querystring 转换为对象
-    RocoUtils.parseQueryString = function (queryString) {
+    DameiUtils.parseQueryString = function (queryString) {
         var params = {};
         var parts = queryString && queryString.split('&') || window.location.search.substr(1).split('\x26');
 
@@ -41,7 +41,7 @@
      * param section string 一级菜单
      * param subSection string 二级菜单
      */
-    RocoUtils.setSection = function (section, subSection) {
+    DameiUtils.setSection = function (section, subSection) {
         var $item = $('#side-menu');
         $item_li = $item.find('[data-section="' + section + '"]');
         $item.find('li:only-child').removeClass('active');
@@ -60,7 +60,7 @@
      * 参数：type,判断格式化后的金额是否需要小数位(如果为true,末尾带两位小数).
      * 返回：返回格式化后的数值字符串.
      */
-    RocoUtils.formatNumber = function (data, type) {
+    DameiUtils.formatNumber = function (data, type) {
         if (/[^0-9\.]/.test(data))
             return "0";
         if (data == null || data == "")
@@ -86,7 +86,7 @@
      * now:事件对象
      * fmt:时间格式 yyyy-MM-dd HH:mm:ss
      */
-    RocoUtils.formatDate = function (now, fmt) {
+    DameiUtils.formatDate = function (now, fmt) {
         // $.formatDate(new Date(),'yyyy-MM-dd hh:mm:ss');
         var o = {
             "M+": now.getMonth() + 1, //月份
@@ -135,14 +135,14 @@
      * @param obj
      * @returns {boolean}
      */
-    RocoUtils.isNumber = function (obj) {
+    DameiUtils.isNumber = function (obj) {
         return typeof obj === 'number' && !isNaN(obj)
     }
 
     /**
      * 把obj 转为百分数，如果 传flag：true则带百分号,否则不带
      */
-    RocoUtils.decToper = function (obj, flag) {
+    DameiUtils.decToper = function (obj, flag) {
         flag = flag || false;
         if (typeof obj === 'number') {
             return new Decimal(obj).times(100).toNumber() + (flag ? '%' : 0);
@@ -159,7 +159,7 @@
     }
 
     // 根据是否带着百分号进行判断是否需要 乘以 0.01；如果是数字类型，f 参数为true则乘以0.01,否则直接返回
-    RocoUtils.perToDec = function (obj, f) {
+    DameiUtils.perToDec = function (obj, f) {
         if (typeof obj === 'number') {
             return f ? new Decimal(obj).times(0.01).toNumber() : obj;
         }
@@ -178,7 +178,7 @@
         }
     }
     // 加法
-    RocoUtils.accAdd = function (arg1, arg2) {
+    DameiUtils.accAdd = function (arg1, arg2) {
         var r1, r2, m, c;
         try {
             r1 = arg1.toString().split(".")[1].length;
@@ -211,7 +211,7 @@
     };
 
     //将数字转化为大写金额,flag为true,不带圆角分，false带圆角分
-    RocoUtils.moneyToUpper = function (money, flag) {
+    DameiUtils.moneyToUpper = function (money, flag) {
         var cnNums = new Array("零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"); //汉字的数字
         var cnIntRadice = new Array("", "拾", "佰", "仟"); //基本单位
         var cnIntUnits = new Array("", "万", "亿", "兆"); //对应整数部分扩展单位
@@ -305,7 +305,7 @@
      * @param end 结束时间
      * @param pattern 时间格式 默认为 YYYY-MM-DD
      */
-    RocoUtils.initDateControl = function (start, end, format) {
+    DameiUtils.initDateControl = function (start, end, format) {
         if (!format)
             format = 'yyyy-mm-dd';
         start.datetimepicker({format: format});
@@ -324,8 +324,8 @@
      * @param permission
      * @returns {boolean}
      */
-    RocoUtils.hasPermission = function (permission) {
-        var permissions = window.RocoUser.permissions;
+    DameiUtils.hasPermission = function (permission) {
+        var permissions = window.DameiUser.permissions;
         return permissions.indexOf(permission) > 0 ? true : false;
     };
 
@@ -334,8 +334,8 @@
      * @param role 指定角色名
      * @returns {boolean}
      */
-    RocoUtils.hasRole = function (role) {
-        var permissions = window.RocoUser.roles;
+    DameiUtils.hasRole = function (role) {
+        var permissions = window.DameiUser.roles;
         return permissions.indexOf(role) > 0 ? true : false;
     };
 
@@ -344,8 +344,8 @@
      * @param id
      * @returns {boolean}
      */
-    RocoUtils.isLoginUser = function (id) {
-        var loginId = window.RocoUser.userId;
+    DameiUtils.isLoginUser = function (id) {
+        var loginId = window.DameiUser.userId;
         return id == loginId ? true : false;
     };
 

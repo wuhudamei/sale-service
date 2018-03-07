@@ -1,6 +1,6 @@
 //门店客户库
 var vueIndex = null;
-+(function (RocoUtils) {
++(function (DameiUtils) {
     $('#customerMenu').addClass('active');
     $('#storeCustomer').addClass('active');
     vueIndex = new Vue({
@@ -83,7 +83,7 @@ var vueIndex = null;
                         align: 'center',
                         width: '5%',
                         formatter: function(value,row){
-                            if(!row.blackFlag && RocoUtils.hasPermission('customer:menu-blackBtn')) {
+                            if(!row.blackFlag && DameiUtils.hasPermission('customer:menu-blackBtn')) {
                                 return '<button data-handle="black-customer" style="margin-left:15px;" ' +
                                     'class="btn btn-xs btn-danger" data-id="' + row.id + '" type="button">无需回访</button>';
                             }
@@ -146,7 +146,7 @@ var vueIndex = null;
             }
         },
         created: function () {
-            this.fUser = window.RocoUser;
+            this.fUser = window.DameiUser;
         },
         ready: function () {
             this.drawTable();
@@ -233,9 +233,9 @@ var vueIndex = null;
 		           title:'完成时间',
 		           align: 'center'
 		       }];
-      /*var getUrl = '/api/employee/listCollection?store=' + RocoUser.storeCode
+      /*var getUrl = '/api/employee/listCollection?store=' + DameiUser.storeCode
       				+ '&dataSource=' + vueIndex.form.dataSource;*/
-      var getUrl = '/mdni/workorder/findWorkOrdersByCustomerId';
+      var getUrl = '/damei/workorder/findWorkOrdersByCustomerId';
       var $modal = $('#modalBrand').clone();
       $modal.modal({
     	width: 1000, 
@@ -247,7 +247,7 @@ var vueIndex = null;
         function () {
           vueModal2 = new Vue({
             el: $modal.get(0),
-            mixins: [RocoVueMixins.DataTableMixin],
+            mixins: [DameiVueMixins.DataTableMixin],
             data: {
               $dataTable: null,
               modalModel: null,
@@ -308,4 +308,4 @@ var vueIndex = null;
     }
     
 })
-(this.RocoUtils);
+(this.DameiUtils);

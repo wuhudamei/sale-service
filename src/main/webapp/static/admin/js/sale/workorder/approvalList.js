@@ -1,12 +1,12 @@
-+(function (RocoUtils, moment) {
++(function (DameiUtils, moment) {
     $('#workOrderList').addClass('active');
     $('#treatTime').addClass('active');
     var orderList = new Vue({
         validators: {},
         el: '#container',
-        mixins: [RocoVueMixins.DataTableMixin],
+        mixins: [DameiVueMixins.DataTableMixin],
         data: {
-            user: _.extend({}, window.RocoUser),
+            user: _.extend({}, window.DameiUser),
             fUser: null,
             deal: false, //是否显示延期列
             form: {
@@ -44,7 +44,7 @@
             drawTable: function () {
                 var self = this;
                 self.$dataTable = $(this.$els.dataTable).bootstrapTable({
-                    url: '/mdni/worktime/approvalList',
+                    url: '/damei/worktime/approvalList',
                     method: 'get',
                     dataType: 'json',
                     cache: false, //去缓存
@@ -138,6 +138,6 @@
         }
     });
 
-})(RocoUtils, moment);
+})(DameiUtils, moment);
 
 

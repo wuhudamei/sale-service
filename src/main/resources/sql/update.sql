@@ -78,3 +78,10 @@ ALTER TABLE sale_workorder ADD suggestion VARCHAR (500) DEFAULT NULL COMMENT'分
 -- 1:工单表 修改 图片字段大小
 --执行状态 已执行
 alter table sale_workorder  modify column photo varchar(3000) COMMENT '图片路径';
+
+--日期时间 2018/3/7
+--描  述：
+-- 代码整理
+-- 未执行
+ALTER TABLE sale_workorder CHANGE order_id dm_order_id VARCHAR(50) ;
+ALTER TABLE sale_workorder CHANGE order_no dm_order_no VARCHAR(100) ;

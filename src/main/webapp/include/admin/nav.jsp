@@ -384,7 +384,7 @@
             <%--</shiro:hasPermission>--%>
 
              <li id="resetPassword">
-                 <a href="/mdni/updPwd">
+                 <a href="/damei/updPwd">
                     <i class="glyphicon glyphicon-stats"></i>
                      <span class="nav-label">修改密码</span>
                  </a>
