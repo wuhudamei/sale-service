@@ -7,9 +7,9 @@
         <replace key="jdbc.username">cmuser</replace>
         <replace key="jdbc.password">cmuser123456</replace>
         <replace key="base.url">http://cmtest.mdni.net.cn</replace>
-        <replace key="oauth.center.url">http://logintest.mdni.net.cn</replace>
+        <replace key="oauth.center.url">http://47.95.234.249:8185</replace>
         <!--oa测试url-->
-        <replace key="oa.base.url">http://oatest.mdni.net.cn</replace>
+        <replace key="oa.base.url">http://47.95.234.249:8187</replace>
         <replace key="profile">test</replace>
 
         <replace key="order.service.url">http://59.110.170.55:60101</replace>
